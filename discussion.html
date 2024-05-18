@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home || Discussion</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/css/style.css"> 
+
+    <link rel="stylesheet" href="/css/smallphone.css"> <!-- Media query for mobile -->
+    
+    <link rel="icon" type="image/png" href="/images/logo.png">
+    <link rel="stylesheet" href="/css/discussion.css">
+</head>
+<body>
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <h4>Loading</h4>
+    </div>
+
+<div id="content" style="display: none;">
+      
+    <!-- Top Navigation -->
+    <div class="container-fluid header">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#"><img src="/images/logo.png" alt="logo">EduConnect</a>
+                    <button class="navbar-toggler" type="button" id="navbarToggler" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <button class="close-btn" type="button" id="navbarCloser" aria-label="Close navigation">
+                        &times;
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html" title="Home">
+                                    <i class="bi bi-house"></i>
+                                    <span>Home</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="forums.html" title="Forums">
+                                    <i class="bi bi-chat"></i>
+                                    <span>Forums</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="my_discussions.html" title="My Discussions">
+                                    <i class="bi bi-person-lines-fill"></i>
+                                    <span>My Discussions</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="messages.html" title="Messages">
+                                    <i class="bi bi-envelope"></i>
+                                    <span>Messages</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="notifications.html" title="Notifications">
+                                    <i class="bi bi-bell"></i>
+                                    <span>Notifications</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="profile.html" title="Profile">
+                                    <i class="bi bi-person"></i>
+                                    <span>Profile</span>
+                                </a>
+                            
+                        </ul>
+                        <div class="profilestuf">
+                            <img src="/images/tutdet2.jpg" style="width: 50px; border-radius: 50px;" onclick="toggleDropdown()">
+                            <div class="dropdown-menu" id="profileDropdown">
+                                <a href="profile.html">Edit Profile</a>
+                                <a href="settings.html">Settings</a>
+                                <a href="logout.html">Logout</a>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                </div>
+            </nav>
+        </div>
+    </div>
+    
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3">
+                <div class="card mb-3">
+                    <div class="card-header"><strong>Profile</strong></div>
+                    <div class="card-body text-center">
+                        <div class="profiledet">
+                            <img src="/images/ttu1.png" alt="" style="width: 100px; border-radius: 50%;">
+                        </div>
+                        <p>Name: Adekunle Jane</p>
+                        <p>Email: jane@example.com</p>
+                        <p>Location: Lagos, Nigeria</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><strong>Suggested Friends</strong></div>
+                    <div class="card-body">
+                        <!-- Suggested friends list goes here -->
+                        <ul class="suggested">
+                            <li><a href=""><img src="/images/ttu2.png" alt="" style="width: 40px; border-radius: 40px;">
+                                <strong>Damola Ebele</strong>
+                            </a></li>
+                            <li><a href=""><img src="/images/tutdet1.jpg" alt="" style="width: 40px; border-radius: 40px;">
+                                <strong>Okolo Uchenna</strong>
+                            </a></li>
+                            <li><a href=""><img src="/images/tutdet2.jpg" alt="" style="width: 40px; border-radius: 40px;">
+                                <strong>Musa Blessing</strong>
+                            </a></li>
+                            <p><a href="">show more</a></p>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-lg-6">
+                <!-- Post/News Feeds Section -->
+                <div class="card mb-3">
+                    <div class="card-header"><strong>News Feeds</strong></div>
+                    <div class="card-body">
+                        <!-- Posts/News Feeds with reply, like, and share buttons -->
+                        <div class="post">
+                            <h4>Breaking news</h4>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                Illo reiciendis voluptatem consectetur quod debitis ex nulla unde quam dolore, 
+                                adipisci nam amet tempore recusandae impedit temporibus maxime dicta architecto voluptates, 
+                                autem alias distinctio repudiandae rerum? 
+                                Harum, suscipit nobis incidunt quas magni iste tempora natus sequi voluptatem laboriosam nemo ducimus aspernatur.
+                            <img src="/images/tee1.png" alt="" style="width: 200px;">
+                            </p>
+                            <button class="btn btn-primary"><i class="bi bi-heart"></i> Like</button>
+                            <button class="btn btn-secondary"><i class="bi bi-reply"></i> Reply</button>
+                            <button class="btn btn-info"><i class="bi bi-share"></i> Share</button>
+                        </div>
+                        <div class="post">
+                            <h4>Reading tips </h4>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                Possimus, deserunt consectetur quas deleniti libero provident quam, 
+                                assumenda quasi alias error ipsam blanditiis eveniet 
+                                explicabo similique nemo, ex aut molestiae pariatur iusto! 
+                                Nemo explicabo odio iure id corporis illo dolorum ex!</p>
+                            <button class="btn btn-primary"><i class="bi bi-heart"></i> Like</button>
+                            <button class="btn btn-secondary"><i class="bi bi-reply"></i> Reply</button>
+                            <button class="btn btn-info"><i class="bi bi-share"></i> Share</button>
+                        </div>
+                    </div>
+                    <a href="" style="text-align: center; margin-bottom: 1rem; color: #543f02;">
+                        <i class="bi bi-hourglass-bottom"></i>Load more posts</a>
+                </div>
+
+                <!-- Make Post Section -->
+                <div class="card">
+                    <div class="card-header"><strong>Make a Post</strong></div>
+                    <div class="card-body">
+                        <!-- Post form with options for pictures, videos, or text -->
+                        <form>
+                            <div class="form-group">
+                                <label for="postContent">Write your post:</label>
+                                <textarea class="form-control" id="postContent" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Post</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="col-lg-3">
+                <div class="card mb-3">
+                    <div class="card-header"><strong>Hot Topics</strong></div>
+                    <div class="card-body">
+                        <!-- Hot topics list goes here -->
+                        <ul class="hottopics">
+                            <li><a href=""><i class="bi bi-chevron-double-up"></i>Artificial Intelligence</a></li>
+                            <li><a href=""><i class="bi bi-chevron-double-up"></i>Data Science</a></li>
+                            <li><a href=""><i class="bi bi-chevron-double-up"></i>Machine Learning</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><strong>Upcoming Events</strong></div>
+                    <div class="card-body">
+                        <!-- Upcoming events list goes here -->
+                        <ul class="events">
+                            <li><a href="">
+                                <i class="bi bi-alarm"></i>Webinar on Python Programming - May 20, 2024 </a>
+                            </li>
+                            <li><a href="">
+                                <i class="bi bi-alarm"></i>Workshop on Web Development - June 5, 2024</a></li>
+                            <li><a href="">
+                                <i class="bi bi-alarm"></i>Seminar on Machine Learning - June 15, 2024</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="containter-fluid footerpart" style="background-color:#fff8e5; margin-top: 3rem; padding-top: 2rem;">
+        <div class="footer">
+            <ul class="footerul">
+                <li><strong>EduConnet</strong></li>
+                <li><div class="socials">
+                    <i class="bi bi-twitter"></i>
+                    <i class="bi bi-facebook"></i>
+                    <i class="bi bi-linkedin"></i>         
+                </div></li>
+                <li><div class="space"></div></li>
+                <li><a href="">&copy2024 EduConnet</a></li>
+                <li><a href="">EduConnet is a registered</a></li>
+                <li><a href="">tradmark of EduConnect</a></li>
+            </ul>
+        
+            <ul class="footerul">
+                <li><strong>Lesson Mode</strong></li>
+                <li><a href="">Classroom subjects</a></li>
+                <li><a href="">Virtual classroom subjects</a></li>
+                <li><a href="">E-Learning courses</a></li>
+                <li><a href="">E-Learning courses</a></li>
+                <li><a href="">Offline courses</a></li>
+        
+            </ul>
+        
+            <ul class="footerul">
+                <li><strong>Community</strong></li>
+                <li><a href="">Learners</a>
+                <li><a href="">Partners</a></li>
+                <li><a href="">Developers</a></li>
+                <li><a href="">Transactions</a></li>
+                <li><a href="">Blog</a></li>
+                <li><a href="">Teaching center</a></li>
+        
+        
+            </ul>
+        
+        
+            <ul class="footerul">
+                <li><strong>Quick links</strong></li>
+                <li><a href="">Home</a></li>
+                <li><a href="">Professional Education</a></li>
+                <li><a href="">Admissions</a></li>
+                <li><a href="">Courses</a></li>
+                <li><a href="">Testimonial</a></li>
+                <li><a href="">Programs</a></li>
+        
+        
+            </ul>
+        
+            <ul class="footerul lastfootul">
+                <li><strong>More</strong></li>
+                <li><a href="">Press</a></li>
+                <li><a href="">Investors</a></li>
+                <li><a href="">Terms</a></li>
+                <li><a href="">Privacy</a></li>
+                <li><a href="">Help</a></li>
+                <li><a href="">Contact</a></li>
+        
+        
+            </ul>
+        
+        </div>
+    </div>
+
+  </div>  
+    <script>
+        function closeNavbar() {
+            document.getElementById('navbarNav').classList.remove('show');
+        }
+
+
+        window.addEventListener('load', function () {
+    const loadingOverlay = document.getElementById('loading-overlay');
+    const content = document.getElementById('content');
+    
+    loadingOverlay.style.display = 'none';
+    content.style.display = 'block';
+  });
+    
+  document.addEventListener("DOMContentLoaded", function () {
+            const navbarToggler = document.getElementById("navbarToggler");
+            const navbarCloser = document.getElementById("navbarCloser");
+            const navbarNav = document.getElementById("navbarNav");
+    
+            navbarToggler.addEventListener("click", function () {
+                if (!navbarNav.classList.contains("show")) {
+                    navbarNav.classList.add("show");
+                    navbarCloser.classList.add("show");
+                    navbarToggler.style.display = "none";
+                }
+            });
+    
+            navbarCloser.addEventListener("click", function () {
+                navbarNav.classList.remove("show");
+                navbarCloser.classList.remove("show");
+                navbarToggler.style.display = "block";
+            });
+        });
+
+
+        // profile picture handler
+        function toggleDropdown() {
+            const dropdown = document.getElementById('profileDropdown');
+            dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.profilestuf img')) {
+                const dropdowns = document.getElementsByClassName('dropdown-menu');
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === 'block') {
+                        openDropdown.style.display = 'none';
+                    }
+                }
+            }
+        }
+</script>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2"> </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>  
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+
+
+</body>
+</html>

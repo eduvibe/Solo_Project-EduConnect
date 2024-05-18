@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find a Tutor</title>
+    <link rel="icon" type="image/png" href="/images/logo.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    
+    <link rel="stylesheet" href="/css/findtutor.css">
+    <link rel="stylesheet" href="/css/teach.css">
+    <link rel="stylesheet" href="/css/style.css">
+
+<!-- media query for mobile -->
+
+</head>
+<body>
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <h4>Loading</h4>
+    </div>
+
+<div id="content" style="display: none;">
+        
+<div class="container-fluid header">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="#"><img src="/images/logo.png" alt="logo">EduConnect</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/index.html">Home</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/teach.html" style="color: #ffc206;">Tutor</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="discussion.html">Discussion</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Know us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signINModal">Login</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signUpModal">Signup</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+     
+</div>
+
+
+<!-- this is home section -->
+<div class="container-fluid wrapper">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="description">
+                <h4>EduConnet offers you a 30% discount this season</h4>
+                <p>Promotion valid from June 1, 2024- 30 July 2024 </p>
+                <button class="btn">Explore now</button>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="content-picture">
+                <img src="/images/kid1.png" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+<!-- find tutor section -->
+<div class="findtutor">
+<div class="container-fluid">
+    <div class="container">
+ <h3>Find the right tutor for you</h3>
+        <div class="searchsec">
+        <div class="input-group mb-3 searchinput">
+            <input type="text" id="searchBar" class="form-control" placeholder="find your choice tutor" aria-label="subject's tutor" aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick=""><i class="bi bi-search"></i></button>
+        </div>
+        
+        </div>  
+    </div>
+</div>
+</div>
+
+<!-- Tutors by experience -->
+<div class="container-fluid experienced">
+<div class="head">
+    <div class="headdescription">Book your Tutor Today!</div></div>
+    <div class="tutors">
+            <div class="card indtutor expt">
+                <img src="/images/ICTtut.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Umezuluike Laurentia</div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Abuja</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>ICT</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>20 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+            </div>
+
+
+
+            
+
+            
+            <div class="card indtutor expt">
+                <img src="/images/tutor2.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Samuel Adepoju</div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Ibadan</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>Geography</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>7 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+            <div class="card indtutor expt">
+                <img src="/images/tutor3.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Okwo Samson</div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Otta</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>Science</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>12 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                        <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+            <div class="card indtutor expt">
+                <img src="/images/tutorfe2.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Okolo Oluchi </div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Magodo-Lagos</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>Biology</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>8 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                        <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+
+            <div class="card indtutor expt">
+                <img src="/images/stuttormat.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Eze Jerry</div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Badagry</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>Physics</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>4 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                        <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+
+            <div class="card indtutor expt">
+                <img src="/images/tutorpri.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Jeph Hassan</div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Asaba</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>Health Science</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>2 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                        <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+
+
+<div class="card indtutor expt">
+                <img src="/images/tutor5.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Lazarus Ibe</div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Port Harcourt</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>English</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>13 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                        <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+            
+            <div class="card indtutor expt">
+                <img src="/images/ttu1.png" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Stella Ibraham</div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Lagos</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>Accounting</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>10 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                        <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+            <div class="card indtutor expt">
+                <img src="/images/tutorfe3.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Elizabeth Johnson</div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Lekki-Lagos</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>Accounting</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>9 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                        <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+            <div class="card indtutor expt">
+                <img src="/images/tutorr.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Mark Ukandu</div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Abeokuta</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>ICT</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>8 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                        <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+
+            <div class="card indtutor expt">
+                <img src="/images/studtutor.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Kenneth Ukaiji</div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Abraka</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>Government</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>11 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                        <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+
+            <div class="card indtutor expt">
+                <img src="/images/studtutlit.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Bose Chukwu </div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Warri</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>Literacy</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>6 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                        <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+
+            <div class="card indtutor expt">
+                <img src="/images/mathtuto.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Gideon Mustapha</div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Abuja</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>Social Studies</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>4 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+            </div>
+
+
+
+            
+
+            
+            <div class="card indtutor expt">
+                <img src="/images/phytuto.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Michael Emeka</div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Enugu</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>Basic Math</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>10 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+            <div class="card indtutor expt">
+                <img src="/images/stututor2.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Ojo Philip</div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Powe Tamara</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>Basic Maths</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>8 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                        <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+            <div class="card indtutor expt">
+                <img src="/images/stututor5.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Livinus Maculey </div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Magodo</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>Government</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>5 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                        <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+
+            <div class="card indtutor expt">
+                <img src="/images/tutdet1.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Anny John</div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>UK</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>Math</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>7 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                        <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+
+            <div class="card indtutor expt">
+                <img src="/images/stututchem.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Adekunle Jane</div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Abuja</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>ICT</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>25 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                        <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+
+
+<div class="card indtutor expt">
+                <img src="/images/tutor5.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Peter Adekeye</div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Onitsha</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>English</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>16 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                        <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+            
+            <div class="card indtutor expt">
+                <img src="/images/ttu1.png" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Uzoma Stephen</div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Lagos</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>Physics</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>10 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                        <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+            <div class="card indtutor expt">
+                <img src="/images/tutorfe3.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Momoh Adaeze Zion</div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Port Harcort</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>Creative Writing</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>4 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                        <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+            <div class="card indtutor expt">
+                <img src="/images/tutorr.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Adeyemo Abiola</div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Magodo</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>Physics</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>8 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                        <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+
+            <div class="card indtutor expt">
+                <img src="/images/studtutor.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Adeniye Samuel</div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Canada</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>Technical Drawing</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>10 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                        <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+
+            <div class="card indtutor expt">
+                <img src="/images/studtutlit.jpg" class="image-fluid">
+                <div class="tutortitle" id="tutortitle"><strong>Name:</strong>Ajiboye Inioluwa </div>
+                <div class="rating">
+                    <img src="/images/star.PNG">
+                </div>
+                <div class="location" id="location"><strong>Location:</strong>Ikeja</div>
+                <div class="subject" id="subject"><strong>Subject:</strong>Math</div>
+                <div class="experience" id="experience"><strong>Experience:</strong>5 Years</div>
+                    
+                <div class="phont" id="phoneno"><strong>Phone No:</strong>+2348059403939</div>
+                <div class="Email" id="email"><strong>Email:</strong>Uchelaurentia@gmail.com</div>
+                
+                        <li><div class="socials">
+                            <i class="bi bi-twitter"></i>
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-linkedin"></i>         
+                        </div></li>
+                        <a href="/tutordetails.html" class="btn btn-success"> Check out</a>
+                
+            </div>
+
+
+        </div>
+</div>
+</div> 
+
+<!--  -->
+
+   
+<!-- Footer navigation section -->
+<div class="containter-fluid footerpart" style="background-color: #d8e6c3; margin-top: 3rem;">
+<div class="footer">
+    <ul class="footerul">
+        <li><strong>EduConnet</strong></li>
+        <li><div class="socials">
+            <i class="bi bi-twitter"></i>
+            <i class="bi bi-facebook"></i>
+            <i class="bi bi-linkedin"></i>         
+        </div></li>
+        <li><div class="space"></div></li>
+        <li><a href="">&copy2024 EduConnet</a></li>
+        <li><a href="">EduConnet is a registered</a></li>
+        <li><a href="">tradmark of EduConnect</a></li>
+    </ul>
+
+    <ul class="footerul">
+        <li><strong>Lesson Mode</strong></li>
+        <li><a href="">Classroom subjects</a></li>
+        <li><a href="">Virtual classroom subjects</a></li>
+        <li><a href="">E-Learning courses</a></li>
+        <li><a href="">E-Learning courses</a></li>
+        <li><a href="">Offline courses</a></li>
+
+    </ul>
+
+    <ul class="footerul">
+        <li><strong>Community</strong></li>
+        <li><a href="">Learners</a>
+        <li><a href="">Partners</a></li>
+        <li><a href="">Developers</a></li>
+        <li><a href="">Transactions</a></li>
+        <li><a href="">Blog</a></li>
+        <li><a href="">Teaching center</a></li>
+
+
+    </ul>
+
+
+    <ul class="footerul">
+        <li><strong>Quick links</strong></li>
+        <li><a href="">Home</a></li>
+        <li><a href="">Professional Education</a></li>
+        <li><a href="">Admissions</a></li>
+        <li><a href="">Courses</a></li>
+        <li><a href="">Testimonial</a></li>
+        <li><a href="">Programs</a></li>
+
+
+    </ul>
+
+    <ul class="footerul lastfootul">
+        <li><strong>More</strong></li>
+        <li><a href="">Press</a></li>
+        <li><a href="">Investors</a></li>
+        <li><a href="">Terms</a></li>
+        <li><a href="">Privacy</a></li>
+        <li><a href="">Help</a></li>
+        <li><a href="">Contact</a></li>
+
+
+    </ul>
+
+</div>
+</div>
+
+<!-- page loader div ends here -->
+      </div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

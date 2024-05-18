@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/tutoreg.css"> 
+
+    <link rel="icon" type="image/png" href="/images/logo.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="bootstrap-5.3.2-dist/css/bootstrap.min.css">
+
+</head>
+<body>
+<div class="container-fluid col-8">
+    <div class="container col-8">
+       <div class="headform" style="display: block; text-align: center;">
+        <h1 class="mt-2 mb-4">Become a Tutor</h1>
+       </div> 
+        <form id="tutorRegistrationForm" action="submit.php" method="post">
+            <!-- Section 1: Personal Information -->
+            <div class="section" id="section1">
+                <div class="form-group">
+                    <label for="fullName">Full Name *</label>
+                    <input type="text" class="form-control" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="photo">Photo *</label>
+                    <input type="file" class="form-control-file" id="photo" name="photo" accept="image/*" required>
+                </div>
+                <button type="button" class="btn btn-primary next-section">Next</button>
+            </div>
+
+            <!-- Section 2: Subject Information -->
+            <div class="section" id="section2" style="display: none;">
+                <div class="form-group">
+                    <label for="teachingSubjects">Teaching Subjects *</label>
+                    <select class="form-control" id="teachingSubjects" name="teachingSubjects" required>
+                        <option value="">Select Teaching Subjects</option>
+                        <optgroup label="Secondary School Subjects">
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="English Language">English Language</option>
+                            <option value="Physics">Physics</option>
+                            <option value="Chemistry">Chemistry</option>
+                            <option value="Biology">Biology</option>
+                            <option value="Economics">Economics</option>
+                            <option value="Lit-in-English">Lit-in-English</option>
+                            <option value="Government">Government</option>
+                            <option value="Technical Drawing">Technical Drawing</option>
+                            <option value="Basic STechnology">Basic Science & Technology</option>
+
+                            <!-- Add more secondary school subjects as needed -->
+                        </optgroup>
+                        <optgroup label="Primary School Subjects">
+                            <option value="Basic Mathematics">Basic Mathematics</option>
+                            <option value="Literacy">Literacy</option>
+                            <option value="Science">Science</option>
+                            <option value="Social Studies">Social Studies</option>
+                            <!-- Add more primary school subjects as needed -->
+                        </optgroup>
+                    </select>
+                </div>
+                <!-- Other subject information fields -->
+                <button type="button" class="btn btn-primary prev-section">Previous</button>
+                <button type="button" class="btn btn-primary next-section">Next</button>
+            </div>
+            
+
+            <!-- Section 3: Education Information -->
+            <div class="section" id="section3" style="display: none;">
+                <!-- Education information fields -->
+               
+                <div class="form-group">
+                    <label for="educationLevel">Highest Education Level *</label>
+                    <select class="form-control" id="educationLevel" name="educationLevel" required>
+                        <option value="">Select Education Level</option>
+                        <option value="High School">High School</option>
+                        <option value="Bachelor's Degree">Bachelor's Degree</option>
+                        <option value="Master's Degree">Master's Degree</option>
+                        <option value="PhD">PhD</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="educationField">Field of Study *</label>
+                    <input type="text" class="form-control" id="educationField" name="educationField" required>
+                </div>
+                <div class="form-group">
+                    <label for="certification">Certification (if any)</label>
+                    <input type="file" class="form-control-file" id="certification" name="certification" accept=".pdf,.doc,.docx">
+                </div>
+    
+                <button type="button" class="btn btn-primary prev-section">Previous</button>
+                <button type="button" class="btn btn-primary next-section">Next</button>
+            </div>
+
+            <!-- Section 4: Description Information -->
+            <div class="section" id="section4" style="display: none;">
+                <div class="form-group">
+                    <textarea class="form-control" id="about" name="about" rows="4" required placeholder="Description"></textarea>
+                </div>    
+                
+                <button type="button" class="btn btn-primary prev-section">Previous</button>
+                <button type="button" class="btn btn-primary next-section">Next</button>
+            </div>
+            
+            <!-- Section 6: Description Information -->
+            <div class="section" id="section6" style="display: none;">
+                <div class="form-group">
+                    <label for="videoLink">Video Link</label>
+                    <input type="url" class="form-control" id="videoLink" name="videoLink">
+                </div>    
+                
+                <button type="button" class="btn btn-primary prev-section">Previous</button>
+                <button type="button" class="btn btn-primary next-section">Next</button>
+            </div>
+            
+
+            
+
+
+            <!-- Section 7: Availability Information -->
+            <div class="section" id="section6" style="display: none;">
+                <div class="form-group">
+                    <label for="hourlyRate">Availability *</label>
+                    <select class="form-control" id="availability" name="availability" required>
+                        <option value="">Select Availability</option>
+                        <option value="Anytime">Anytime</option>
+                        <option value="Morning">Morning</option>
+                        <option value="Afternoon">Afternoon</option>
+                        <option value="Night">Night</option>
+                    </select>
+                </div>
+                <!-- Other availability information fields -->
+                <div class="form-group">
+                    <label for="hourlyRate">Hourly Rate (₦) *</label>
+                    <input type="number" class="form-control" id="hourlyRate" name="hourlyRate" min="0" step="0.01" required>
+                </div>
+
+                  <!-- Terms & Conditions -->
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="agreeTerms" name="agreeTerms" required>
+                <label class="form-check-label" for="agreeTerms">I agree to the <a href="#">Terms & Conditions</a></label>
+            </div>
+                <button type="button" class="btn btn-primary prev-section">Previous</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            // Next section button click event
+            $('.next-section').click(function(){
+                var currentSection = $(this).closest('.section');
+                if (validateFields(currentSection)) {
+                    currentSection.hide().next('.section').show();
+                }
+            });
+    
+            // Previous section button click event
+            $('.prev-section').click(function(){
+                var currentSection = $(this).closest('.section');
+                currentSection.hide().prev('.section').show();
+            });
+    
+            // Function to validate fields in a section
+            function validateFields(section) {
+                var isValid = true;
+                section.find('input, select, textarea').each(function(){
+                    if ($(this).prop('required') && !$(this).val()) {
+                        isValid = false;
+                        $(this).addClass('is-invalid');
+                    } else {
+                        $(this).removeClass('is-invalid');
+                    }
+                });
+                return isValid;
+            }
+        });
+    </script>
+    
+</body>
+</html>

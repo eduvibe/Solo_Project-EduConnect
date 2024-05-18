@@ -1,0 +1,42 @@
+:root{
+    --linkcolor:#000;
+    --navbcolor:#986dee;
+    --maincolor:#f9f8f7;
+    --btncolor:#ffc206;
+    --maincolo2: #ff6652;
+    --maincolo3: #918cff;
+    --color1: #fff8e5;
+    --color2: #ff1d25;
+    --main: #ffc107;
+    --color5: #7ac943;
+    --color4: #425460;
+    --colorx1: #e2dffa;
+    --colorx: #ffcebf;
+    --headfont: 18px;
+    --secolor: #fcfcfc;
+    --secondarybcolor: #0e5ba3;
+    
+}
+
+.card img{
+    width: 100px;
+    border-radius: 50px;
+    align-self: center;
+}
+
+.card-text{
+    font-size: 15px;
+}
+
+.btnexp{
+    background-color:#dc7105;
+    color: #fff;
+    padding-inline: 10px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+}
+
+.trialvideo{
+    display:flex !important;
+}

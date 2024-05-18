@@ -1,0 +1,128 @@
+:root{
+    --linkcolor:#000;
+    --navbcolor:#986dee;
+    --maincolor:#f9f8f7;
+    --btncolor:#ffc206;
+    --maincolo2: #ff6652;
+    --maincolo3: #918cff;
+    --color1: #fff8e5;
+    --color2: #ff1d25;
+    --main: #ffc107;
+    --color5: #7ac943;
+    --color4: #425460;
+    --colorx1: #e2dffa;
+    --colorx: #ffcebf;
+    --headfont: 18px;
+    --secolor: #fcfcfc;
+    --secondarybcolor: #0e5ba3;
+    
+}
+
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    
+  }
+  
+  #loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  .spinner {
+    border: 12px solid #f3f3f3;
+    border-top: 12px solid #3498db;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  #content {
+    display: none;
+  }
+  
+
+
+/* .searchsec{
+    display: flex;
+} */
+
+.searchinput{
+    width: 400px;
+}
+
+.tutorlink a{
+    color:var(--btncolor);
+}
+
+.head{
+    display: flex;
+    justify-content: space-around;
+}
+
+.expt{
+    font-size: 12px !important;
+}
+
+.expt li{
+    list-style: none;
+}
+
+.expt{
+    width: 200px !important;
+    padding: 10px;
+    cursor: pointer;
+}
+.expt strong{
+    margin-right: 2px;
+}
+.expt img{
+    width: 180px !important;
+    border-radius: 7px;
+}
+.expt .image-fluid{
+    filter: var(--btncolor) !important;
+}
+
+.indtutor .image-fluid:hover{
+    filter: var(--btncolor);
+}
+
+.experiencedtutor {
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+
+.tutors {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(6, 1fr);
+    transition: transform 0.5s ease;
+}
+
+.indtutor {
+    flex: 0 0 calc(100% / 4);
+    padding: 0 5px;
+}
+
+.rating img{
+    width: 100px !important;
+}

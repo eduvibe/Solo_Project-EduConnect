@@ -1,0 +1,104 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    scroll-behavior: smooth;
+}
+
+a{
+    text-decoration: none;
+    color: var(--linkcolor);
+}
+
+:root{
+    --linkcolor:#000;
+    --navbcolor:#986dee;
+    --maincolor:#f9f8f7;
+    --btncolor:#ffc206;
+    --maincolo2: #ff6652;
+    --maincolo3: #918cff;
+    --color1: #fff8e5;
+    --color2: #ff1d25;
+    --main: #ffc107;
+    --color5: #7ac943;
+    --color4: #425460;
+    --colorx1: #e2dffa;
+    --colorx: #ffcebf;
+    --headfont: 18px;
+    --secolor: #fcfcfc;
+    --secondarybcolor: #0e5ba3;
+    
+}
+.indtutor{
+    width: 250px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.indtutor img{
+    width: 230px;
+    border-radius: 7px;
+    /* filter: grayscale(50); */
+}
+.indtutor .image-fluid{
+    filter: grayscale(50);
+}
+
+.indtutor .image-fluid:hover{
+    filter: var(--btncolor);
+}
+.indtutor p{
+    font-size: 13px;
+    text-align: justify;
+}
+.expteachers h4{
+    text-align: center;
+}
+.rating img{
+    width: 6rem;
+}
+.rating img:hover{
+    filter:var(--btncolor)
+}
+
+.tutorsection{
+    margin-bottom: 2rem;
+    background-color: #fff8e5;
+}
+
+.expteacherwrapper{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+
+@media screen and (max-width:600px){
+    .expteacherwrapper{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .indtutor{
+        width: 240px;
+        padding: 8px;
+        font-size: 15px;
+    }
+    
+    .indtutor img{
+        width: 220px;
+        border-radius: 7px;
+    }
+    .rating img{
+        width: 5rem;
+    }
+    
+    
+
+}

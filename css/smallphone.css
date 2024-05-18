@@ -1,0 +1,49 @@
+@media only screen and (max-width:500px){
+  .subcards{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+  }
+    .subdes{
+        font-size: 14px;
+    }
+
+    .edge{
+        display: block;
+        width: 100%;
+        height: 300px;
+        
+    }
+
+}
+
+@media  (min-width:560px) and (max-width:676px){
+    .edge{
+        display: block;
+        width: 100%;
+        height: 300px;
+        
+    }
+
+    .chooseus img{
+        width: 10rem;
+    }
+}
+
+
+
+
+@media  (min-width:700px) and (max-width:980px){
+    .subcards{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        background-color: var(--maincolor);
+    
+    }
+
+    .chooseus img{
+        width: 13rem;
+    }
+
+}
+

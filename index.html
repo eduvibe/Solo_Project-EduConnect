@@ -7,7 +7,7 @@
 
     <link rel="icon" type="image/png" href="/images/logo.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/css/style.css">
 <!-- media query for mobile -->
 <link rel="stylesheet" href="/css/smallphone.css">
@@ -23,63 +23,57 @@
         </div>
     
            
-    <div class="container-fluid header">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container">
-                    <a class="navbar-brand" href="index.html"><img src="/images/logo.png" alt="logo">EduConnect</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav ms-auto">
-                            
-                            <li class="nav-item">
-                                <a class="nav-link" href="/findtutor.html">Find a tutor</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="becom.html">Teach on EduConnect</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/discussion.html">Discussion</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/about.html">Know us</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signINModal">Login</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signUpModal">Signup</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+    <div class="w-full bg-[var(--secolor)] text-[var(--linkcolor)]">
+        <div class="max-w-7xl mx-auto px-4">
+            <nav class="flex items-center justify-between py-4">
+                <a href="index.html" class="flex items-center gap-2 text-lg font-semibold">
+                    <img src="/images/logo.png" alt="logo" class="w-12 h-12">EduConnect
+                </a>
+                <button id="mobileMenuBtn" class="md:hidden inline-flex items-center justify-center p-2 rounded border border-gray-300">
+                    <i class="bi bi-list text-2xl"></i>
+                </button>
+                <ul id="primaryNav" class="hidden md:flex gap-6 items-center">
+                    <li><a class="hover:underline" href="/findtutor.html">Find a tutor</a></li>
+                    <li><a class="hover:underline" href="becom.html">Teach on EduConnect</a></li>
+                    <li><a class="hover:underline" href="/discussion.html">Discussion</a></li>
+                    <li><a class="hover:underline" href="/about.html">Know us</a></li>
+                    <li><a class="hover:underline" href="#" id="openLogin">Login</a></li>
+                    <li><a class="hover:underline" href="#" id="openSignup">Signup</a></li>
+                    <li><a class="hover:underline hidden" href="#" id="logoutLink">Logout</a></li>
+                </ul>
             </nav>
-         
+            <ul id="mobileNav" class="md:hidden hidden flex-col gap-3 pb-4">
+                <li><a class="block py-1" href="/findtutor.html">Find a tutor</a></li>
+                <li><a class="block py-1" href="becom.html">Teach on EduConnect</a></li>
+                <li><a class="block py-1" href="/discussion.html">Discussion</a></li>
+                <li><a class="block py-1" href="/about.html">Know us</a></li>
+                <li><a class="block py-1" href="#" id="openLoginMobile">Login</a></li>
+                <li><a class="block py-1" href="#" id="openSignupMobile">Signup</a></li>
+                <li><a class="block py-1 hidden" href="#" id="logoutLinkMobile">Logout</a></li>
+            </ul>
+        </div>
     </div>
 
-    <div class="container-fluid wrapper">
-        <div class="row">
-            <div class="col-lg-6">
+    <div class="w-full wrapper">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
                 <div class="description">
                     <h4>Knowledge Connection</h4>
                     <h4>Open the Door to Better Learning</h4> 
                     <p>Giving every student the opportunity to access the best education and open the door to the world of knowledge. Start your learning journey today with Educonnect to become an outstanding student in your various institutions.</p>
-                    <button class="btn">Get started!</button>
+                    <button class="btn mt-2">Get started!</button>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="content-picture">
-                    <img src="/images/tee3.png" alt="" class="img-fluid">
+            <div>
+                <div class="content-picture flex justify-center md:justify-end">
+                    <img src="/images/tee3.png" alt="" class="max-w-full h-auto">
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container-fluid section2">
-        <div class="container">
+    <div class="w-full section2">
+        <div class="max-w-7xl mx-auto px-4">
         <div class="lesson-description pt-5">
             <h5 class="head"> Lessons revolve around all subjects in secondary and primary school</h5>
             <p>Diverse lessons around all subjects: Maths, English, Literature-in-English, drawing, Geography, Chemistry, Physics, Biology, and more.</p>
@@ -145,19 +139,20 @@
 <!-- The end of section 2 -->
 
 <div class="container-fluid wrapper2">
-    <div class="row">
-        
+<div class="w-full wrapper2">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
         <div class="col-lg-6">
-            <div class="content-picture2">
+        <div>
                 <img src="/images/tee2.png" alt="" class="img-fluid">
-            </div>
+                <img src="/images/tee2.png" alt="" class="max-w-full h-auto">
         </div>
         <div class="col-lg-6">
-            <div class="description">
+        <div>
                 <h4>What will your child get after studying at EduConnect?</h4>
                 <ul>
                     <li><i class="bi bi-check-circle"></i>Quality education</li>
                     <li><i class="bi bi-check-circle"></i>Better learning experience</li>
+                    <li><i class="bi bi-check-circle"></i>Improved grade</li>
                     <li><i class="bi bi-check-circle"></i>Improved grade</li>
                     <li><i class="bi bi-check-circle"></i>Respond confidently when encountering difficult situation</li>
                     <li><i class="bi bi-check-circle"></i>The ability to criticize knowledge increases</li>
@@ -379,159 +374,87 @@
 
 <!-- Modal -->
 <div class="modal fade" id="signINModal" tabindex="-1" aria-labelledby="signINModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="container">
-            <div class="row">
-              <!-- Close Button (1 column) -->
-              <div class="col-1 position-absolute top-0 end-0">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-  
-              <!-- Margins (2 columns) -->
-              <div class="col-2"></div>
-  
-              <!-- Sign Up Form (9 columns) -->
-              <div class="col-9">
-                <h5 class="modal-title  text-center fw-bold mb-3" id="signINModalLabel">Welcome back</h5>
-                
-                <!-- Sign Up Form -->
-                <form id="signINForm">
-                      <div class="mb-3">
-                    <label for="email" class="form-label">EMAIL</label>
-                    <input type="email" class="form-control nradius" id="email" required placeholder="name@email.com">
-                  </div>
-                  <div class="mb-3">
-                    <label for="password" class="form-label">PASSWORD </label>
-                    <input type="password" class="form-control nradius" id="password" required minlength="8" maxlength="72" placeholder="Create password"><i class="bi bi-eye password"></i>
-                    <small class="form-text text-muted" style="font-size: 13px;"><a href="">Forgot password?</a></small>
-                  </div>
-                  <div class="btn col-12 join btn-primary"><button type="submit" class="btn btn-primary btn-block">Login</button></div>
-                </form>
-              </div>
+<div id="signINModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+    <div class="bg-white max-w-md w-full rounded p-6 relative overflow-y-auto max-h-[80vh]">
+        <button id="closeLogin" class="absolute top-3 right-3 p-2">
+            <i class="bi bi-x-lg"></i>
+        </button>
+        <h5 class="text-center font-bold mb-3">Welcome back</h5>
+        <form id="signINForm" class="space-y-3">
+            <div>
+                <label for="login_email" class="text-xs font-bold">EMAIL</label>
+                <input type="email" class="w-full border border-black rounded-none p-2" id="login_email" required placeholder="name@email.com">
             </div>
-          </div>
-  
-          <!-- Or Separator -->
-  
-          <div class="modal-body text-center">
-          <div class="my-3 horizontal-line">or</div>
-  
-          <!-- Social Media Sign Up -->
-  
-        <div class="signoptionss">
-          <button class="btn col-9 btn-outline-danger signoptions"><span><img src="/images/googleicon.png" width="15rem" style="margin-right: 2rem; margin-bottom: 3px;"></span> Continue with Google</button> <br>
-          <button class="btn btn col-9 btn-outline-primary signoptions"><span><img src="/images/facebookicon.png" width="15rem" style="margin-right: 2rem; margin-bottom: 3px;"></span>Continue with Facebook</button>
-          <button class="btn btn col-9 btn-outline-primary signoptions"><span><img src="/images/apple.png" width="30rem" style="margin-right: 2rem; margin-bottom: 3px;"></span>Continue with Facebook</button>
-          </div>
-          <p class="mt-3" style="font-size: 13px;">New to Coursera? <a href="#">Sign up</a></p>
-  <hr>
-          <p class="mt-3" style="font-size: 14px;"><a href="" style="text-decoration: none;">Log in with your organization</a></p>
-  
-          <!-- Terms and Privacy Notice -->
-  <label style="font-size: 11px;"><p>Having trouble logging in? 
-      <a href="#" style="color: #000;">Learner help center</a></p</label>
-   <a href="#" style="color: #000;">Learner help center</a></p></label>
-          </div>
-  
-          <!-- Learner Help Center Link -->
-          </p>
-  
-          <!-- reCAPTCHA notice -->
-          <p class="modal-body text-center w-55" style="font-size: 11px;">This site is protected by reCAPTCHA Enterprise and the Google <a href="" style="color: #000;">Privacy Policy</a> and <a href="" style="color: #000;">Terms of Service</a> apply.</p>
-      </div> 
-      </div>
-      </div>
-      </div>
+            <div>
+                <label for="login_password" class="text-xs font-bold">PASSWORD</label>
+                <input type="password" class="w-full border border-black rounded-none p-2" id="login_password" required minlength="8" maxlength="72" placeholder="Create password">
+                <small class="text-gray-600 text-xs"><a href="">Forgot password?</a></small>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white py-2">Login</button>
+        </form>
+        <div class="text-center mt-4">
+            <div class="my-3 horizontal-line">or</div>
+            <div class="signoptionss">
+                <button class="btn col-9 btn-outline-danger signoptions"><span><img src="/images/googleicon.png" width="15rem" style="margin-right: 2rem; margin-bottom: 3px;"></span> Continue with Google</button> <br>
+                <button class="btn btn col-9 btn-outline-primary signoptions"><span><img src="/images/facebookicon.png" width="15rem" style="margin-right: 2rem; margin-bottom: 3px;"></span>Continue with Facebook</button>
+                <button class="btn btn col-9 btn-outline-primary signoptions"><span><img src="/images/apple.png" width="30rem" style="margin-right: 2rem; margin-bottom: 3px;"></span>Continue with Facebook</button>
+            </div>
+            <p class="mt-3" style="font-size: 13px;">New to Coursera? <a href="#">Sign up</a></p>
+            <hr>
+            <p class="mt-3" style="font-size: 14px;"><a href="" style="text-decoration: none;">Log in with your organization</a></p>
+            <label style="font-size: 11px;"><p>Having trouble logging in? 
+                <a href="#" style="color: #000;">Learner help center</a></p</label>
+            <a href="#" style="color: #000;">Learner help center</a></p></label>
+        </div>
+        <p class="text-center text-xs">This site is protected by reCAPTCHA Enterprise and the Google <a href="" style="color: #000;">Privacy Policy</a> and <a href="" style="color: #000;">Terms of Service</a> apply.</p>
     </div>
-  </div>
-
+</div>
 
 <!-- this is sign up section -->
 
 <!-- Modal -->
 <div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="container">
-            <div class="row">
-              <!-- Close Button (1 column) -->
-              <div class="col-1 position-absolute top-0 end-0">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-  
-              <!-- Margins (2 columns) -->
-              <div class="col-2"></div>
-  
-              <!-- Sign Up Form (9 columns) -->
-              <div class="col-9">
-                <h5 class="modal-title  text-center fw-bold mb-3" id="signUpModalLabel">Sign Up</h5>
-                <p class=" text-center">Learn on your own time from top universities and businesses.</p>
-  
-                <!-- Sign Up Form -->
-                <form id="signUpForm">
-                  <div class="mb-3">
-                    <label for="fullName" class="form-label">FULL NAME</label>
-                    <input type="text" class="form-control nradius" id="fullName" required placeholder="Enter your full name">
-                  </div>
-                  <div class="mb-3">
-                    <label for="email" class="form-label">EMAIL</label>
-                    <input type="email" class="form-control nradius" id="email" required placeholder="name@email.com">
-                  </div>
-                  <div class="mb-3">
-                    <label for="password" class="form-label">PASSWORD </label>
-                    <input type="password" class="form-control nradius" id="password" required minlength="8" maxlength="72" placeholder="Create password"><i class="bi bi-eye password"></i>
-                    <small class="form-text text-muted" style="font-size: 13px;">Between 8 and 72 characters</small>
-                  </div>
-                  <div class="btn col-12 join btn-primary"><button type="submit" class="btn btn-primary btn-block">Join for Free</button></div>
-                </form>
-              </div>
+<div id="signUpModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+    <div class="bg-white max-w-md w-full rounded p-6 relative overflow-y-auto max-h-[80vh]">
+        <button id="closeSignup" class="absolute top-3 right-3 p-2">
+            <i class="bi bi-x-lg"></i>
+        </button>
+        <h5 class="text-center font-bold mb-1" id="signUpModalLabel">Sign Up</h5>
+        <p class="text-center">Learn on your own time from top universities and businesses.</p>
+        <form id="signUpForm" class="space-y-3 mt-3">
+            <div>
+                <label for="fullName" class="text-xs font-bold">FULL NAME</label>
+                <input type="text" class="w-full border border-black rounded-none p-2" id="fullName" required placeholder="Enter your full name">
             </div>
-          </div>
-  
-          <!-- Or Separator -->
-  
-          <div class="modal-body text-center">
-          <div class="my-3 horizontal-line">or</div>
-  
-          <!-- Social Media Sign Up -->
-  
-        <div class="signoptionss">
-          <button class="btn col-9 btn-outline-danger signoptions"><span><img src="/images/googleicon.png" width="15rem" style="margin-right: 2rem; margin-bottom: 3px;"></span> Continue with Google</button> <br>
-          <button class="btn btn col-9 btn-outline-primary signoptions"><span><img src="/images/facebookicon.png" width="15rem" style="margin-right: 2rem; margin-bottom: 3px;"></span>Continue with Facebook</button>
-      </div>
-          <p class="mt-3" style="font-size: 13px;">Already on Coursera? <a href="#">Log in</a></p>
-  <hr>
-          <p class="mt-3" style="font-size: 14px;"><a href="" style="text-decoration: none;">Sign up with your organization</a></p>
-  
-          <!-- Terms and Privacy Notice -->
-  <label style="font-size: 11px;"> I accept Coursera's <a href="" style="color: #000;">Terms of Use</a> and <a href="" style="color: #000;">Privacy Notice</a>. <p>Having trouble logging in? <a href="#" style="color: #000;">Learner help center</a></p</label>
-   <a href="#" style="color: #000;">Learner help center</a></p>
-          </div>
-  
-          <!-- Learner Help Center Link -->
-          </p>
-  
-          <!-- reCAPTCHA notice -->
-          <p class="modal-body text-center w-55" style="font-size: 11px;">This site is protected by reCAPTCHA Enterprise and the Google <a href="" style="color: #000;">Privacy Policy</a> and <a href="" style="color: #000;">Terms of Service</a> apply.</p>
-      </div> 
-      </div>
-      </div>
-      </div>
+            <div>
+                <label for="signup_email" class="text-xs font-bold">EMAIL</label>
+                <input type="email" class="w-full border border-black rounded-none p-2" id="signup_email" required placeholder="name@email.com">
+            </div>
+            <div>
+                <label for="signup_password" class="text-xs font-bold">PASSWORD</label>
+                <input type="password" class="w-full border border-black rounded-none p-2" id="signup_password" required minlength="8" maxlength="72" placeholder="Create password">
+                <small class="text-gray-600 text-xs">Between 8 and 72 characters</small>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white py-2">Join for Free</button>
+        </form>
+        <div class="text-center mt-4">
+            <div class="my-3 horizontal-line">or</div>
+            <div class="signoptionss">
+                <button class="btn col-9 btn-outline-danger signoptions"><span><img src="/images/googleicon.png" width="15rem" style="margin-right: 2rem; margin-bottom: 3px;"></span> Continue with Google</button> <br>
+                <button class="btn btn col-9 btn-outline-primary signoptions"><span><img src="/images/facebookicon.png" width="15rem" style="margin-right: 2rem; margin-bottom: 3px;"></span>Continue with Facebook</button>
+            </div>
+            <p class="mt-3" style="font-size: 13px;">Already on Coursera? <a href="#">Log in</a></p>
+            <hr>
+            <p class="mt-3" style="font-size: 14px;"><a href="" style="text-decoration: none;">Sign up with your organization</a></p>
+            <label style="font-size: 11px;"> I accept Coursera's <a href="" style="color: #000;">Terms of Use</a> and <a href="" style="color: #000;">Privacy Notice</a>. <p>Having trouble logging in? <a href="#" style="color: #000;">Learner help center</a></p</label>
+            <a href="#" style="color: #000;">Learner help center</a></p>
+        </div>
+        <p class="text-center text-xs">This site is protected by reCAPTCHA Enterprise and the Google <a href="" style="color: #000;">Privacy Policy</a> and <a href="" style="color: #000;">Terms of Service</a> apply.</p>
     </div>
-  </div>
-
+</div>
 
   
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-  
-
-
-
-  <script>
     window.addEventListener('load', () => {
         const preloader = document.getElementById('preloader');
         preloader.style.display = 'none';
@@ -540,26 +463,24 @@
     // Initialize AOS
     AOS.init();
 </script>
+    var mBtn=document.getElementById('mobileMenuBtn');var mNav=document.getElementById('mobileNav');if(mBtn&&mNav){mBtn.addEventListener('click',function(){mNav.classList.toggle('hidden')})}
+    function openModal(id){var m=document.getElementById(id);if(m){m.classList.remove('hidden');m.classList.add('flex')}}
+    function closeModal(id){var m=document.getElementById(id);if(m){m.classList.add('hidden');m.classList.remove('flex')}}
+    var ol=document.getElementById('openLogin');var ol2=document.getElementById('openLoginMobile');var os=document.getElementById('openSignup');var os2=document.getElementById('openSignupMobile');var cl=document.getElementById('closeLogin');var cs=document.getElementById('closeSignup');
+    if(ol){ol.addEventListener('click',function(e){e.preventDefault();openModal('signINModal')})}
+    if(ol2){ol2.addEventListener('click',function(e){e.preventDefault();openModal('signINModal')})}
+    if(os){os.addEventListener('click',function(e){e.preventDefault();openModal('signUpModal')})}
+    if(os2){os2.addEventListener('click',function(e){e.preventDefault();openModal('signUpModal')})}
+    if(cl){cl.addEventListener('click',function(){closeModal('signINModal')})}
+    if(cs){cs.addEventListener('click',function(){closeModal('signUpModal')})}
 
 
 
 
   <script>
-    window.addEventListener('load', () => {
-        const preloader = document.getElementById('preloader');
-        preloader.style.display = 'none';
-    });
-
-    
-   
-
-</script>
-
-
-<script src="/js/app.js"></script>
-<script src="/bootstrap-5.3.2-dist/js/bootstrap.min.js"></script>
 <!-- link for scrolling effects -->
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 </body>
+
+</html>
 
 </html>

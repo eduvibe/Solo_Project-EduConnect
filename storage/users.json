@@ -1,0 +1,50 @@
+[
+    {
+        "id": "04792d2fff1489e2",
+        "name": "Test User",
+        "email": "test463399808@example.com",
+        "password_hash": "$2y$10$tvN.oDpKOibJiJrxGQ80y.KF9NOgQ4HrwNQRbuYNDx1RWXCTmbnGG",
+        "role": "student",
+        "created_at": "2026-03-10T11:58:07+00:00"
+    },
+    {
+        "id": "eb5fc57aaa980169",
+        "name": "Uchenna Okolo",
+        "email": "imustbefocused@gmail.com",
+        "password_hash": "$2y$10$1PFVebpQMQPL.yBO70jAGewdPKpvxshuEffajld.rirPoOYUNs1oC",
+        "role": "student",
+        "created_at": "2026-03-10T13:01:22+00:00"
+    },
+    {
+        "id": "1c4dfac6b4428ca2",
+        "name": "Teacher One",
+        "email": "teacher530020769@example.com",
+        "password_hash": "$2y$10$/id3MqnEMbbln1/lhO7vVOvgBacQmGEkKRtTRWgpdpN/l5X1OaCT.",
+        "role": "teacher",
+        "created_at": "2026-03-10T13:17:11+00:00"
+    },
+    {
+        "id": "6884fd475cec18a9",
+        "name": "Teacher Two",
+        "email": "teacher1195077468@example.com",
+        "password_hash": "$2y$10$BMziVKy/k5NbNFgZESPJ1.qURc3VH9mjssjVQiYIm57ckgSftdhd2",
+        "role": "teacher",
+        "created_at": "2026-03-10T13:17:48+00:00"
+    },
+    {
+        "id": "53743342725dfbdb",
+        "name": "Parent One",
+        "email": "parent62047467@example.com",
+        "password_hash": "$2y$10$/rSUIAG4YElY85vCezrwretxVQ/5k0djF5437v3.4BNeci9THlXPS",
+        "role": "parent",
+        "created_at": "2026-03-10T13:18:40+00:00"
+    },
+    {
+        "id": "ffe67945ac110b02",
+        "name": "Evil",
+        "email": "evil1360153330@example.com",
+        "password_hash": "$2y$10$x/dhnSn1c6n6sybbgW/tte3v42Pdqzq/PuK8izcyveLs4OEowzcwW",
+        "role": "parent",
+        "created_at": "2026-03-10T13:19:17+00:00"
+    }
+]

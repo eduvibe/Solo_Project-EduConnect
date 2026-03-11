@@ -58,22 +58,22 @@ export default function Users({ users, filters }) {
 
             <div className="space-y-6">
                 {flash?.status && (
-                    <div className="rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+                    <div className="bg-[#9dff52] px-4 py-3 text-base font-semibold text-black">
                         {flash.status}
                     </div>
                 )}
 
-                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                    <div className="border-b border-slate-200 px-6 py-4">
+                <div className="overflow-hidden bg-white shadow-sm">
+                    <div className="px-6 py-4">
                         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                             <div className="flex flex-wrap items-center gap-2">
                                 <Link
                                     href={route('admin.users')}
                                     className={
-                                        'rounded-full px-4 py-2 text-sm font-semibold ' +
+                                        'px-4 py-3 text-base font-semibold ' +
                                         (currentRole === '' && !isTeachersView
-                                            ? 'bg-brand-50 text-brand-700'
-                                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200')
+                                            ? 'bg-[#9dff52] text-black'
+                                            : 'bg-slate-100 text-slate-900')
                                     }
                                 >
                                     All
@@ -81,10 +81,10 @@ export default function Users({ users, filters }) {
                                 <Link
                                     href={route('dashboard.superadmin.teachers')}
                                     className={
-                                        'rounded-full px-4 py-2 text-sm font-semibold ' +
+                                        'px-4 py-3 text-base font-semibold ' +
                                         (currentRole === 'teacher'
-                                            ? 'bg-brand-50 text-brand-700'
-                                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200')
+                                            ? 'bg-[#9dff52] text-black'
+                                            : 'bg-slate-100 text-slate-900')
                                     }
                                 >
                                     Teachers
@@ -92,10 +92,10 @@ export default function Users({ users, filters }) {
                                 <Link
                                     href={route('admin.users', { role: 'parent' })}
                                     className={
-                                        'rounded-full px-4 py-2 text-sm font-semibold ' +
+                                        'px-4 py-3 text-base font-semibold ' +
                                         (currentRole === 'parent'
-                                            ? 'bg-brand-50 text-brand-700'
-                                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200')
+                                            ? 'bg-[#9dff52] text-black'
+                                            : 'bg-slate-100 text-slate-900')
                                     }
                                 >
                                     Parents
@@ -116,11 +116,11 @@ export default function Users({ users, filters }) {
                                             setQ(e.target.value)
                                         }
                                         placeholder="Search name or email..."
-                                        className="w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:w-80"
+                                        className="w-full border-gray-300 text-base shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:w-80"
                                     />
                                     <button
                                         type="submit"
-                                        className="rounded-md bg-brand-700 px-3 py-2 text-sm font-semibold text-white hover:bg-brand-800"
+                                        className="bg-black px-4 py-3 text-base font-semibold text-white"
                                     >
                                         Search
                                     </button>
@@ -169,7 +169,7 @@ export default function Users({ users, filters }) {
                                                         [u.id]: e.target.value,
                                                     }))
                                                 }
-                                                className="rounded-md border-gray-300 text-sm shadow-sm focus:border-brand-500 focus:ring-brand-500"
+                                                className="border-gray-300 text-base shadow-sm focus:border-brand-500 focus:ring-brand-500"
                                             >
                                                 <option value="parent">
                                                     parent
@@ -192,7 +192,7 @@ export default function Users({ users, filters }) {
                                             <button
                                                 type="button"
                                                 onClick={() => updateRole(u.id)}
-                                                className="rounded-md bg-gray-900 px-3 py-2 text-sm font-semibold text-white hover:bg-gray-800"
+                                                className="bg-[#9dff52] px-4 py-3 text-base font-semibold text-black"
                                             >
                                                 Save
                                             </button>
@@ -204,7 +204,7 @@ export default function Users({ users, filters }) {
                     </div>
 
                     {users.links && users.links.length > 0 && (
-                        <div className="border-t border-slate-200 px-6 py-4">
+                        <div className="px-6 py-4">
                             <div className="flex flex-wrap gap-2">
                                 {users.links.map((linkItem, i) => (
                                     <Link
@@ -213,11 +213,11 @@ export default function Users({ users, filters }) {
                                         preserveScroll
                                         preserveState
                                         className={
-                                            'rounded-md px-3 py-2 text-sm ' +
+                                            'px-3 py-2 text-base ' +
                                             (linkItem.active
-                                                ? 'bg-brand-700 text-white'
+                                                ? 'bg-[#9dff52] text-black'
                                                 : linkItem.url
-                                                  ? 'bg-white text-gray-700 ring-1 ring-gray-200 hover:bg-gray-50'
+                                                  ? 'bg-slate-100 text-slate-900'
                                                   : 'cursor-not-allowed bg-gray-100 text-gray-400')
                                         }
                                         dangerouslySetInnerHTML={{

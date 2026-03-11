@@ -18,6 +18,13 @@ class EnsureRole
             return redirect()->route('login');
         }
 
+        if ($role === 'superadmin') {
+            $impersonate = (string) $request->session()->get('impersonate_role', '');
+            if (in_array($impersonate, ['parent', 'teacher'], true)) {
+                $role = $impersonate;
+            }
+        }
+
         if (in_array($role, $roles, true)) {
             return $next($request);
         }

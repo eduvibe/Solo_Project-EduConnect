@@ -10,7 +10,7 @@ export default function TeacherDashboard() {
 
             <div className="grid gap-6 lg:grid-cols-12">
                 <div className="lg:col-span-8">
-                    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                    <div className="bg-white p-6 shadow-sm">
                         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
                             <div>
                                 <div className="text-sm font-semibold text-slate-500">
@@ -24,7 +24,7 @@ export default function TeacherDashboard() {
                                 </div>
                             </div>
 
-                            <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
+                            <div className="flex h-24 w-24 items-center justify-center bg-[#9dff52] text-black">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24"
@@ -44,7 +44,7 @@ export default function TeacherDashboard() {
                         </div>
 
                         <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                            <div className="rounded-2xl bg-slate-50 p-5">
+                            <div className="bg-slate-50 p-5">
                                 <div className="text-xs font-semibold text-slate-500">
                                     Profile views
                                 </div>
@@ -55,7 +55,7 @@ export default function TeacherDashboard() {
                                     This week
                                 </div>
                             </div>
-                            <div className="rounded-2xl bg-slate-50 p-5">
+                            <div className="bg-slate-50 p-5">
                                 <div className="text-xs font-semibold text-slate-500">
                                     Verification
                                 </div>
@@ -66,7 +66,7 @@ export default function TeacherDashboard() {
                                     Upload docs to go live
                                 </div>
                             </div>
-                            <div className="rounded-2xl bg-slate-50 p-5">
+                            <div className="bg-slate-50 p-5">
                                 <div className="text-xs font-semibold text-slate-500">
                                     Earnings
                                 </div>
@@ -81,13 +81,13 @@ export default function TeacherDashboard() {
                     </div>
 
                     <div className="mt-6 grid gap-6 lg:grid-cols-2">
-                        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <div className="bg-white p-6 shadow-sm">
                             <div className="flex items-center justify-between">
                                 <div className="text-sm font-semibold text-slate-900">
                                     Notifications
                                 </div>
-                                <div className="text-xs font-semibold text-brand-700">
-                                    View all
+                                <div className="text-xs font-semibold text-slate-700">
+                                    All
                                 </div>
                             </div>
                             <div className="mt-4 space-y-3">
@@ -98,7 +98,7 @@ export default function TeacherDashboard() {
                                 ].map((t) => (
                                     <div
                                         key={t}
-                                        className="rounded-xl bg-slate-50 p-4 text-sm text-slate-700"
+                                        className="bg-slate-50 p-4 text-sm text-slate-700"
                                     >
                                         {t}
                                     </div>
@@ -106,13 +106,13 @@ export default function TeacherDashboard() {
                             </div>
                         </div>
 
-                        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <div className="bg-white p-6 shadow-sm">
                             <div className="flex items-center justify-between">
                                 <div className="text-sm font-semibold text-slate-900">
                                     Upcoming schedule
                                 </div>
-                                <div className="text-xs font-semibold text-brand-700">
-                                    View
+                                <div className="text-xs font-semibold text-slate-700">
+                                    Next
                                 </div>
                             </div>
                             <div className="mt-4 space-y-3">
@@ -123,7 +123,7 @@ export default function TeacherDashboard() {
                                 ].map((s) => (
                                     <div
                                         key={s.title}
-                                        className="rounded-xl bg-slate-50 p-4"
+                                        className="bg-slate-50 p-4"
                                     >
                                         <div className="text-sm font-semibold text-slate-900">
                                             {s.title}
@@ -139,49 +139,49 @@ export default function TeacherDashboard() {
                 </div>
 
                 <div className="lg:col-span-4">
-                    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                    <div className="bg-white p-6 shadow-sm">
                         <div className="text-sm font-semibold text-slate-900">
                             Profile strength
                         </div>
-                        <div className="mt-3 rounded-xl bg-slate-50 p-4">
+                        <div className="mt-3 bg-slate-50 p-4">
                             <div className="flex items-center justify-between text-xs text-slate-600">
                                 <div>Completed</div>
                                 <div className="font-semibold text-slate-900">
                                     23%
                                 </div>
                             </div>
-                            <div className="mt-3 h-2 w-full rounded-full bg-slate-200">
-                                <div className="h-2 w-[23%] rounded-full bg-brand-700"></div>
+                            <div className="mt-3 h-2 w-full bg-slate-200">
+                                <div className="h-2 w-[23%] bg-[#9dff52]"></div>
                             </div>
                             <div className="mt-4 space-y-2 text-sm text-slate-700">
                                 <div className="flex items-start gap-2">
-                                    <span className="mt-1 h-2 w-2 rounded-full bg-brand-700"></span>
+                                    <span className="mt-1 h-2 w-2 bg-[#9dff52]"></span>
                                     Add subjects & pricing
                                 </div>
                                 <div className="flex items-start gap-2">
-                                    <span className="mt-1 h-2 w-2 rounded-full bg-brand-700"></span>
+                                    <span className="mt-1 h-2 w-2 bg-[#9dff52]"></span>
                                     Upload verification documents
                                 </div>
                                 <div className="flex items-start gap-2">
-                                    <span className="mt-1 h-2 w-2 rounded-full bg-brand-700"></span>
+                                    <span className="mt-1 h-2 w-2 bg-[#9dff52]"></span>
                                     Set availability
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                    <div className="mt-6 bg-white p-6 shadow-sm">
                         <div className="text-sm font-semibold text-slate-900">
                             Quick actions
                         </div>
                         <div className="mt-4 grid gap-3">
-                            <div className="rounded-xl bg-slate-50 p-4 text-sm font-semibold text-slate-900">
+                            <div className="bg-slate-50 p-4 text-sm font-semibold text-slate-900">
                                 Update profile
                             </div>
-                            <div className="rounded-xl bg-slate-50 p-4 text-sm font-semibold text-slate-900">
+                            <div className="bg-slate-50 p-4 text-sm font-semibold text-slate-900">
                                 Add availability
                             </div>
-                            <div className="rounded-xl bg-slate-50 p-4 text-sm font-semibold text-slate-900">
+                            <div className="bg-slate-50 p-4 text-sm font-semibold text-slate-900">
                                 View payouts
                             </div>
                         </div>

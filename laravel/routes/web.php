@@ -55,10 +55,43 @@ Route::get('/reviews', function () {
 
 Route::get('/dashboard', function () {
     $user = auth()->user();
-    return redirect(RoleDashboard::path($user ? $user->role : null));
+    $role = $user ? (string) $user->role : null;
+    if ($role === 'superadmin') {
+        $impersonate = (string) request()->session()->get('impersonate_role', '');
+        if (in_array($impersonate, ['parent', 'teacher'], true)) {
+            $role = $impersonate;
+        }
+    }
+    return redirect(RoleDashboard::path($role));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::post('/impersonate/role', function (Request $request) {
+        $user = $request->user();
+        if (! $user || (string) $user->role !== 'superadmin') {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'role' => ['required', 'string', 'in:parent,teacher'],
+        ]);
+
+        $request->session()->put('impersonate_role', $validated['role']);
+
+        return redirect()->route('dashboard');
+    })->name('impersonate.role');
+
+    Route::post('/impersonate/stop', function (Request $request) {
+        $user = $request->user();
+        if (! $user || (string) $user->role !== 'superadmin') {
+            abort(403);
+        }
+
+        $request->session()->forget('impersonate_role');
+
+        return redirect()->route('dashboard.superadmin');
+    })->name('impersonate.stop');
+
     Route::get('/dashboard/parent', function () {
         return Inertia::render('Dashboards/Parent');
     })->middleware('role:parent')->name('dashboard.parent');

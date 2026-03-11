@@ -10,7 +10,7 @@ export default function ParentDashboard() {
 
             <div className="grid gap-6 lg:grid-cols-12">
                 <div className="lg:col-span-8">
-                    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                    <div className="bg-white p-6 shadow-sm">
                         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                             <div>
                                 <div className="text-sm font-semibold text-slate-500">
@@ -25,14 +25,14 @@ export default function ParentDashboard() {
                             </div>
                             <Link
                                 href={route('tutors.index')}
-                                className="inline-flex items-center justify-center rounded-xl bg-brand-700 px-5 py-3 text-sm font-semibold text-white hover:bg-brand-800"
+                                className="inline-flex items-center justify-center bg-[#9dff52] px-5 py-3 text-base font-semibold text-black"
                             >
                                 Find tutors
                             </Link>
                         </div>
 
                         <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                            <div className="rounded-2xl bg-slate-50 p-5">
+                            <div className="bg-slate-50 p-5">
                                 <div className="text-xs font-semibold text-slate-500">
                                     Active bookings
                                 </div>
@@ -43,7 +43,7 @@ export default function ParentDashboard() {
                                     This week
                                 </div>
                             </div>
-                            <div className="rounded-2xl bg-slate-50 p-5">
+                            <div className="bg-slate-50 p-5">
                                 <div className="text-xs font-semibold text-slate-500">
                                     Messages
                                 </div>
@@ -54,7 +54,7 @@ export default function ParentDashboard() {
                                     Unread
                                 </div>
                             </div>
-                            <div className="rounded-2xl bg-slate-50 p-5">
+                            <div className="bg-slate-50 p-5">
                                 <div className="text-xs font-semibold text-slate-500">
                                     Spend
                                 </div>
@@ -69,7 +69,7 @@ export default function ParentDashboard() {
                     </div>
 
                     <div className="mt-6 grid gap-6 lg:grid-cols-2">
-                        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <div className="bg-white p-6 shadow-sm">
                             <div className="text-sm font-semibold text-slate-900">
                                 Upcoming lessons
                             </div>
@@ -80,7 +80,7 @@ export default function ParentDashboard() {
                                 ].map((l) => (
                                     <div
                                         key={l.title}
-                                        className="rounded-xl bg-slate-50 p-4"
+                                        className="bg-slate-50 p-4"
                                     >
                                         <div className="text-sm font-semibold text-slate-900">
                                             {l.title}
@@ -93,7 +93,7 @@ export default function ParentDashboard() {
                             </div>
                         </div>
 
-                        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <div className="bg-white p-6 shadow-sm">
                             <div className="text-sm font-semibold text-slate-900">
                                 Recommended next steps
                             </div>
@@ -105,7 +105,7 @@ export default function ParentDashboard() {
                                 ].map((t) => (
                                     <div
                                         key={t}
-                                        className="rounded-xl bg-slate-50 p-4 text-sm text-slate-700"
+                                        className="bg-slate-50 p-4 text-sm text-slate-700"
                                     >
                                         {t}
                                     </div>
@@ -116,21 +116,21 @@ export default function ParentDashboard() {
                 </div>
 
                 <div className="lg:col-span-4">
-                    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                    <div className="bg-white p-6 shadow-sm">
                         <div className="text-sm font-semibold text-slate-900">
                             Quick actions
                         </div>
                         <div className="mt-4 grid gap-3">
                             <Link
                                 href={route('tutors.index')}
-                                className="rounded-xl bg-slate-50 p-4 text-sm font-semibold text-slate-900 hover:bg-slate-100"
+                                className="bg-slate-50 p-4 text-sm font-semibold text-slate-900"
                             >
                                 Browse tutors
                             </Link>
-                            <div className="rounded-xl bg-slate-50 p-4 text-sm font-semibold text-slate-900">
+                            <div className="bg-slate-50 p-4 text-sm font-semibold text-slate-900">
                                 View bookings
                             </div>
-                            <div className="rounded-xl bg-slate-50 p-4 text-sm font-semibold text-slate-900">
+                            <div className="bg-slate-50 p-4 text-sm font-semibold text-slate-900">
                                 Payments
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { useMemo, useState } from 'react';
 
 function initials(name) {
@@ -26,10 +26,14 @@ function roleLabel(role) {
 
 export default function DashboardLayout({ title, children }) {
     const user = usePage().props.auth.user;
+    const impersonation = usePage().props.impersonation;
+    const effectiveRole = String(impersonation?.activeRole || user?.role || '').toLowerCase();
+    const canImpersonate = Boolean(impersonation?.can);
+    const isImpersonating = Boolean(impersonation?.activeRole);
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const nav = useMemo(() => {
-        const role = String(user?.role || '').toLowerCase();
+        const role = String(effectiveRole || '').toLowerCase();
 
         if (role === 'superadmin') {
             return [
@@ -61,41 +65,49 @@ export default function DashboardLayout({ title, children }) {
             { label: 'Find tutors', href: route('tutors.index'), active: route().current('tutors.index') },
             { label: 'Profile', href: route('profile.edit'), active: route().current('profile.edit') },
         ];
-    }, [user?.role]);
+    }, [effectiveRole]);
+
+    const switchToRole = (role) => {
+        router.post(route('impersonate.role'), { role }, { preserveScroll: true });
+    };
+
+    const stopImpersonation = () => {
+        router.post(route('impersonate.stop'), {}, { preserveScroll: true });
+    };
 
     const Sidebar = (
-        <div className="flex h-full flex-col bg-brand-800 text-white">
+        <div className="flex h-full flex-col bg-black text-white">
             <div className="flex items-center gap-3 px-6 py-5">
                 <ApplicationLogo className="h-10 w-10 text-white" />
                 <div className="leading-tight">
-                    <div className="text-sm font-semibold">EduConnect</div>
-                    <div className="text-xs text-white/70">Dashboard</div>
+                    <div className="text-base font-semibold">EduConnect</div>
+                    <div className="text-sm text-white/70">Dashboard</div>
                 </div>
             </div>
 
             <div className="px-6 pb-4">
-                <div className="rounded-2xl bg-white/10 p-4">
+                <div className="bg-white/10 p-4">
                     <div className="flex items-center gap-3">
-                        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/15 text-sm font-bold">
+                        <div className="flex h-11 w-11 items-center justify-center bg-[#9dff52] text-base font-bold text-black">
                             {initials(user?.name)}
                         </div>
                         <div className="min-w-0">
-                            <div className="truncate text-sm font-semibold">
+                            <div className="truncate text-base font-semibold">
                                 {user?.name}
                             </div>
-                            <div className="truncate text-xs text-white/70">
-                                {roleLabel(user?.role)}
+                            <div className="truncate text-sm text-white/70">
+                                {roleLabel(effectiveRole)}
                             </div>
                         </div>
                     </div>
 
                     <div className="mt-4">
-                        <div className="flex items-center justify-between text-xs text-white/70">
+                        <div className="flex items-center justify-between text-sm text-white/70">
                             <div>Profile Completed</div>
                             <div>23%</div>
                         </div>
-                        <div className="mt-2 h-2 w-full rounded-full bg-white/15">
-                            <div className="h-2 w-[23%] rounded-full bg-white"></div>
+                        <div className="mt-2 h-2 w-full bg-white/15">
+                            <div className="h-2 w-[23%] bg-[#9dff52]"></div>
                         </div>
                     </div>
                 </div>
@@ -108,8 +120,8 @@ export default function DashboardLayout({ title, children }) {
                             key={item.label}
                             href={item.href}
                             className={
-                                'flex items-center rounded-xl px-4 py-3 text-sm font-semibold transition ' +
-                                (item.active ? 'bg-white text-brand-800' : 'text-white/90 hover:bg-white/10')
+                                'flex items-center px-4 py-3 text-base font-semibold ' +
+                                (item.active ? 'bg-[#9dff52] text-black' : 'text-white/85')
                             }
                         >
                             {item.label}
@@ -123,7 +135,7 @@ export default function DashboardLayout({ title, children }) {
                     href={route('logout')}
                     method="post"
                     as="button"
-                    className="inline-flex w-full items-center justify-center rounded-xl bg-white/10 px-4 py-3 text-sm font-semibold text-white hover:bg-white/15"
+                    className="inline-flex w-full items-center justify-center bg-white/10 px-4 py-3 text-base font-semibold text-white"
                 >
                     Log out
                 </Link>
@@ -144,7 +156,7 @@ export default function DashboardLayout({ title, children }) {
                             <button
                                 type="button"
                                 onClick={() => setSidebarOpen(true)}
-                                className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white p-3 text-slate-700 shadow-sm hover:bg-slate-50 lg:hidden"
+                                className="inline-flex items-center justify-center bg-white p-3 text-slate-700 shadow-sm lg:hidden"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -163,27 +175,57 @@ export default function DashboardLayout({ title, children }) {
                             </button>
 
                             <div>
-                                <div className="text-xl font-semibold text-slate-900">
+                                <div className="text-2xl font-semibold text-slate-900">
                                     {title}
                                 </div>
-                                <div className="text-sm text-slate-500">
-                                    Hello, {user?.name}
+                                <div className="text-base text-slate-600">
+                                    Viewing as {roleLabel(effectiveRole)}
                                 </div>
                             </div>
                         </div>
 
                         <div className="flex items-center gap-3">
-                            <Dropdown>
-                                <Dropdown.Trigger>
-                                    <span className="inline-flex rounded-xl">
+                            {canImpersonate && (
+                                <div className="hidden items-center gap-2 sm:flex">
+                                    {isImpersonating ? (
                                         <button
                                             type="button"
-                                            className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50"
+                                            onClick={stopImpersonation}
+                                            className="bg-[#9dff52] px-4 py-3 text-base font-semibold text-black"
+                                        >
+                                            Back to owner
+                                        </button>
+                                    ) : (
+                                        <>
+                                            <button
+                                                type="button"
+                                                onClick={() => switchToRole('parent')}
+                                                className="bg-[#9dff52] px-4 py-3 text-base font-semibold text-black"
+                                            >
+                                                View as parent
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => switchToRole('teacher')}
+                                                className="bg-[#9dff52] px-4 py-3 text-base font-semibold text-black"
+                                            >
+                                                View as tutor
+                                            </button>
+                                        </>
+                                    )}
+                                </div>
+                            )}
+                            <Dropdown>
+                                <Dropdown.Trigger>
+                                    <span className="inline-flex">
+                                        <button
+                                            type="button"
+                                            className="inline-flex items-center gap-2 bg-white px-4 py-3 text-base font-semibold text-slate-700 shadow-sm"
                                         >
                                             <span className="hidden sm:inline">
                                                 {user?.name}
                                             </span>
-                                            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-brand-50 text-xs font-bold text-brand-700">
+                                            <span className="flex h-8 w-8 items-center justify-center bg-[#9dff52] text-sm font-bold text-black">
                                                 {initials(user?.name)}
                                             </span>
                                         </button>
@@ -191,6 +233,41 @@ export default function DashboardLayout({ title, children }) {
                                 </Dropdown.Trigger>
 
                                 <Dropdown.Content>
+                                    {canImpersonate && (
+                                        <div className="border-b border-slate-200">
+                                            <div className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                                Role preview
+                                            </div>
+                                            {isImpersonating ? (
+                                                <Dropdown.Link
+                                                    href={route('impersonate.stop')}
+                                                    method="post"
+                                                    as="button"
+                                                >
+                                                    Back to owner
+                                                </Dropdown.Link>
+                                            ) : (
+                                                <>
+                                                    <Dropdown.Link
+                                                        href={route('impersonate.role')}
+                                                        method="post"
+                                                        as="button"
+                                                        data={{ role: 'parent' }}
+                                                    >
+                                                        View as parent
+                                                    </Dropdown.Link>
+                                                    <Dropdown.Link
+                                                        href={route('impersonate.role')}
+                                                        method="post"
+                                                        as="button"
+                                                        data={{ role: 'teacher' }}
+                                                    >
+                                                        View as tutor
+                                                    </Dropdown.Link>
+                                                </>
+                                            )}
+                                        </div>
+                                    )}
                                     <Dropdown.Link href={route('profile.edit')}>
                                         Profile
                                     </Dropdown.Link>
@@ -222,7 +299,7 @@ export default function DashboardLayout({ title, children }) {
                             <button
                                 type="button"
                                 onClick={() => setSidebarOpen(false)}
-                                className="rounded-xl bg-white/10 p-2 text-white hover:bg-white/15"
+                                className="bg-white/10 p-2 text-white"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"

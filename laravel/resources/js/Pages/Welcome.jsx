@@ -72,6 +72,7 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
     const [mode, setMode] = useState('online');
     const [city, setCity] = useState('any');
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [proofSlideIndex, setProofSlideIndex] = useState(0);
 
     const formatCount = (n) => {
         const num = Number(n || 0);
@@ -92,6 +93,41 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
         ],
         [],
     );
+
+    const proofSlides = useMemo(
+        () => [
+            {
+                img: '/slide-accessibility.svg',
+                title: 'Learning that fits real schedules.',
+                body: 'Choose a tutor for school subjects or modern skills, then learn online or in-person—whatever works for your routine.',
+                stat: 'Make steady progress without disrupting your day.',
+                source: 'Built for busy learners',
+            },
+            {
+                img: '/slide-sustainable.svg',
+                title: 'Consistency that compounds.',
+                body: 'Set a clear goal, show up consistently, and get guidance that keeps you moving—one session at a time.',
+                stat: 'Small weekly wins add up quickly.',
+                source: 'Designed for momentum',
+            },
+            {
+                img: '/slide-journey.svg',
+                title: 'Progress you can actually track.',
+                body: 'From the first session to mastery, keep learning structured with clear feedback and visible improvement.',
+                stat: 'Confidence grows when learning feels organized.',
+                source: 'Made for real outcomes',
+            },
+        ],
+        [],
+    );
+
+    const goPrevProofSlide = () => {
+        setProofSlideIndex((i) => (i - 1 + proofSlides.length) % proofSlides.length);
+    };
+
+    const goNextProofSlide = () => {
+        setProofSlideIndex((i) => (i + 1) % proofSlides.length);
+    };
 
     const tutors = useMemo(
         () => [
@@ -605,91 +641,126 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
                         </div>
                     </section>
 
-                    <section
-                        id="why-choose-us"
-                        className="border-t border-slate-200 bg-white"
-                    >
+                    <section id="outcomes" className="border-t border-slate-200 bg-white">
                         <div className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
                             <Reveal>
-                                <div className="flex items-center justify-between gap-6">
-                                    <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">
-                                        Why Choose Us
+                                <div className="text-center">
+                                    <h2 className="text-5xl font-bold tracking-tight text-slate-900 sm:text-6xl">
+                                        Learn better with the right match
                                     </h2>
+                                    <p className="mx-auto mt-4 max-w-3xl text-base text-slate-600">
+                                        Find a tutor who understands your goal, your pace, and your context—then build progress that sticks.
+                                    </p>
                                 </div>
                             </Reveal>
 
-                            <div className="mt-10 grid gap-10 lg:grid-cols-12">
-                                <Reveal className="lg:col-span-4">
-                                    <div className="border border-slate-200">
-                                        <div className="p-4">
-                                            <img
-                                                src="/heroimage.png"
-                                                alt="Learning support"
-                                                className="h-56 w-full object-cover"
-                                            />
-                                        </div>
-                                    </div>
-                                </Reveal>
+                            <Reveal className="mt-12">
+                                <div className="grid items-center gap-10 lg:grid-cols-12">
+                                    <div className="lg:col-span-7">
+                                        <div className="flex items-center justify-between">
+                                            <button
+                                                type="button"
+                                                onClick={goPrevProofSlide}
+                                                className="flex h-11 w-11 items-center justify-center border border-slate-200 bg-white text-slate-900"
+                                                aria-label="Previous"
+                                            >
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    strokeWidth="2"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    className="h-5 w-5"
+                                                >
+                                                    <path d="M15 18l-6-6 6-6" />
+                                                </svg>
+                                            </button>
 
-                                <Reveal className="lg:col-span-8">
-                                    <div className="grid gap-10 sm:grid-cols-3">
-                                        {[
-                                            {
-                                                title: 'Accessibility',
-                                                desc: 'Find tutors for academics and real-world skills—online or in-person.',
-                                                icon: (
-                                                    <>
-                                                        <path d="M12 2v20" />
-                                                        <path d="M2 12h20" />
-                                                    </>
-                                                ),
-                                            },
-                                            {
-                                                title: 'Sustainable',
-                                                desc: 'Clear progress, consistent support, and learning plans that last.',
-                                                icon: (
-                                                    <>
-                                                        <path d="M12 2l3 6 6 .9-4.5 4.4 1.1 6.3L12 16.8 6.4 19.6l1.1-6.3L3 8.9 9 8z" />
-                                                    </>
-                                                ),
-                                            },
-                                            {
-                                                title: 'Journey',
-                                                desc: 'From first lesson to mastery—your child grows with guidance and structure.',
-                                                icon: (
-                                                    <>
-                                                        <path d="M3 17l6-6 4 4 8-8" />
-                                                        <path d="M21 7v6h-6" />
-                                                    </>
-                                                ),
-                                            },
-                                        ].map((f) => (
-                                            <div key={f.title}>
-                                                <div className="flex h-11 w-11 items-center justify-center border border-slate-200 bg-white text-[#9dff52]">
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        strokeWidth="2"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        className="h-5 w-5"
-                                                    >
-                                                        {f.icon}
-                                                    </svg>
-                                                </div>
-                                                <div className="mt-5 text-base font-bold text-slate-900">
-                                                    {f.title}
-                                                </div>
-                                                <div className="mt-2 text-base leading-relaxed text-slate-600">
-                                                    {f.desc}
+                                            <div className="mx-6 flex-1 overflow-hidden border border-slate-200 bg-white">
+                                                <div
+                                                    className="flex motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out"
+                                                    style={{
+                                                        transform: `translateX(-${proofSlideIndex * 100}%)`,
+                                                    }}
+                                                >
+                                                    {proofSlides.map((s) => (
+                                                        <div
+                                                            key={s.title}
+                                                            className="w-full shrink-0 p-6 sm:p-8"
+                                                        >
+                                                            <div className="relative mx-auto max-w-[520px]">
+                                                                <div className="absolute -left-10 top-10 h-[340px] w-[460px] border border-slate-200 bg-white"></div>
+                                                                <div className="absolute -left-5 top-5 h-[340px] w-[460px] border border-slate-200 bg-white"></div>
+                                                                <div className="relative border border-slate-200 bg-white p-3">
+                                                                    <img
+                                                                        src={s.img}
+                                                                        alt={s.title}
+                                                                        className="h-[340px] w-full object-cover"
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))}
                                                 </div>
                                             </div>
-                                        ))}
+
+                                            <button
+                                                type="button"
+                                                onClick={goNextProofSlide}
+                                                className="flex h-11 w-11 items-center justify-center border border-slate-200 bg-white text-slate-900"
+                                                aria-label="Next"
+                                            >
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    strokeWidth="2"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    className="h-5 w-5"
+                                                >
+                                                    <path d="M9 18l6-6-6-6" />
+                                                </svg>
+                                            </button>
+                                        </div>
+
+                                        <div className="mt-6 flex items-center justify-center gap-2">
+                                            {proofSlides.map((_, i) => (
+                                                <button
+                                                    key={i}
+                                                    type="button"
+                                                    onClick={() => setProofSlideIndex(i)}
+                                                    className={
+                                                        'h-2.5 w-2.5 border border-slate-200 ' +
+                                                        (i === proofSlideIndex
+                                                            ? 'bg-[#9dff52]'
+                                                            : 'bg-white')
+                                                    }
+                                                    aria-label={`Slide ${i + 1}`}
+                                                />
+                                            ))}
+                                        </div>
                                     </div>
-                                </Reveal>
-                            </div>
+
+                                    <div className="lg:col-span-5">
+                                        <div className="text-2xl font-bold tracking-tight text-slate-900">
+                                            {proofSlides[proofSlideIndex].title}
+                                        </div>
+                                        <div className="mt-3 text-base leading-relaxed text-slate-600">
+                                            {proofSlides[proofSlideIndex].body}
+                                        </div>
+                                        <div className="mt-6 border border-slate-200 bg-white p-4 text-base font-semibold text-slate-900">
+                                            {proofSlides[proofSlideIndex].stat}
+                                        </div>
+                                        <div className="mt-3 text-sm font-semibold text-slate-500">
+                                            {proofSlides[proofSlideIndex].source}
+                                        </div>
+                                    </div>
+                                </div>
+                            </Reveal>
                         </div>
                     </section>
 
@@ -714,10 +785,10 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
                                             1
                                         </div>
                                         <div className="mt-6 text-4xl font-bold tracking-tight text-slate-900">
-                                            Find your tutor.
+                                            Tell us what you want to learn.
                                         </div>
                                         <div className="mt-4 text-base leading-relaxed text-slate-700">
-                                            We’ll connect you with a tutor who motivates, challenges, and supports you — from first lesson to fluency.
+                                            Share your subject or skill, level, and location. We’ll surface tutors that fit what you need.
                                         </div>
 
                                         <div className="relative mt-10 h-44">
@@ -726,7 +797,7 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
                                                     <div className="h-10 w-10 bg-slate-100"></div>
                                                     <div className="min-w-0">
                                                         <div className="truncate text-base font-semibold text-slate-900">
-                                                            Milena
+                                                            Amina
                                                         </div>
                                                         <div className="mt-1 text-sm text-slate-500">
                                                             English tutor • 4.9
@@ -739,7 +810,7 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
                                                     <div className="h-10 w-10 bg-slate-100"></div>
                                                     <div className="min-w-0">
                                                         <div className="truncate text-base font-semibold text-slate-900">
-                                                            Bassel
+                                                            Tolu
                                                         </div>
                                                         <div className="mt-1 text-sm text-slate-500">
                                                             Coding tutor • 4.8
@@ -752,7 +823,7 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
                                                     <div className="h-10 w-10 bg-slate-100"></div>
                                                     <div className="min-w-0">
                                                         <div className="truncate text-base font-semibold text-slate-900">
-                                                            Sophia
+                                                            Chisom
                                                         </div>
                                                         <div className="mt-1 text-sm text-slate-500">
                                                             Maths tutor • 4.9
@@ -768,10 +839,10 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
                                             2
                                         </div>
                                         <div className="mt-6 text-4xl font-bold tracking-tight text-slate-900">
-                                            Start learning.
+                                            Start with a plan.
                                         </div>
                                         <div className="mt-4 text-base leading-relaxed text-slate-700">
-                                            Your tutor will tailor every lesson to your learning goals, so progress feels personal from the very beginning.
+                                            Your tutor adapts each session to your goal—exams, career, or skill-building—so learning stays focused.
                                         </div>
 
                                         <div className="mt-10 grid grid-cols-2 gap-4">
@@ -797,10 +868,10 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
                                             3
                                         </div>
                                         <div className="mt-6 text-4xl font-bold tracking-tight text-slate-900">
-                                            Make progress every week.
+                                            Build momentum.
                                         </div>
                                         <div className="mt-4 text-base leading-relaxed text-slate-700">
-                                            Choose how many lessons you want to take and build lasting confidence, one conversation at a time.
+                                            Keep it consistent, track improvement, and adjust as you grow—week by week.
                                         </div>
 
                                         <div className="mt-10 border border-slate-200 bg-white p-3">
@@ -818,95 +889,235 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
 
                     <section id="for-tutors" className="border-t border-slate-200 bg-white">
                         <div className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
-                            <div className="grid gap-6 lg:grid-cols-2">
-                                <Reveal>
-                                    <BracketCard innerClassName="bg-slate-50 p-8">
-                                        <h3 className="text-xl font-bold text-slate-900">
-                                            For parents
-                                        </h3>
-                                        <p className="mt-2 text-sm text-slate-600">
-                                            Discover tutors, book lessons, and stay informed with a clear learning plan.
-                                        </p>
-                                        <div className="mt-6">
-                                            {isAuthed ? (
-                                                <Link
-                                                    href={route('dashboard')}
-                                                    className="inline-flex items-center rounded-lg bg-brand-700 px-5 py-3 text-sm font-semibold text-white hover:bg-brand-800"
-                                                >
-                                                    Open dashboard
-                                                </Link>
-                                            ) : (
-                                                <Link
-                                                    href={route('login')}
-                                                    className="inline-flex items-center rounded-lg bg-brand-700 px-5 py-3 text-sm font-semibold text-white hover:bg-brand-800"
-                                                >
-                                                    Get started
-                                                </Link>
-                                            )}
+                            <Reveal>
+                                <div className="overflow-hidden border border-slate-200 bg-white">
+                                    <div className="grid lg:grid-cols-12">
+                                        <div className="lg:col-span-6">
+                                            <img
+                                                src="/become-tutor-photo.svg"
+                                                alt="Become a tutor"
+                                                className="h-full w-full object-cover"
+                                            />
                                         </div>
-                                    </BracketCard>
-                                </Reveal>
+                                        <div className="lg:col-span-6 bg-[#9dff52] p-8 sm:p-10">
+                                            <div className="text-5xl font-bold tracking-tight text-black sm:text-6xl">
+                                                Teach on EduConnect
+                                            </div>
+                                            <div className="mt-4 text-base text-black/80">
+                                                Turn your expertise into income. Reach learners, set your schedule, and teach what you know—academics and modern skills.
+                                            </div>
+                                            <div className="mt-6 space-y-2 text-base font-semibold text-black">
+                                                <div className="flex items-start gap-3">
+                                                    <span className="mt-2 h-2 w-2 bg-black"></span>
+                                                    <div>Reach new learners</div>
+                                                </div>
+                                                <div className="flex items-start gap-3">
+                                                    <span className="mt-2 h-2 w-2 bg-black"></span>
+                                                    <div>Build your tutoring brand</div>
+                                                </div>
+                                                <div className="flex items-start gap-3">
+                                                    <span className="mt-2 h-2 w-2 bg-black"></span>
+                                                    <div>Secure payouts and bookings</div>
+                                                </div>
+                                            </div>
 
-                                <Reveal>
-                                    <BracketCard innerClassName="bg-slate-50 p-8">
-                                        <h3 className="text-xl font-bold text-slate-900">
-                                            For tutors
-                                        </h3>
-                                        <p className="mt-2 text-sm text-slate-600">
-                                            Build a profile, set availability, and teach families who value your work.
-                                        </p>
-                                        <div className="mt-6">
-                                            <Link
-                                                href={route('register', { role: 'teacher' })}
-                                                className="inline-flex items-center rounded-lg bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800"
-                                            >
-                                                Become a tutor
-                                            </Link>
+                                            <div className="mt-8">
+                                                <Link
+                                                    href={route('register', { role: 'teacher' })}
+                                                    className="flex w-full items-center justify-center bg-black px-6 py-4 text-base font-semibold text-white"
+                                                >
+                                                    Start teaching →
+                                                </Link>
+                                            </div>
+
+                                            <div className="mt-5 text-center">
+                                                <a
+                                                    href="#how-it-works"
+                                                    className="text-base font-semibold text-black underline"
+                                                >
+                                                    See how it works
+                                                </a>
+                                            </div>
                                         </div>
-                                    </BracketCard>
-                                </Reveal>
-                            </div>
+                                    </div>
+                                </div>
+                            </Reveal>
                         </div>
                     </section>
 
                     <footer className="border-t border-white/10 bg-black">
-                        <div className="mx-auto max-w-7xl px-6 py-10">
-                            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-                                <div className="flex items-center gap-3">
-                                    <ApplicationLogo className="h-9 w-9 text-white" />
-                                    <div className="text-sm font-semibold text-white">
-                                        EduConnect
+                        <div className="mx-auto max-w-7xl px-6 py-14">
+                            <div className="grid gap-10 lg:grid-cols-12">
+                                <div className="lg:col-span-4">
+                                    <div className="flex items-center gap-3">
+                                        <ApplicationLogo className="h-10 w-10 text-white" />
+                                        <div className="text-lg font-bold text-white">
+                                            EduConnect
+                                        </div>
+                                    </div>
+                                    <div className="mt-4 text-base text-white/70">
+                                        Find the right tutor for academics and modern skills. Learn with clarity, consistency, and support.
+                                    </div>
+
+                                    <form
+                                        className="mt-6 flex gap-2"
+                                        onSubmit={(e) => e.preventDefault()}
+                                    >
+                                        <input
+                                            type="email"
+                                            placeholder="Get product updates"
+                                            className="w-full border border-white/15 bg-black px-4 py-3 text-base text-white placeholder:text-white/40 focus:outline-none"
+                                        />
+                                        <button
+                                            type="submit"
+                                            className="bg-[#9dff52] px-5 py-3 text-base font-semibold text-black hover:opacity-90"
+                                        >
+                                            Join
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <div className="lg:col-span-8">
+                                    <div className="grid gap-10 sm:grid-cols-3">
+                                        <div>
+                                            <div className="text-sm font-bold uppercase tracking-wider text-white/70">
+                                                Explore
+                                            </div>
+                                            <div className="mt-4 space-y-3 text-base text-white/70">
+                                                <Link
+                                                    href={route('tutors.index')}
+                                                    className="block hover:text-white"
+                                                >
+                                                    Find tutors
+                                                </Link>
+                                                <a
+                                                    href="#subjects"
+                                                    className="block hover:text-white"
+                                                >
+                                                    Categories
+                                                </a>
+                                                <a
+                                                    href="#how-it-works"
+                                                    className="block hover:text-white"
+                                                >
+                                                    How it works
+                                                </a>
+                                                <Link
+                                                    href={route('reviews.index')}
+                                                    className="block hover:text-white"
+                                                >
+                                                    Reviews
+                                                </Link>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <div className="text-sm font-bold uppercase tracking-wider text-white/70">
+                                                Teach
+                                            </div>
+                                            <div className="mt-4 space-y-3 text-base text-white/70">
+                                                <Link
+                                                    href={route('register', { role: 'teacher' })}
+                                                    className="block hover:text-white"
+                                                >
+                                                    Become a tutor
+                                                </Link>
+                                                <Link
+                                                    href={isAuthed ? route('dashboard') : route('login')}
+                                                    className="block hover:text-white"
+                                                >
+                                                    {isAuthed ? 'Open dashboard' : 'Tutor sign in'}
+                                                </Link>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <div className="text-sm font-bold uppercase tracking-wider text-white/70">
+                                                Company
+                                            </div>
+                                            <div className="mt-4 space-y-3 text-base text-white/70">
+                                                <a
+                                                    href="#"
+                                                    className="block hover:text-white"
+                                                >
+                                                    About
+                                                </a>
+                                                <a
+                                                    href="#"
+                                                    className="block hover:text-white"
+                                                >
+                                                    Terms
+                                                </a>
+                                                <a
+                                                    href="#"
+                                                    className="block hover:text-white"
+                                                >
+                                                    Privacy
+                                                </a>
+                                                <a
+                                                    href="#"
+                                                    className="block hover:text-white"
+                                                >
+                                                    Support
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/70">
-                                    <Link href={route('tutors.index')} className="hover:text-white">
-                                        Find tutors
-                                    </Link>
-                                    <a href="#how-it-works" className="hover:text-white">
-                                        How it works
-                                    </a>
-                                    <a href="#subjects" className="hover:text-white">
-                                        Subjects
-                                    </a>
-                                    <Link href={route('reviews.index')} className="hover:text-white">
-                                        Reviews
-                                    </Link>
-                                    <Link
-                                        href={route('register', { role: 'teacher' })}
-                                        className="hover:text-white"
-                                    >
-                                        Become a tutor
-                                    </Link>
-                                    <Link
-                                        href={isAuthed ? route('dashboard') : route('login')}
-                                        className="hover:text-white"
-                                    >
-                                        {isAuthed ? 'Dashboard' : 'Sign in'}
-                                    </Link>
-                                </div>
                             </div>
-                            <div className="mt-8 text-xs text-white/60">
-                                © {new Date().getFullYear()} EduConnect. Built for Nigerian tutors and parents.
+
+                            <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
+                                <div className="text-sm text-white/60">
+                                    © {new Date().getFullYear()} EduConnect. All rights reserved.
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="flex h-10 w-10 items-center justify-center border border-white/15 bg-white/5 text-[#9dff52]">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            className="h-5 w-5"
+                                        >
+                                            <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2-2-.2-3.7-1.5-4.2-3.4.7.1 1.4.1 2-.1-2.2-.6-3.6-2.7-3.2-5 .6.3 1.3.5 2 .5C1.4 6.7 3 4.2 5.4 4c2.3-.2 4.4.9 5.7 2.6 2-.4 3.9-1.1 5.6-2.2z" />
+                                        </svg>
+                                    </div>
+                                    <div className="flex h-10 w-10 items-center justify-center border border-white/15 bg-white/5 text-[#9dff52]">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            className="h-5 w-5"
+                                        >
+                                            <rect x="2" y="2" width="20" height="20" rx="0" ry="0" />
+                                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                                            <path d="M17.5 6.5h.01" />
+                                        </svg>
+                                    </div>
+                                    <div className="flex h-10 w-10 items-center justify-center border border-white/15 bg-white/5 text-[#9dff52]">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            className="h-5 w-5"
+                                        >
+                                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                                            <rect x="2" y="9" width="4" height="12" />
+                                            <circle cx="4" cy="4" r="2" />
+                                        </svg>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </footer>

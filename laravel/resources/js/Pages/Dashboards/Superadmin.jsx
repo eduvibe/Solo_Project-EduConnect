@@ -8,7 +8,7 @@ export default function SuperadminDashboard() {
 
             <div className="grid gap-6 lg:grid-cols-12">
                 <div className="lg:col-span-8">
-                    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                    <div className="bg-white p-6 shadow-sm">
                         <div className="text-2xl font-bold text-slate-900">
                             Platform controls
                         </div>
@@ -18,19 +18,19 @@ export default function SuperadminDashboard() {
                         <div className="mt-6 flex flex-wrap gap-3">
                             <Link
                                 href={route('dashboard.superadmin.teachers')}
-                                className="inline-flex items-center rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800"
+                                className="inline-flex items-center bg-black px-5 py-3 text-base font-semibold text-white"
                             >
                                 Teachers
                             </Link>
                             <Link
                                 href={route('admin.users')}
-                                className="inline-flex items-center rounded-xl bg-brand-700 px-5 py-3 text-sm font-semibold text-white hover:bg-brand-800"
+                                className="inline-flex items-center bg-[#9dff52] px-5 py-3 text-base font-semibold text-black"
                             >
                                 Manage users
                             </Link>
                             <Link
                                 href={route('tutors.index')}
-                                className="inline-flex items-center rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-50"
+                                className="inline-flex items-center bg-slate-100 px-5 py-3 text-base font-semibold text-slate-900"
                             >
                                 Browse tutors
                             </Link>
@@ -39,18 +39,18 @@ export default function SuperadminDashboard() {
                 </div>
 
                 <div className="lg:col-span-4">
-                    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                    <div className="bg-white p-6 shadow-sm">
                         <div className="text-sm font-semibold text-slate-900">
                             Quick actions
                         </div>
                         <div className="mt-4 grid gap-3">
-                            <div className="rounded-xl bg-slate-50 p-4 text-sm font-semibold text-slate-900">
+                            <div className="bg-slate-50 p-4 text-sm font-semibold text-slate-900">
                                 Audit logs
                             </div>
-                            <div className="rounded-xl bg-slate-50 p-4 text-sm font-semibold text-slate-900">
+                            <div className="bg-slate-50 p-4 text-sm font-semibold text-slate-900">
                                 Payout settings
                             </div>
-                            <div className="rounded-xl bg-slate-50 p-4 text-sm font-semibold text-slate-900">
+                            <div className="bg-slate-50 p-4 text-sm font-semibold text-slate-900">
                                 Platform settings
                             </div>
                         </div>

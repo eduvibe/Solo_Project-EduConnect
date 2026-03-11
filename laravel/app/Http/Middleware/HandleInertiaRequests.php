@@ -29,10 +29,21 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $user = $request->user();
+        $impersonateRole = (string) $request->session()->get('impersonate_role', '');
+        $canImpersonate = $user && (string) $user->role === 'superadmin';
+        $activeRole = $canImpersonate && in_array($impersonateRole, ['parent', 'teacher'], true)
+            ? $impersonateRole
+            : null;
+
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user,
+            ],
+            'impersonation' => [
+                'can' => $canImpersonate,
+                'activeRole' => $activeRole,
             ],
             'flash' => [
                 'status' => fn () => $request->session()->get('status'),

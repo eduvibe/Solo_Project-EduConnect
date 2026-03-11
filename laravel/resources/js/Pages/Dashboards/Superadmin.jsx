@@ -17,6 +17,12 @@ export default function SuperadminDashboard() {
                         </div>
                         <div className="mt-6 flex flex-wrap gap-3">
                             <Link
+                                href={route('dashboard.superadmin.teachers')}
+                                className="inline-flex items-center rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800"
+                            >
+                                Teachers
+                            </Link>
+                            <Link
                                 href={route('admin.users')}
                                 className="inline-flex items-center rounded-xl bg-brand-700 px-5 py-3 text-sm font-semibold text-white hover:bg-brand-800"
                             >

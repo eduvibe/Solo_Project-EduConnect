@@ -2,18 +2,39 @@
 
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Category;
+use App\Models\User;
 use App\Support\RoleDashboard;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 use Inertia\Inertia;
 
 Route::get('/', function () {
+    $categoryCounts = [];
+    if (Schema::hasTable('categories') && Schema::hasTable('category_user')) {
+        $categoryCounts = Category::query()
+            ->withCount([
+                'users as tutors_count' => function ($query) {
+                    $query->where('role', 'teacher');
+                },
+            ])
+            ->pluck('tutors_count', 'slug')
+            ->all();
+    }
+
+    $teacherCount = Schema::hasTable('users')
+        ? User::query()->where('role', 'teacher')->count()
+        : 0;
+
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'categoryCounts' => $categoryCounts,
+        'teacherCount' => $teacherCount,
     ]);
 });
 

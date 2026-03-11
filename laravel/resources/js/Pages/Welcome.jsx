@@ -38,8 +38,8 @@ function Reveal({ children, className = '' }) {
         <div
             ref={ref}
             className={
-                'motion-safe:transition-all motion-safe:duration-700 motion-safe:ease-out ' +
-                (inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5') +
+                'motion-safe:transition-all motion-safe:duration-500 motion-safe:ease-out ' +
+                (inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8') +
                 (className ? ` ${className}` : '')
             }
         >
@@ -52,19 +52,19 @@ function BracketCard({ children, className = '', innerClassName = '' }) {
     return (
         <div
             className={
-                `group relative overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm motion-safe:transition motion-safe:duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md ${className}`.trim()
+                `relative border border-slate-200 bg-white shadow-sm ${className}`.trim()
             }
         >
-            <div className="pointer-events-none absolute left-4 top-4 h-10 w-10 rounded-tl-2xl border-l-2 border-t-2 border-brand-700/80"></div>
-            <div className="pointer-events-none absolute bottom-4 right-4 h-10 w-10 rounded-br-2xl border-b-2 border-r-2 border-brand-700/80"></div>
-            <div className={`relative rounded-3xl ${innerClassName}`.trim()}>
+            <div className="pointer-events-none absolute left-4 top-4 h-10 w-10 border-l-2 border-t-2 border-brand-700/80"></div>
+            <div className="pointer-events-none absolute bottom-4 right-4 h-10 w-10 border-b-2 border-r-2 border-brand-700/80"></div>
+            <div className={`relative ${innerClassName}`.trim()}>
                 {children}
             </div>
         </div>
     );
 }
 
-export default function Welcome({ auth }) {
+export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 }) {
     const isAuthed = Boolean(auth?.user);
 
     const [subject, setSubject] = useState('');
@@ -73,20 +73,22 @@ export default function Welcome({ auth }) {
     const [city, setCity] = useState('any');
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-    const popularSubjects = useMemo(
+    const formatCount = (n) => {
+        const num = Number(n || 0);
+        return new Intl.NumberFormat('en', { notation: 'compact' }).format(num);
+    };
+
+    const popularCategories = useMemo(
         () => [
-            'Mathematics',
-            'English',
-            'Physics',
-            'Chemistry',
-            'Biology',
-            'Further Maths',
-            'Literature',
-            'French',
-            'Yorùbá',
-            'Igbo',
-            'Coding',
-            'IELTS',
+            { slug: 'english', title: 'English tutors', query: 'English' },
+            { slug: 'mathematics', title: 'Mathematics tutors', query: 'Mathematics' },
+            { slug: 'coding', title: 'Coding tutors', query: 'Coding' },
+            { slug: 'graphics-design', title: 'Graphics design', query: 'Graphics design' },
+            { slug: 'cyber-security', title: 'Cyber security', query: 'Cyber security' },
+            { slug: 'ui-ux-design', title: 'UI/UX design', query: 'UI/UX design' },
+            { slug: 'hairmaking', title: 'Hairmaking', query: 'Hairmaking' },
+            { slug: 'fashion-design', title: 'Fashion design', query: 'Fashion design' },
+            { slug: 'ielts', title: 'IELTS prep', query: 'IELTS' },
         ],
         [],
     );
@@ -212,7 +214,7 @@ export default function Welcome({ auth }) {
     return (
         <>
             <Head title="EduConnect" />
-            <div className="min-h-screen scroll-smooth overflow-x-hidden bg-white text-slate-900">
+            <div className="min-h-screen scroll-smooth overflow-x-hidden bg-white text-[18px] text-slate-900">
                 <header className="sticky top-0 z-20 border-b border-white/10 bg-black/90 text-white backdrop-blur">
                     <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
                         <Link href="/" className="flex items-center gap-3">
@@ -225,19 +227,19 @@ export default function Welcome({ auth }) {
                         <nav className="hidden items-center gap-8 md:flex">
                             <Link
                                 href={route('tutors.index')}
-                                className="text-sm font-semibold text-white/85 hover:text-white"
+                                className="text-base font-semibold text-white/85 hover:text-white"
                             >
                                 Find tutors
                             </Link>
                             <a
                                 href="#how-it-works"
-                                className="text-sm font-semibold text-white/85 hover:text-white"
+                                className="text-base font-semibold text-white/85 hover:text-white"
                             >
                                 How it works
                             </a>
                             <a
                                 href="#subjects"
-                                className="text-sm font-semibold text-white/85 hover:text-white"
+                                className="text-base font-semibold text-white/85 hover:text-white"
                             >
                                 Subjects
                             </a>
@@ -379,7 +381,7 @@ export default function Welcome({ auth }) {
                 </header>
 
                 <main>
-                    <section className="bg-[#9dff52]">
+                    <section className="bg-white">
                         <div className="mx-auto max-w-7xl px-6 py-16 sm:py-20">
                             <div className="grid items-center gap-12 lg:grid-cols-12">
                                 <Reveal className="lg:col-span-7">
@@ -432,13 +434,6 @@ export default function Welcome({ auth }) {
                                             </Link>
                                         </div>
 
-                                        <Link
-                                            href={route('register', { role: 'teacher' })}
-                                            className="inline-flex h-11 items-center justify-center rounded-full border border-black/15 bg-black px-6 text-sm font-semibold text-white hover:bg-black/90"
-                                        >
-                                            Become a tutor
-                                        </Link>
-
                                         {isAuthed && (
                                             <Link
                                                 href={route('dashboard')}
@@ -449,34 +444,53 @@ export default function Welcome({ auth }) {
                                         )}
                                     </div>
 
-                                    <div className="mt-10 grid max-w-xl grid-cols-3 gap-3">
+                                    <div className="mt-10 grid max-w-xl gap-8 sm:grid-cols-3">
                                         {[
                                             { value: '20k+', label: 'Active learners' },
-                                            { value: '1k+', label: 'Verified tutors' },
-                                            { value: '80+', label: 'Subjects' },
+                                            {
+                                                value:
+                                                    teacherCount > 0
+                                                        ? `${formatCount(teacherCount)}+`
+                                                        : '1k+',
+                                                label: 'Verified tutors',
+                                            },
+                                            {
+                                                value:
+                                                    Object.keys(categoryCounts)
+                                                        .length > 0
+                                                        ? `${formatCount(Object.keys(categoryCounts).length)}+`
+                                                        : '80+',
+                                                label: 'Skills taught',
+                                            },
                                         ].map((s) => (
-                                            <div
-                                                key={s.label}
-                                                className="rounded-2xl bg-white p-4 ring-1 ring-black/10"
-                                            >
-                                                <div className="text-lg font-bold text-black">
+                                            <div key={s.label}>
+                                                <div className="text-2xl font-bold tracking-tight text-black">
                                                     {s.value}
                                                 </div>
-                                                <div className="mt-1 text-xs font-semibold text-slate-600">
+                                                <div className="mt-1 text-sm text-slate-600">
                                                     {s.label}
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
+
+                                    <div className="mt-6">
+                                        <Link
+                                            href={route('register', { role: 'teacher' })}
+                                            className="text-sm font-semibold text-black/70 hover:text-black"
+                                        >
+                                            Want to teach? Become a tutor →
+                                        </Link>
+                                    </div>
                                 </Reveal>
 
                                 <Reveal className="lg:col-span-5 lg:justify-self-end">
                                     <div className="relative">
-                                        <div className="absolute -inset-10 -z-10 rounded-full bg-white/10 blur-3xl"></div>
+                                        <div className="absolute left-1/2 top-1/2 -z-10 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#9dff52] sm:h-[420px] sm:w-[420px]"></div>
                                         <img
                                             src="/heroimage.png"
                                             alt="EduConnect hero"
-                                            className="w-full max-w-md rounded-[28px] object-cover shadow-[0_22px_60px_rgba(0,0,0,0.25)] ring-1 ring-white/10"
+                                            className="w-full max-w-md rounded-[28px] object-cover shadow-[0_22px_60px_rgba(0,0,0,0.18)] ring-1 ring-black/10"
                                         />
                                     </div>
                                 </Reveal>
@@ -484,59 +498,65 @@ export default function Welcome({ auth }) {
                         </div>
                     </section>
 
-                    <section className="mx-auto max-w-7xl px-6 pb-6 pt-14">
+                    <section
+                        id="subjects"
+                        className="border-t border-white/10 bg-black text-white"
+                    >
+                        <div className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
                         <Reveal>
-                            <div className="text-center">
-                                <div className="text-xs font-semibold uppercase tracking-wider text-brand-700">
-                                    Why EduConnect
+                            <div className="flex flex-col gap-3">
+                                <div>
+                                    <h2 className="text-3xl font-bold text-white sm:text-4xl">
+                                        Popular tutors by category
+                                    </h2>
+                                    <p className="mt-3 text-base text-white/70">
+                                        Subjects and modern skills—learn what matters today.
+                                    </p>
                                 </div>
-                                <h2 className="mt-3 text-2xl font-bold text-slate-900 sm:text-3xl">
-                                    3 Reasons To Choose Us
-                                </h2>
-                                <p className="mt-3 text-sm text-slate-600">
-                                    Designed to feel premium, clear, and reliable—on every device.
-                                </p>
                             </div>
                         </Reveal>
 
                         <Reveal className="mt-8">
-                            <div className="grid gap-6 md:grid-cols-3">
-                                {[
-                                    {
-                                        title: '24/7 Support',
-                                        desc: 'Our tutors are always available for your child and ready to teach.',
-                                        icon: (
-                                            <>
-                                                <path d="M4 12a8 8 0 0 1 16 0" />
-                                                <path d="M4 12v5a2 2 0 0 0 2 2h2v-7H6a2 2 0 0 0-2 2Z" />
-                                                <path d="M20 12v5a2 2 0 0 1-2 2h-2v-7h2a2 2 0 0 1 2 2Z" />
-                                            </>
-                                        ),
-                                    },
-                                    {
-                                        title: 'Top Guide',
-                                        desc: 'Learn from the best tutors with proven track records and clarity.',
-                                        icon: (
-                                            <>
-                                                <path d="M4 19.5V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v13.5" />
-                                                <path d="M4 19.5a2.5 2.5 0 0 0 2.5 2.5H20" />
-                                                <path d="M8 7h8" />
-                                                <path d="M8 11h8" />
-                                            </>
-                                        ),
-                                    },
-                                    {
-                                        title: 'Best Course',
-                                        desc: 'Curriculum-aligned lessons that produce real results and confidence.',
-                                        icon: (
-                                            <>
-                                                <path d="M12 2l3 6 6 .9-4.5 4.4 1.1 6.3L12 16.8 6.4 19.6l1.1-6.3L3 8.9 9 8z" />
-                                            </>
-                                        ),
-                                    },
-                                ].map((c) => (
-                                    <BracketCard key={c.title} innerClassName="bg-white p-7">
-                                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-50 text-brand-700 ring-1 ring-brand-700/20">
+                            <div className="grid gap-4 md:grid-cols-3">
+                                {popularCategories.map((c) => (
+                                    <Link
+                                        key={c.title}
+                                        href={route('tutors.index', {
+                                            subject: c.query,
+                                            level,
+                                            mode,
+                                            city: city === 'any' ? undefined : city,
+                                        })}
+                                        className="flex items-center justify-between gap-5 border border-white/15 bg-black px-5 py-4"
+                                    >
+                                        <div className="flex min-w-0 items-center gap-4">
+                                            <div className="flex h-11 w-11 items-center justify-center bg-white/10 text-[#9dff52]">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    strokeWidth="2"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    className="h-5 w-5"
+                                                >
+                                                    <path d="M7 7h10" />
+                                                    <path d="M7 11h10" />
+                                                    <path d="M7 15h7" />
+                                                    <path d="M5 21h14a2 2 0 0 0 2-2V7l-5-4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2Z" />
+                                                </svg>
+                                            </div>
+                                            <div className="min-w-0">
+                                                <div className="truncate text-base font-bold text-white">
+                                                    {c.title}
+                                                </div>
+                                                <div className="mt-1 text-sm text-white/65">
+                                                    {formatCount(categoryCounts[c.slug] || 0)} tutor{(categoryCounts[c.slug] || 0) === 1 ? '' : 's'}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="flex h-11 w-11 items-center justify-center bg-white/10 text-white">
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 viewBox="0 0 24 24"
@@ -547,69 +567,102 @@ export default function Welcome({ auth }) {
                                                 strokeLinejoin="round"
                                                 className="h-5 w-5"
                                             >
-                                                {c.icon}
+                                                <path d="M9 18l6-6-6-6" />
                                             </svg>
                                         </div>
-                                        <div className="mt-5 text-base font-bold text-slate-900">
-                                            {c.title}
-                                        </div>
-                                        <div className="mt-2 text-sm leading-relaxed text-slate-600">
-                                            {c.desc}
-                                        </div>
-
-                                        <div className="mt-5">
-                                            <Link
-                                                href={route('tutors.index')}
-                                                className="inline-flex items-center rounded-full border border-brand-700 px-4 py-2 text-xs font-semibold text-brand-700 hover:bg-brand-50"
-                                            >
-                                                Read More →
-                                            </Link>
-                                        </div>
-                                    </BracketCard>
+                                    </Link>
                                 ))}
                             </div>
                         </Reveal>
+
+                        <div className="mt-8">
+                            <Link
+                                href={route('tutors.index')}
+                                className="inline-flex items-center gap-2 text-base font-semibold text-[#9dff52]"
+                            >
+                                <span className="flex h-9 w-9 items-center justify-center border border-white/15 bg-white/5">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="h-5 w-5"
+                                    >
+                                        <path d="M12 5v14" />
+                                        <path d="M5 12h14" />
+                                    </svg>
+                                </span>
+                                Show more
+                            </Link>
+                        </div>
+                        </div>
                     </section>
 
-                    <section id="subjects" className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
-                        <Reveal>
-                            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-                                <div>
-                                    <h2 className="text-2xl font-bold text-slate-900">
-                                        Popular subjects
+                    <section
+                        id="why-choose-us"
+                        className="border-t border-white/10 bg-black text-white"
+                    >
+                        <div className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
+                            <Reveal>
+                                <div className="flex items-center justify-between gap-6">
+                                    <h2 className="text-3xl font-bold text-white sm:text-4xl">
+                                        Why Choose Us
                                     </h2>
-                                    <p className="mt-2 text-sm text-slate-600">
-                                        Curated for the Nigerian curriculum and exams.
-                                    </p>
                                 </div>
-                                <Link
-                                    href={route('tutors.index')}
-                                    className="inline-flex items-center justify-center rounded-full bg-brand-700 px-5 py-2 text-sm font-semibold text-white hover:bg-brand-800"
-                                >
-                                    View more
-                                </Link>
-                            </div>
-                        </Reveal>
+                            </Reveal>
 
-                        <Reveal className="mt-8">
-                            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-                                {popularSubjects.slice(0, 5).map((s) => (
-                                    <Link
-                                        key={s}
-                                        href={route('tutors.index', {
-                                            subject: s,
-                                            level,
-                                            mode,
-                                            city: city === 'any' ? undefined : city,
-                                        })}
-                                        className="block"
-                                    >
-                                        <BracketCard innerClassName="bg-white p-6">
-                                            <div className="flex items-center justify-between gap-3">
-                                                <div className="text-sm font-bold text-slate-900">
-                                                    {s}
-                                                </div>
-                                                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-50 text-brand-700 ring-1 ring-brand-700/20">
+                            <div className="mt-10 grid gap-10 lg:grid-cols-12">
+                                <Reveal className="lg:col-span-4">
+                                    <div className="relative border border-white/15 bg-white/5">
+                                        <div className="absolute inset-0 bg-[#9dff52] opacity-25"></div>
+                                        <div className="relative p-4">
+                                            <img
+                                                src="/heroimage.png"
+                                                alt="Learning support"
+                                                className="h-56 w-full object-cover"
+                                            />
+                                        </div>
+                                    </div>
+                                </Reveal>
+
+                                <Reveal className="lg:col-span-8">
+                                    <div className="grid gap-10 sm:grid-cols-3">
+                                        {[
+                                            {
+                                                title: 'Accessibility',
+                                                desc: 'Find tutors for academics and real-world skills—online or in-person.',
+                                                icon: (
+                                                    <>
+                                                        <path d="M12 2v20" />
+                                                        <path d="M2 12h20" />
+                                                    </>
+                                                ),
+                                            },
+                                            {
+                                                title: 'Sustainable',
+                                                desc: 'Clear progress, consistent support, and learning plans that last.',
+                                                icon: (
+                                                    <>
+                                                        <path d="M12 2l3 6 6 .9-4.5 4.4 1.1 6.3L12 16.8 6.4 19.6l1.1-6.3L3 8.9 9 8z" />
+                                                    </>
+                                                ),
+                                            },
+                                            {
+                                                title: 'Journey',
+                                                desc: 'From first lesson to mastery—your child grows with guidance and structure.',
+                                                icon: (
+                                                    <>
+                                                        <path d="M3 17l6-6 4 4 8-8" />
+                                                        <path d="M21 7v6h-6" />
+                                                    </>
+                                                ),
+                                            },
+                                        ].map((f) => (
+                                            <div key={f.title}>
+                                                <div className="flex h-11 w-11 items-center justify-center border border-white/15 bg-white/5 text-[#9dff52]">
                                                     <svg
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         viewBox="0 0 24 24"
@@ -620,40 +673,33 @@ export default function Welcome({ auth }) {
                                                         strokeLinejoin="round"
                                                         className="h-5 w-5"
                                                     >
-                                                        <path d="M9 18l6-6-6-6" />
+                                                        {f.icon}
                                                     </svg>
                                                 </div>
-                                            </div>
-                                            <div className="mt-3 text-sm text-slate-600">
-                                                Browse tutors
-                                            </div>
-                                            <div className="mt-6 flex items-center justify-between text-xs font-semibold text-slate-500">
-                                                <div>
-                                                    {mode === 'online'
-                                                        ? 'Online available'
-                                                        : 'In-person available'}
+                                                <div className="mt-5 text-base font-bold text-white">
+                                                    {f.title}
                                                 </div>
-                                                <div className="text-brand-700">
-                                                    Read More →
+                                                <div className="mt-2 text-base leading-relaxed text-white/70">
+                                                    {f.desc}
                                                 </div>
                                             </div>
-                                        </BracketCard>
-                                    </Link>
-                                ))}
+                                        ))}
+                                    </div>
+                                </Reveal>
                             </div>
-                        </Reveal>
+                        </div>
                     </section>
 
                     <section
                         id="how-it-works"
-                        className="border-t border-slate-200 bg-slate-50"
+                        className="border-t border-white/10 bg-black text-white"
                     >
                         <div className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
                             <Reveal>
-                                <h2 className="text-2xl font-bold text-slate-900">
+                                <h2 className="text-3xl font-bold text-white sm:text-4xl">
                                     How it works
                                 </h2>
-                                <p className="mt-2 text-sm text-slate-600">
+                                <p className="mt-3 text-base text-white/70">
                                     A familiar flow: search, book, learn, repeat.
                                 </p>
                             </Reveal>
@@ -677,19 +723,23 @@ export default function Welcome({ auth }) {
                                             desc: 'Messages, notes, and steady improvement.',
                                         },
                                     ].map((s) => (
-                                        <BracketCard key={s.step} innerClassName="bg-white p-6">
+                                        <BracketCard
+                                            key={s.step}
+                                            className="border-white/15 bg-black"
+                                            innerClassName="p-6"
+                                        >
                                             <div className="flex items-center justify-between">
-                                                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-xs font-bold text-brand-700">
+                                                <div className="flex h-11 w-11 items-center justify-center bg-white/10 text-sm font-bold text-[#9dff52]">
                                                     {s.step}
                                                 </div>
-                                                <div className="text-xs font-semibold text-slate-500">
+                                                <div className="text-sm font-semibold text-white/60">
                                                     Step
                                                 </div>
                                             </div>
-                                            <div className="mt-4 text-sm font-semibold text-slate-900">
+                                            <div className="mt-5 text-lg font-semibold text-white">
                                                 {s.title}
                                             </div>
-                                            <div className="mt-1 text-sm text-slate-600">
+                                            <div className="mt-2 text-base text-white/70">
                                                 {s.desc}
                                             </div>
                                         </BracketCard>
@@ -724,12 +774,6 @@ export default function Welcome({ auth }) {
                                     </span>
                                 </p>
                             </div>
-                            <Link
-                                href={tutorsUrl}
-                                className="inline-flex items-center justify-center rounded-full bg-brand-700 px-5 py-2 text-sm font-semibold text-white hover:bg-brand-800"
-                            >
-                                View more
-                            </Link>
                         </div>
 
                         <Reveal className="mt-8">
@@ -783,10 +827,34 @@ export default function Welcome({ auth }) {
                         </Reveal>
 
                         {filteredTutors.length === 0 && (
-                            <div className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-6 text-sm text-slate-700">
+                            <div className="mt-8 border border-slate-200 bg-slate-50 p-6 text-sm text-slate-700">
                                 No tutors match those filters yet. Try changing mode or city.
                             </div>
                         )}
+
+                        <div className="mt-8">
+                            <Link
+                                href={tutorsUrl}
+                                className="inline-flex items-center gap-2 text-base font-semibold text-slate-900"
+                            >
+                                <span className="flex h-9 w-9 items-center justify-center border border-slate-200 bg-white">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="h-5 w-5"
+                                    >
+                                        <path d="M12 5v14" />
+                                        <path d="M5 12h14" />
+                                    </svg>
+                                </span>
+                                Show more
+                            </Link>
+                        </div>
                     </section>
 
                     <section id="testimonials" className="border-t border-slate-200 bg-slate-50">

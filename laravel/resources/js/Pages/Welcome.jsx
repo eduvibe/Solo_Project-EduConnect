@@ -243,6 +243,12 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
                             >
                                 Subjects
                             </a>
+                            <Link
+                                href={route('reviews.index')}
+                                className="text-base font-semibold text-white/85 hover:text-white"
+                            >
+                                Reviews
+                            </Link>
                         </nav>
 
                         <div className="flex items-center gap-2">
@@ -269,7 +275,7 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
                                     </Link>
                                     <Link
                                         href={route('register')}
-                                        className="hidden rounded-lg bg-[#9dff52] px-4 py-2 text-sm font-semibold text-black hover:bg-[#b7ff7f] sm:inline-flex"
+                                        className="hidden rounded-lg bg-[#9dff52] px-4 py-2 text-sm font-semibold text-black hover:opacity-90 sm:inline-flex"
                                     >
                                         Get started
                                     </Link>
@@ -354,7 +360,7 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
                                             </Link>
                                             <Link
                                                 href={route('register')}
-                                                className="inline-flex items-center justify-center rounded-lg bg-[#9dff52] px-4 py-2 text-sm font-semibold text-black hover:bg-[#b7ff7f]"
+                                                className="inline-flex items-center justify-center rounded-lg bg-[#9dff52] px-4 py-2 text-sm font-semibold text-black hover:opacity-90"
                                                 onClick={() =>
                                                     setMobileMenuOpen(false)
                                                 }
@@ -500,16 +506,15 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
 
                     <section
                         id="subjects"
-                        className="border-t border-white/10 bg-black text-white"
+                        className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16"
                     >
-                        <div className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
                         <Reveal>
                             <div className="flex flex-col gap-3">
                                 <div>
-                                    <h2 className="text-3xl font-bold text-white sm:text-4xl">
+                                    <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">
                                         Popular tutors by category
                                     </h2>
-                                    <p className="mt-3 text-base text-white/70">
+                                    <p className="mt-3 text-base text-slate-600">
                                         Subjects and modern skills—learn what matters today.
                                     </p>
                                 </div>
@@ -527,10 +532,10 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
                                             mode,
                                             city: city === 'any' ? undefined : city,
                                         })}
-                                        className="flex items-center justify-between gap-5 border border-white/15 bg-black px-5 py-4"
+                                        className="flex items-center justify-between gap-5 border border-slate-200 bg-white px-5 py-4 shadow-sm"
                                     >
                                         <div className="flex min-w-0 items-center gap-4">
-                                            <div className="flex h-11 w-11 items-center justify-center bg-white/10 text-[#9dff52]">
+                                            <div className="flex h-11 w-11 items-center justify-center bg-slate-100 text-slate-700">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     viewBox="0 0 24 24"
@@ -548,15 +553,15 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
                                                 </svg>
                                             </div>
                                             <div className="min-w-0">
-                                                <div className="truncate text-base font-bold text-white">
+                                                <div className="truncate text-base font-bold text-slate-900">
                                                     {c.title}
                                                 </div>
-                                                <div className="mt-1 text-sm text-white/65">
+                                                <div className="mt-1 text-sm text-slate-500">
                                                     {formatCount(categoryCounts[c.slug] || 0)} tutor{(categoryCounts[c.slug] || 0) === 1 ? '' : 's'}
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="flex h-11 w-11 items-center justify-center bg-white/10 text-white">
+                                        <div className="flex h-11 w-11 items-center justify-center bg-white text-slate-700 ring-1 ring-slate-200">
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 viewBox="0 0 24 24"
@@ -580,7 +585,7 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
                                 href={route('tutors.index')}
                                 className="inline-flex items-center gap-2 text-base font-semibold text-[#9dff52]"
                             >
-                                <span className="flex h-9 w-9 items-center justify-center border border-white/15 bg-white/5">
+                                <span className="flex h-9 w-9 items-center justify-center border border-slate-200 bg-white">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 24 24"
@@ -598,17 +603,16 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
                                 Show more
                             </Link>
                         </div>
-                        </div>
                     </section>
 
                     <section
                         id="why-choose-us"
-                        className="border-t border-white/10 bg-black text-white"
+                        className="border-t border-slate-200 bg-white"
                     >
                         <div className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
                             <Reveal>
                                 <div className="flex items-center justify-between gap-6">
-                                    <h2 className="text-3xl font-bold text-white sm:text-4xl">
+                                    <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">
                                         Why Choose Us
                                     </h2>
                                 </div>
@@ -616,9 +620,8 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
 
                             <div className="mt-10 grid gap-10 lg:grid-cols-12">
                                 <Reveal className="lg:col-span-4">
-                                    <div className="relative border border-white/15 bg-white/5">
-                                        <div className="absolute inset-0 bg-[#9dff52] opacity-25"></div>
-                                        <div className="relative p-4">
+                                    <div className="border border-slate-200">
+                                        <div className="p-4">
                                             <img
                                                 src="/heroimage.png"
                                                 alt="Learning support"
@@ -662,7 +665,7 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
                                             },
                                         ].map((f) => (
                                             <div key={f.title}>
-                                                <div className="flex h-11 w-11 items-center justify-center border border-white/15 bg-white/5 text-[#9dff52]">
+                                                <div className="flex h-11 w-11 items-center justify-center border border-slate-200 bg-white text-[#9dff52]">
                                                     <svg
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         viewBox="0 0 24 24"
@@ -676,10 +679,10 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
                                                         {f.icon}
                                                     </svg>
                                                 </div>
-                                                <div className="mt-5 text-base font-bold text-white">
+                                                <div className="mt-5 text-base font-bold text-slate-900">
                                                     {f.title}
                                                 </div>
-                                                <div className="mt-2 text-base leading-relaxed text-white/70">
+                                                <div className="mt-2 text-base leading-relaxed text-slate-600">
                                                     {f.desc}
                                                 </div>
                                             </div>
@@ -692,213 +695,122 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
 
                     <section
                         id="how-it-works"
-                        className="border-t border-white/10 bg-black text-white"
+                        className="border-t border-slate-200 bg-white"
                     >
                         <div className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
                             <Reveal>
-                                <h2 className="text-3xl font-bold text-white sm:text-4xl">
-                                    How it works
+                                <h2 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
+                                    How EduConnect works:
                                 </h2>
-                                <p className="mt-3 text-base text-white/70">
-                                    A familiar flow: search, book, learn, repeat.
+                                <p className="mt-3 text-base text-slate-600">
+                                    Find the right tutor, start learning, and track progress—week by week.
                                 </p>
                             </Reveal>
-
-                            <Reveal className="mt-8">
-                                <div className="grid gap-4 sm:grid-cols-3">
-                                    {[
-                                        {
-                                            step: '01',
-                                            title: 'Search tutors',
-                                            desc: 'Filter by subject, level, mode, and city.',
-                                        },
-                                        {
-                                            step: '02',
-                                            title: 'Book a lesson',
-                                            desc: 'Pick a time and pay securely in ₦.',
-                                        },
-                                        {
-                                            step: '03',
-                                            title: 'Track progress',
-                                            desc: 'Messages, notes, and steady improvement.',
-                                        },
-                                    ].map((s) => (
-                                        <BracketCard
-                                            key={s.step}
-                                            className="border-white/15 bg-black"
-                                            innerClassName="p-6"
-                                        >
-                                            <div className="flex items-center justify-between">
-                                                <div className="flex h-11 w-11 items-center justify-center bg-white/10 text-sm font-bold text-[#9dff52]">
-                                                    {s.step}
-                                                </div>
-                                                <div className="text-sm font-semibold text-white/60">
-                                                    Step
-                                                </div>
-                                            </div>
-                                            <div className="mt-5 text-lg font-semibold text-white">
-                                                {s.title}
-                                            </div>
-                                            <div className="mt-2 text-base text-white/70">
-                                                {s.desc}
-                                            </div>
-                                        </BracketCard>
-                                    ))}
-                                </div>
-                            </Reveal>
-                        </div>
-                    </section>
-
-                    <section id="tutors" className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
-                        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-                            <div>
-                                <h2 className="text-2xl font-bold text-slate-900">
-                                    Tutors you can book
-                                </h2>
-                                <p className="mt-2 text-sm text-slate-600">
-                                    {filteredTutors.length} tutor{filteredTutors.length === 1 ? '' : 's'} for{' '}
-                                    <span className="font-semibold text-slate-900">
-                                        {subject.trim() === '' ? 'any subject' : subject.trim()}
-                                    </span>{' '}
-                                    •{' '}
-                                    <span className="font-semibold text-slate-900">
-                                        {level.toUpperCase()}
-                                    </span>{' '}
-                                    •{' '}
-                                    <span className="font-semibold text-slate-900">
-                                        {mode === 'online' ? 'Online' : 'In-person'}
-                                    </span>{' '}
-                                    •{' '}
-                                    <span className="font-semibold text-slate-900">
-                                        {city === 'any' ? 'Any city' : city}
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-
-                        <Reveal className="mt-8">
-                            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                                {filteredTutors.slice(0, 4).map((t) => (
-                                    <div
-                                        key={t.name}
-                                    >
-                                        <BracketCard innerClassName="bg-white p-0">
-                                            <img
-                                                src="/heroimage.png"
-                                                alt={`${t.name} - ${t.subjects[0]}`}
-                                                className="h-40 w-full object-cover"
-                                            />
-                                            <div className="p-6">
-                                                <div className="text-sm font-bold text-slate-900">
-                                                    {t.name}
-                                                </div>
-                                                <div className="mt-1 text-xs text-slate-500">
-                                                    {t.subjects.join(', ')} • {t.city}
-                                                </div>
-                                                <div className="mt-4 flex items-center gap-3 text-xs font-semibold text-slate-600">
-                                                    <div className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1">
-                                                        <span>{t.rating} ★</span>
-                                                    </div>
-                                                    <div className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1">
-                                                        <span>{t.lessons} lessons</span>
-                                                    </div>
-                                                    <div className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1">
-                                                        <span>₦{t.price.toLocaleString()}/hr</span>
-                                                    </div>
-                                                </div>
-                                                <div className="mt-6">
-                                                    <Link
-                                                        href={route('tutors.index', {
-                                                            subject: t.subjects?.[0] || undefined,
-                                                            level,
-                                                            mode,
-                                                            city: city === 'any' ? undefined : city,
-                                                        })}
-                                                        className="inline-flex items-center rounded-full border border-brand-700 px-4 py-2 text-xs font-semibold text-brand-700 hover:bg-brand-50"
-                                                    >
-                                                        Read More →
-                                                    </Link>
-                                                </div>
-                                            </div>
-                                        </BracketCard>
-                                    </div>
-                                ))}
-                            </div>
-                        </Reveal>
-
-                        {filteredTutors.length === 0 && (
-                            <div className="mt-8 border border-slate-200 bg-slate-50 p-6 text-sm text-slate-700">
-                                No tutors match those filters yet. Try changing mode or city.
-                            </div>
-                        )}
-
-                        <div className="mt-8">
-                            <Link
-                                href={tutorsUrl}
-                                className="inline-flex items-center gap-2 text-base font-semibold text-slate-900"
-                            >
-                                <span className="flex h-9 w-9 items-center justify-center border border-slate-200 bg-white">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        className="h-5 w-5"
-                                    >
-                                        <path d="M12 5v14" />
-                                        <path d="M5 12h14" />
-                                    </svg>
-                                </span>
-                                Show more
-                            </Link>
-                        </div>
-                    </section>
-
-                    <section id="testimonials" className="border-t border-slate-200 bg-slate-50">
-                        <div className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
-                            <h2 className="text-2xl font-bold text-slate-900">
-                                Trusted by parents
-                            </h2>
-                            <p className="mt-2 text-sm text-slate-600">
-                                Real outcomes, local context, consistent support.
-                            </p>
 
                             <Reveal className="mt-8">
                                 <div className="grid gap-4 lg:grid-cols-3">
-                                    {[
-                                        {
-                                            quote: 'Our son moved from C to A in Mathematics within one term. The tutor was consistent and communicated clearly.',
-                                            name: 'Parent • Lagos',
-                                        },
-                                        {
-                                            quote: 'WAEC prep became structured. Weekly lesson notes helped us track progress without stress.',
-                                            name: 'Parent • Abuja',
-                                        },
-                                        {
-                                            quote: 'The tutor understood the Nigerian curriculum and taught with patience. We saw confidence improve quickly.',
-                                            name: 'Parent • Port Harcourt',
-                                        },
-                                    ].map((t) => (
-                                        <BracketCard
-                                            key={t.name}
-                                            innerClassName="bg-white p-6"
-                                        >
-                                            <div className="text-sm leading-relaxed text-slate-700">
-                                                “{t.quote}”
-                                            </div>
-                                            <div className="mt-4 flex items-center justify-between">
-                                                <div className="text-sm font-semibold text-slate-900">
-                                                    {t.name}
-                                                </div>
-                                                <div className="text-xs font-semibold text-emerald-700">
-                                                    Verified
+                                    <div className="border border-black p-7">
+                                        <div className="flex h-10 w-10 items-center justify-center bg-[#9dff52] text-base font-bold text-black">
+                                            1
+                                        </div>
+                                        <div className="mt-6 text-4xl font-bold tracking-tight text-slate-900">
+                                            Find your tutor.
+                                        </div>
+                                        <div className="mt-4 text-base leading-relaxed text-slate-700">
+                                            We’ll connect you with a tutor who motivates, challenges, and supports you — from first lesson to fluency.
+                                        </div>
+
+                                        <div className="relative mt-10 h-44">
+                                            <div className="absolute left-0 top-2 w-56 border border-slate-200 bg-white p-3 shadow-sm">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="h-10 w-10 bg-slate-100"></div>
+                                                    <div className="min-w-0">
+                                                        <div className="truncate text-base font-semibold text-slate-900">
+                                                            Milena
+                                                        </div>
+                                                        <div className="mt-1 text-sm text-slate-500">
+                                                            English tutor • 4.9
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </BracketCard>
-                                    ))}
+                                            <div className="absolute left-10 top-16 w-56 border border-slate-200 bg-white p-3 shadow-sm">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="h-10 w-10 bg-slate-100"></div>
+                                                    <div className="min-w-0">
+                                                        <div className="truncate text-base font-semibold text-slate-900">
+                                                            Bassel
+                                                        </div>
+                                                        <div className="mt-1 text-sm text-slate-500">
+                                                            Coding tutor • 4.8
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="absolute left-20 top-28 w-56 border border-slate-200 bg-white p-3 shadow-sm">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="h-10 w-10 bg-slate-100"></div>
+                                                    <div className="min-w-0">
+                                                        <div className="truncate text-base font-semibold text-slate-900">
+                                                            Sophia
+                                                        </div>
+                                                        <div className="mt-1 text-sm text-slate-500">
+                                                            Maths tutor • 4.9
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="border border-black p-7">
+                                        <div className="flex h-10 w-10 items-center justify-center bg-[#9dff52] text-base font-bold text-black">
+                                            2
+                                        </div>
+                                        <div className="mt-6 text-4xl font-bold tracking-tight text-slate-900">
+                                            Start learning.
+                                        </div>
+                                        <div className="mt-4 text-base leading-relaxed text-slate-700">
+                                            Your tutor will tailor every lesson to your learning goals, so progress feels personal from the very beginning.
+                                        </div>
+
+                                        <div className="mt-10 grid grid-cols-2 gap-4">
+                                            <div className="border border-slate-200 bg-white p-3">
+                                                <img
+                                                    src="/heroimage.png"
+                                                    alt="Tutor"
+                                                    className="h-40 w-full object-cover"
+                                                />
+                                            </div>
+                                            <div className="border border-slate-200 bg-white p-3">
+                                                <img
+                                                    src="/heroimage.png"
+                                                    alt="Student"
+                                                    className="h-40 w-full object-cover"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="border border-black p-7">
+                                        <div className="flex h-10 w-10 items-center justify-center bg-[#9dff52] text-base font-bold text-black">
+                                            3
+                                        </div>
+                                        <div className="mt-6 text-4xl font-bold tracking-tight text-slate-900">
+                                            Make progress every week.
+                                        </div>
+                                        <div className="mt-4 text-base leading-relaxed text-slate-700">
+                                            Choose how many lessons you want to take and build lasting confidence, one conversation at a time.
+                                        </div>
+
+                                        <div className="mt-10 border border-slate-200 bg-white p-3">
+                                            <img
+                                                src="/heroimage.png"
+                                                alt="Online lesson"
+                                                className="h-40 w-full object-cover"
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             </Reveal>
                         </div>
@@ -967,15 +879,18 @@ export default function Welcome({ auth, categoryCounts = {}, teacherCount = 0 })
                                     </div>
                                 </div>
                                 <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/70">
-                                    <a href="#tutors" className="hover:text-white">
+                                    <Link href={route('tutors.index')} className="hover:text-white">
                                         Find tutors
-                                    </a>
+                                    </Link>
                                     <a href="#how-it-works" className="hover:text-white">
                                         How it works
                                     </a>
                                     <a href="#subjects" className="hover:text-white">
                                         Subjects
                                     </a>
+                                    <Link href={route('reviews.index')} className="hover:text-white">
+                                        Reviews
+                                    </Link>
                                     <Link
                                         href={route('register', { role: 'teacher' })}
                                         className="hover:text-white"

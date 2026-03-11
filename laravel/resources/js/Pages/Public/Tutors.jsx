@@ -249,7 +249,7 @@ export default function Tutors({ filters }) {
                             <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                                 <div>
                                     <h1 className="text-2xl font-bold text-slate-900">
-                                        Tutors
+                                        Tutors you can book
                                     </h1>
                                     <div className="mt-1 text-sm text-slate-600">
                                         {results.length} result{results.length === 1 ? '' : 's'}

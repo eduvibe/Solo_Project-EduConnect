@@ -49,6 +49,10 @@ Route::get('/tutors', function (Request $request) {
     ]);
 })->name('tutors.index');
 
+Route::get('/reviews', function () {
+    return Inertia::render('Public/Reviews');
+})->name('reviews.index');
+
 Route::get('/dashboard', function () {
     $user = auth()->user();
     return redirect(RoleDashboard::path($user ? $user->role : null));

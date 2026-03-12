@@ -11,10 +11,23 @@ use Inertia\Inertia;
 
 class ScheduleController extends Controller
 {
+    private function effectiveRole(Request $request): string
+    {
+        $user = $request->user();
+        $role = $user ? (string) $user->role : '';
+        if ($role === 'superadmin') {
+            $impersonate = (string) $request->session()->get('impersonate_role', '');
+            if (in_array($impersonate, ['parent', 'teacher'], true)) {
+                $role = $impersonate;
+            }
+        }
+        return $role;
+    }
+
     public function index(Request $request)
     {
         $user = $request->user();
-        $role = (string) $user->role;
+        $role = $this->effectiveRole($request);
 
         $schedules = [];
         if (Schema::hasTable('schedules')) {
@@ -38,7 +51,7 @@ class ScheduleController extends Controller
     public function store(Request $request)
     {
         $user = $request->user();
-        abort_unless((string) $user->role === 'teacher', 403);
+        abort_unless($this->effectiveRole($request) === 'teacher', 403);
 
         $data = $request->validate([
             'title' => ['required', 'string', 'max:255'],
@@ -78,6 +91,7 @@ class ScheduleController extends Controller
     public function update(Request $request, Schedule $schedule)
     {
         $user = $request->user();
+        abort_unless($this->effectiveRole($request) === 'teacher', 403);
         abort_unless((int) $schedule->teacher_id === (int) $user->id, 403);
 
         $data = $request->validate([
@@ -97,6 +111,7 @@ class ScheduleController extends Controller
     public function destroy(Request $request, Schedule $schedule)
     {
         $user = $request->user();
+        abort_unless($this->effectiveRole($request) === 'teacher', 403);
         abort_unless((int) $schedule->teacher_id === (int) $user->id, 403);
         $schedule->delete();
         return back()->with('status', 'Schedule deleted');
@@ -105,9 +120,9 @@ class ScheduleController extends Controller
     public function complete(Request $request, Schedule $schedule)
     {
         $user = $request->user();
+        abort_unless($this->effectiveRole($request) === 'teacher', 403);
         abort_unless((int) $schedule->teacher_id === (int) $user->id, 403);
         $schedule->update(['status' => 'completed']);
         return back()->with('status', 'Marked completed');
     }
 }
-

@@ -10,58 +10,58 @@ export default function AdminDashboard() {
 
             <div className="grid gap-6 lg:grid-cols-12">
                 <div className="lg:col-span-8">
-                    <div className="bg-white p-6 shadow-sm">
+                    <div className="dash-surface p-6">
                         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                             <div>
-                                <div className="text-sm font-semibold text-slate-500">
+                                <div className="text-sm font-semibold text-white/70">
                                     Hello, {user?.name}
                                 </div>
-                                <div className="mt-2 text-2xl font-bold text-slate-900">
+                                <div className="mt-2 text-2xl font-bold text-white">
                                     Platform overview
                                 </div>
-                                <div className="mt-2 text-sm text-slate-600">
+                                <div className="mt-2 text-sm text-white/60">
                                     Review tutor activity and keep the marketplace healthy.
                                 </div>
                             </div>
                             <Link
                                 href={route('tutors.index')}
-                                className="inline-flex items-center justify-center bg-[#9dff52] px-5 py-3 text-base font-semibold text-black"
+                                className="dash-btn-green inline-flex items-center justify-center px-5 py-3 text-base"
                             >
                                 Browse tutors
                             </Link>
                         </div>
 
                         <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                            <div className="bg-slate-50 p-5">
-                                <div className="text-xs font-semibold text-slate-500">
+                            <div className="border border-white/10 bg-black p-5">
+                                <div className="text-xs font-semibold text-white/60">
                                     New signups
                                 </div>
-                                <div className="mt-2 text-2xl font-bold text-slate-900">
+                                <div className="mt-2 text-2xl font-bold text-white">
                                     12
                                 </div>
-                                <div className="mt-1 text-xs text-slate-500">
+                                <div className="mt-1 text-xs text-white/60">
                                     Today
                                 </div>
                             </div>
-                            <div className="bg-slate-50 p-5">
-                                <div className="text-xs font-semibold text-slate-500">
+                            <div className="border border-white/10 bg-black p-5">
+                                <div className="text-xs font-semibold text-white/60">
                                     Active tutors
                                 </div>
-                                <div className="mt-2 text-2xl font-bold text-slate-900">
+                                <div className="mt-2 text-2xl font-bold text-white">
                                     84
                                 </div>
-                                <div className="mt-1 text-xs text-slate-500">
+                                <div className="mt-1 text-xs text-white/60">
                                     This week
                                 </div>
                             </div>
-                            <div className="bg-slate-50 p-5">
-                                <div className="text-xs font-semibold text-slate-500">
+                            <div className="border border-white/10 bg-black p-5">
+                                <div className="text-xs font-semibold text-white/60">
                                     Disputes
                                 </div>
-                                <div className="mt-2 text-2xl font-bold text-slate-900">
+                                <div className="mt-2 text-2xl font-bold text-white">
                                     1
                                 </div>
-                                <div className="mt-1 text-xs text-slate-500">
+                                <div className="mt-1 text-xs text-white/60">
                                     Open
                                 </div>
                             </div>
@@ -69,8 +69,8 @@ export default function AdminDashboard() {
                     </div>
 
                     <div className="mt-6 grid gap-6 lg:grid-cols-2">
-                        <div className="bg-white p-6 shadow-sm">
-                            <div className="text-sm font-semibold text-slate-900">
+                        <div className="dash-surface p-6">
+                            <div className="text-sm font-semibold text-white">
                                 Review queue
                             </div>
                             <div className="mt-4 space-y-3">
@@ -81,7 +81,7 @@ export default function AdminDashboard() {
                                 ].map((t) => (
                                     <div
                                         key={t}
-                                        className="bg-slate-50 p-4 text-sm text-slate-700"
+                                        className="border border-white/10 bg-black p-4 text-sm text-white/70"
                                     >
                                         {t}
                                     </div>
@@ -89,8 +89,8 @@ export default function AdminDashboard() {
                             </div>
                         </div>
 
-                        <div className="bg-white p-6 shadow-sm">
-                            <div className="text-sm font-semibold text-slate-900">
+                        <div className="dash-surface p-6">
+                            <div className="text-sm font-semibold text-white">
                                 Payments snapshot
                             </div>
                             <div className="mt-4 space-y-3">
@@ -101,12 +101,12 @@ export default function AdminDashboard() {
                                 ].map((i) => (
                                     <div
                                         key={i.label}
-                                        className="flex items-center justify-between bg-slate-50 p-4 text-sm"
+                                        className="flex items-center justify-between border border-white/10 bg-black p-4 text-sm"
                                     >
-                                        <div className="font-semibold text-slate-700">
+                                        <div className="font-semibold text-white/70">
                                             {i.label}
                                         </div>
-                                        <div className="font-semibold text-slate-900">
+                                        <div className="font-semibold text-white">
                                             {i.value}
                                         </div>
                                     </div>
@@ -117,18 +117,18 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="lg:col-span-4">
-                    <div className="bg-white p-6 shadow-sm">
-                        <div className="text-sm font-semibold text-slate-900">
+                    <div className="dash-surface p-6">
+                        <div className="text-sm font-semibold text-white">
                             Quick actions
                         </div>
                         <div className="mt-4 grid gap-3">
-                            <div className="bg-slate-50 p-4 text-sm font-semibold text-slate-900">
+                            <div className="border border-white/10 bg-black p-4 text-sm font-semibold text-white">
                                 Review reports
                             </div>
-                            <div className="bg-slate-50 p-4 text-sm font-semibold text-slate-900">
+                            <div className="border border-white/10 bg-black p-4 text-sm font-semibold text-white">
                                 Verification queue
                             </div>
-                            <div className="bg-slate-50 p-4 text-sm font-semibold text-slate-900">
+                            <div className="border border-white/10 bg-black p-4 text-sm font-semibold text-white">
                                 Platform settings
                             </div>
                         </div>

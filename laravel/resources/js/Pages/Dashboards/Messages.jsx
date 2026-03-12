@@ -20,31 +20,31 @@ export default function Messages() {
 
             <div className="grid gap-6 lg:grid-cols-12">
                 <div className="lg:col-span-8">
-                    <div className="bg-white p-6 shadow-sm">
-                        <div className="text-sm font-semibold text-slate-900">Inbox</div>
+                    <div className="dash-surface p-6">
+                        <div className="text-sm font-semibold text-white">Inbox</div>
 
                         <div className="mt-4 overflow-x-auto">
                             <table className="min-w-full">
                                 <thead>
-                                    <tr className="text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                    <tr className="dash-table-head text-left text-xs font-semibold uppercase tracking-wider">
                                         <th className="px-3 py-2">From</th>
                                         <th className="px-3 py-2">To</th>
                                         <th className="px-3 py-2">Message</th>
                                         <th className="px-3 py-2">When</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-slate-200">
+                                <tbody className="dash-divider">
                                     {messages.map((m) => (
                                         <tr key={m.id}>
-                                            <td className="px-3 py-2 text-sm font-semibold text-slate-900">{m.from?.name}</td>
-                                            <td className="px-3 py-2 text-sm text-slate-800">{m.to?.name}</td>
-                                            <td className="px-3 py-2 text-sm text-slate-800">{m.body}</td>
-                                            <td className="px-3 py-2 text-xs text-slate-500">{m.created_at}</td>
+                                            <td className="px-3 py-2 text-sm font-semibold text-white">{m.from?.name}</td>
+                                            <td className="px-3 py-2 text-sm text-white/70">{m.to?.name}</td>
+                                            <td className="px-3 py-2 text-sm text-white/70">{m.body}</td>
+                                            <td className="px-3 py-2 text-xs text-white/60">{m.created_at}</td>
                                         </tr>
                                     ))}
                                     {messages.length === 0 && (
                                         <tr>
-                                            <td className="px-3 py-6 text-base text-slate-700" colSpan={4}>
+                                            <td className="px-3 py-6 text-sm text-white/70" colSpan={4}>
                                                 No messages yet.
                                             </td>
                                         </tr>
@@ -57,15 +57,15 @@ export default function Messages() {
                 </div>
 
                 <div className="lg:col-span-4">
-                    <div className="bg-white p-6 shadow-sm">
-                        <div className="text-sm font-semibold text-slate-900">New message</div>
+                    <div className="dash-surface p-6">
+                        <div className="text-sm font-semibold text-white">New message</div>
                         <form onSubmit={send} className="mt-4 space-y-3">
                             <div>
-                                <div className="text-sm text-slate-600">To</div>
+                                <div className="text-sm text-white/70">To</div>
                                 <select
                                     value={toUserId}
                                     onChange={(e) => setToUserId(e.target.value)}
-                                    className="mt-1 w-full border-slate-300 text-base shadow-sm"
+                                    className="mt-1 w-full border-white/10 bg-black text-sm text-white shadow-sm"
                                 >
                                     <option value="">Select recipient</option>
                                     {recipients.map((r) => (
@@ -74,17 +74,17 @@ export default function Messages() {
                                 </select>
                             </div>
                             <div>
-                                <div className="text-sm text-slate-600">Message</div>
+                                <div className="text-sm text-white/70">Message</div>
                                 <textarea
                                     value={body}
                                     onChange={(e) => setBody(e.target.value)}
                                     rows={5}
-                                    className="mt-1 w-full border-slate-300 text-base shadow-sm"
+                                    className="mt-1 w-full border-white/10 bg-black p-3 text-sm text-white shadow-sm"
                                 />
                             </div>
                             <button
                                 type="submit"
-                                className="bg-black px-5 py-3 text-base font-semibold text-white"
+                                className="dash-btn-green px-5 py-3"
                                 disabled={!toUserId || body.trim() === ''}
                             >
                                 Send

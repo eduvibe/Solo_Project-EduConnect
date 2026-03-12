@@ -1,7 +1,7 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import { Link, router, usePage } from '@inertiajs/react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 function initials(name) {
     const parts = String(name || '')
@@ -25,12 +25,15 @@ function roleLabel(role) {
 }
 
 export default function DashboardLayout({ title, children }) {
-    const user = usePage().props.auth.user;
-    const impersonation = usePage().props.impersonation;
+    const page = usePage();
+    const user = page.props.auth.user;
+    const impersonation = page.props.impersonation;
     const effectiveRole = String(impersonation?.activeRole || user?.role || '').toLowerCase();
     const canImpersonate = Boolean(impersonation?.can);
     const isImpersonating = Boolean(impersonation?.activeRole);
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const unreadMessages = Number(page.props.counts?.unreadMessages || 0);
+    const unreadNotifications = Number(page.props.counts?.unreadNotifications || 0);
 
     const nav = useMemo(() => {
         const role = String(effectiveRole || '').toLowerCase();
@@ -39,6 +42,8 @@ export default function DashboardLayout({ title, children }) {
             return [
                 { label: 'Dashboard', href: route('dashboard.superadmin'), active: route().current('dashboard.superadmin') },
                 { label: 'Teachers', href: route('dashboard.superadmin.teachers'), active: route().current('dashboard.superadmin.teachers') },
+                { label: 'Verifications', href: route('dashboard.superadmin.verifications'), active: route().current('dashboard.superadmin.verifications') },
+                { label: 'Payouts', href: route('dashboard.superadmin.payouts'), active: route().current('dashboard.superadmin.payouts') },
                 { label: 'User management', href: route('admin.users'), active: route().current('admin.users') },
                 { label: 'Profile', href: route('profile.edit'), active: route().current('profile.edit') },
             ];
@@ -55,7 +60,6 @@ export default function DashboardLayout({ title, children }) {
         if (role === 'teacher') {
             return [
                 { label: 'Dashboard', href: route('dashboard.teacher'), active: route().current('dashboard.teacher') },
-                { label: 'Find parents', href: route('tutors.index'), active: route().current('tutors.index') },
                 { label: 'Agreements', href: route('dashboard.agreements'), active: route().current('dashboard.agreements') },
                 { label: 'Payouts', href: route('dashboard.payouts'), active: route().current('dashboard.payouts') },
                 { label: 'Profile', href: route('profile.edit'), active: route().current('profile.edit') },
@@ -76,6 +80,25 @@ export default function DashboardLayout({ title, children }) {
     const stopImpersonation = () => {
         router.post(route('impersonate.stop'), {}, { preserveScroll: true });
     };
+
+    useEffect(() => {
+        if (!('Notification' in window)) return;
+        if (unreadNotifications <= 0) return;
+        if (Notification.permission !== 'granted') return;
+
+        const key = `last_push_notif_${user?.id || 'anon'}`;
+        const last = Number(window.localStorage.getItem(key) || 0);
+        const now = Date.now();
+        if (now - last < 60_000) return;
+
+        const n = new Notification('EduConnect', {
+            body: `You have ${unreadNotifications} unread notification${unreadNotifications === 1 ? '' : 's'}.`,
+        });
+        window.localStorage.setItem(key, String(now));
+        n.onclick = () => {
+            window.focus();
+        };
+    }, [user?.id, unreadNotifications]);
 
     const Sidebar = (
         <div className="flex h-full flex-col bg-black text-white">
@@ -113,7 +136,7 @@ export default function DashboardLayout({ title, children }) {
                             key={item.label}
                             href={item.href}
                             className={
-                                'flex items-center px-4 py-3 text-base font-semibold ' +
+                                'flex items-center px-4 py-3 text-sm font-semibold ' +
                                 (item.active ? 'bg-[#9dff52] text-black' : 'text-white/85')
                             }
                         >
@@ -137,19 +160,19 @@ export default function DashboardLayout({ title, children }) {
     );
 
     return (
-        <div className="min-h-screen bg-slate-50">
+        <div className="min-h-screen bg-black text-[14px] text-white">
             <div className="mx-auto flex max-w-7xl">
                 <div className="hidden h-screen w-72 shrink-0 lg:block">
                     {Sidebar}
                 </div>
 
                 <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between px-6 py-5 lg:py-6">
+                    <div className="flex items-center justify-between border-b border-white/10 px-6 py-5 lg:py-6">
                         <div className="flex items-center gap-3">
                             <button
                                 type="button"
                                 onClick={() => setSidebarOpen(true)}
-                                className="inline-flex items-center justify-center bg-white p-3 text-slate-700 shadow-sm lg:hidden"
+                                className="inline-flex items-center justify-center bg-white/10 p-3 text-white lg:hidden"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -168,49 +191,49 @@ export default function DashboardLayout({ title, children }) {
                             </button>
 
                             <div>
-                                <div className="text-2xl font-semibold text-slate-900">
+                                <div className="text-xl font-semibold text-white">
                                     {title}
                                 </div>
-                                <div className="text-base text-slate-600">
+                                <div className="text-sm text-white/60">
                                     Viewing as {roleLabel(effectiveRole)}
                                 </div>
                             </div>
                         </div>
 
                         <div className="flex items-center gap-3">
-                            <Link href={route('dashboard.schedules')} aria-label="Schedules" className="text-slate-900">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
+                            <Link href={route('dashboard.schedules')} aria-label="Schedules" className="text-white/85">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
                                     <rect x="3" y="4" width="18" height="18"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
                                 </svg>
                             </Link>
-                            <Link href={route('dashboard.messages')} aria-label="Messages" className="relative text-slate-900">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
+                            <Link href={route('dashboard.messages')} aria-label="Messages" className="relative text-white/85">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
                                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                                 </svg>
-                                {usePage().props.counts?.unreadMessages > 0 && (
-                                    <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center bg-[#9dff52] px-1 text-[10px] font-bold text-black">
-                                        {usePage().props.counts.unreadMessages}
+                                {unreadMessages > 0 && (
+                                    <span className="absolute -right-1 -top-1 flex h-3.5 min-w-3.5 items-center justify-center bg-[#9dff52] px-1 text-[9px] font-bold text-black">
+                                        {unreadMessages}
                                     </span>
                                 )}
                             </Link>
-                            <div className="relative text-slate-900" aria-label="Notifications" title="Notifications">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
+                            <Link href={route('dashboard.notifications')} className="relative text-white/85" aria-label="Notifications" title="Notifications">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
                                     <path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7"/>
                                     <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
                                 </svg>
-                                {usePage().props.counts?.unreadNotifications > 0 && (
-                                    <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center bg-[#9dff52] px-1 text-[10px] font-bold text-black">
-                                        {usePage().props.counts.unreadNotifications}
+                                {unreadNotifications > 0 && (
+                                    <span className="absolute -right-1 -top-1 flex h-3.5 min-w-3.5 items-center justify-center bg-[#9dff52] px-1 text-[9px] font-bold text-black">
+                                        {unreadNotifications}
                                     </span>
                                 )}
-                            </div>
+                            </Link>
                             {canImpersonate && (
                                 <div className="hidden items-center gap-2 sm:flex">
                                     {isImpersonating ? (
                                         <button
                                             type="button"
                                             onClick={stopImpersonation}
-                                            className="bg-[#9dff52] px-4 py-3 text-base font-semibold text-black"
+                                            className="dash-btn-green px-4 py-3 text-base"
                                         >
                                             Back to owner
                                         </button>
@@ -219,14 +242,14 @@ export default function DashboardLayout({ title, children }) {
                                             <button
                                                 type="button"
                                                 onClick={() => switchToRole('parent')}
-                                                className="bg-[#9dff52] px-4 py-3 text-base font-semibold text-black"
+                                                className="dash-btn-green px-4 py-3 text-base"
                                             >
                                                 View as parent
                                             </button>
                                             <button
                                                 type="button"
                                                 onClick={() => switchToRole('teacher')}
-                                                className="bg-[#9dff52] px-4 py-3 text-base font-semibold text-black"
+                                                className="dash-btn-green px-4 py-3 text-base"
                                             >
                                                 View as tutor
                                             </button>
@@ -239,7 +262,7 @@ export default function DashboardLayout({ title, children }) {
                                     <span className="inline-flex">
                                         <button
                                             type="button"
-                                            className="inline-flex items-center gap-2 bg-white px-4 py-3 text-base font-semibold text-slate-700 shadow-sm"
+                                            className="inline-flex items-center gap-2 bg-white/10 px-4 py-3 text-base font-semibold text-white"
                                         >
                                             <span className="hidden sm:inline">
                                                 {user?.name}

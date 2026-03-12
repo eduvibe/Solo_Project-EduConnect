@@ -8,29 +8,29 @@ export default function SuperadminDashboard() {
 
             <div className="grid gap-6 lg:grid-cols-12">
                 <div className="lg:col-span-8">
-                    <div className="bg-white p-6 shadow-sm">
-                        <div className="text-2xl font-bold text-slate-900">
+                    <div className="dash-surface p-6">
+                        <div className="text-2xl font-bold text-white">
                             Platform controls
                         </div>
-                        <div className="mt-2 text-sm text-slate-600">
+                        <div className="mt-2 text-sm text-white/60">
                             User roles, governance, and platform-wide settings.
                         </div>
                         <div className="mt-6 flex flex-wrap gap-3">
                             <Link
                                 href={route('dashboard.superadmin.teachers')}
-                                className="inline-flex items-center bg-black px-5 py-3 text-base font-semibold text-white"
+                                className="dash-btn-black inline-flex items-center px-5 py-3 text-base"
                             >
                                 Teachers
                             </Link>
                             <Link
                                 href={route('admin.users')}
-                                className="inline-flex items-center bg-[#9dff52] px-5 py-3 text-base font-semibold text-black"
+                                className="dash-btn-green inline-flex items-center px-5 py-3 text-base"
                             >
                                 Manage users
                             </Link>
                             <Link
                                 href={route('tutors.index')}
-                                className="inline-flex items-center bg-slate-100 px-5 py-3 text-base font-semibold text-slate-900"
+                                className="inline-flex items-center border border-white/10 bg-black px-5 py-3 text-base font-semibold text-white"
                             >
                                 Browse tutors
                             </Link>
@@ -39,18 +39,18 @@ export default function SuperadminDashboard() {
                 </div>
 
                 <div className="lg:col-span-4">
-                    <div className="bg-white p-6 shadow-sm">
-                        <div className="text-sm font-semibold text-slate-900">
+                    <div className="dash-surface p-6">
+                        <div className="text-sm font-semibold text-white">
                             Quick actions
                         </div>
                         <div className="mt-4 grid gap-3">
-                            <div className="bg-slate-50 p-4 text-sm font-semibold text-slate-900">
+                            <div className="border border-white/10 bg-black p-4 text-sm font-semibold text-white">
                                 Audit logs
                             </div>
-                            <div className="bg-slate-50 p-4 text-sm font-semibold text-slate-900">
+                            <div className="border border-white/10 bg-black p-4 text-sm font-semibold text-white">
                                 Payout settings
                             </div>
-                            <div className="bg-slate-50 p-4 text-sm font-semibold text-slate-900">
+                            <div className="border border-white/10 bg-black p-4 text-sm font-semibold text-white">
                                 Platform settings
                             </div>
                         </div>

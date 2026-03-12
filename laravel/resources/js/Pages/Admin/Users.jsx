@@ -63,7 +63,7 @@ export default function Users({ users, filters }) {
                     </div>
                 )}
 
-                <div className="overflow-hidden bg-white shadow-sm">
+                <div className="dash-surface overflow-hidden">
                     <div className="px-6 py-4">
                         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                             <div className="flex flex-wrap items-center gap-2">
@@ -73,7 +73,7 @@ export default function Users({ users, filters }) {
                                         'px-4 py-3 text-base font-semibold ' +
                                         (currentRole === '' && !isTeachersView
                                             ? 'bg-[#9dff52] text-black'
-                                            : 'bg-slate-100 text-slate-900')
+                                            : 'bg-white/10 text-white')
                                     }
                                 >
                                     All
@@ -84,7 +84,7 @@ export default function Users({ users, filters }) {
                                         'px-4 py-3 text-base font-semibold ' +
                                         (currentRole === 'teacher'
                                             ? 'bg-[#9dff52] text-black'
-                                            : 'bg-slate-100 text-slate-900')
+                                            : 'bg-white/10 text-white')
                                     }
                                 >
                                     Teachers
@@ -95,7 +95,7 @@ export default function Users({ users, filters }) {
                                         'px-4 py-3 text-base font-semibold ' +
                                         (currentRole === 'parent'
                                             ? 'bg-[#9dff52] text-black'
-                                            : 'bg-slate-100 text-slate-900')
+                                            : 'bg-white/10 text-white')
                                     }
                                 >
                                     Parents
@@ -106,7 +106,7 @@ export default function Users({ users, filters }) {
                                 onSubmit={submitSearch}
                                 className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center"
                             >
-                                <div className="text-sm font-semibold text-slate-900">
+                                <div className="text-sm font-semibold text-white">
                                     {titleFromRole(currentRole)}
                                 </div>
                                 <div className="flex gap-2">
@@ -116,11 +116,11 @@ export default function Users({ users, filters }) {
                                             setQ(e.target.value)
                                         }
                                         placeholder="Search name or email..."
-                                        className="w-full border-gray-300 text-base shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:w-80"
+                                        className="w-full border border-white/10 bg-black p-3 text-sm text-white shadow-sm sm:w-80"
                                     />
                                     <button
                                         type="submit"
-                                        className="bg-black px-4 py-3 text-base font-semibold text-white"
+                                        className="dash-btn-green px-4 py-3 text-base"
                                     >
                                         Search
                                     </button>
@@ -130,31 +130,31 @@ export default function Users({ users, filters }) {
                     </div>
 
                     <div className="overflow-x-auto">
-                        <table className="min-w-full divide-y divide-gray-200">
-                            <thead className="bg-gray-50">
+                        <table className="min-w-full">
+                            <thead>
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+                                    <th className="dash-table-head px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
                                         User
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+                                    <th className="dash-table-head px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
                                         Role
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+                                    <th className="dash-table-head px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
                                         Created
                                     </th>
-                                    <th className="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">
+                                    <th className="dash-table-head px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider">
                                         Action
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-gray-200 bg-white">
+                            <tbody className="dash-divider">
                                 {users.data.map((u) => (
                                     <tr key={u.id}>
                                         <td className="px-6 py-4">
-                                            <div className="text-sm font-semibold text-gray-900">
+                                            <div className="text-sm font-semibold text-white">
                                                 {u.name}
                                             </div>
-                                            <div className="text-sm text-gray-500">
+                                            <div className="text-sm text-white/60">
                                                 {u.email}
                                             </div>
                                         </td>
@@ -169,7 +169,7 @@ export default function Users({ users, filters }) {
                                                         [u.id]: e.target.value,
                                                     }))
                                                 }
-                                                className="border-gray-300 text-base shadow-sm focus:border-brand-500 focus:ring-brand-500"
+                                                className="border border-white/10 bg-black p-2 text-sm text-white shadow-sm"
                                             >
                                                 <option value="parent">
                                                     parent
@@ -185,14 +185,14 @@ export default function Users({ users, filters }) {
                                                 </option>
                                             </select>
                                         </td>
-                                        <td className="px-6 py-4 text-sm text-gray-500">
+                                        <td className="px-6 py-4 text-sm text-white/60">
                                             {u.created_at || '-'}
                                         </td>
                                         <td className="px-6 py-4 text-right">
                                             <button
                                                 type="button"
                                                 onClick={() => updateRole(u.id)}
-                                                className="bg-[#9dff52] px-4 py-3 text-base font-semibold text-black"
+                                                className="dash-btn-green px-4 py-3 text-base"
                                             >
                                                 Save
                                             </button>
@@ -217,8 +217,8 @@ export default function Users({ users, filters }) {
                                             (linkItem.active
                                                 ? 'bg-[#9dff52] text-black'
                                                 : linkItem.url
-                                                  ? 'bg-slate-100 text-slate-900'
-                                                  : 'cursor-not-allowed bg-gray-100 text-gray-400')
+                                                  ? 'bg-white/10 text-white'
+                                                  : 'cursor-not-allowed bg-white/10 text-white/40')
                                         }
                                         dangerouslySetInnerHTML={{
                                             __html: linkItem.label,

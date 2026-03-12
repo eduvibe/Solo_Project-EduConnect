@@ -22,8 +22,27 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
         'role',
+        'profile_summary',
+        'location',
+        'hourly_rate_cents',
+        'availability',
+        'avatar_path',
+        'id_document_path',
+        'certificate_path',
+        'linkedin_url',
+        'x_url',
+        'tiktok_url',
+        'facebook_url',
+        'verification_status',
+        'verification_submitted_at',
+        'verification_rejection_note',
+        'verification_reviewed_by',
+        'verification_reviewed_at',
+        'balance_cents',
+        'spent_cents',
     ];
 
     /**
@@ -46,6 +65,9 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'availability' => 'array',
+            'verification_submitted_at' => 'datetime',
+            'verification_reviewed_at' => 'datetime',
         ];
     }
 

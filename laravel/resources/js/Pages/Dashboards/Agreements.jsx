@@ -13,12 +13,12 @@ export default function Agreements() {
         <DashboardLayout title="Agreements">
             <Head title="Agreements" />
 
-            <div className="bg-white p-6 shadow-sm">
-                <div className="text-sm font-semibold text-slate-900">Your agreements</div>
+            <div className="dash-surface p-6">
+                <div className="text-sm font-semibold text-white">Your agreements</div>
                 <div className="mt-4 overflow-x-auto">
                     <table className="min-w-full">
                         <thead>
-                            <tr className="text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                            <tr className="dash-table-head text-left text-xs font-semibold uppercase tracking-wider">
                                 <th className="px-3 py-2">Parent</th>
                                 <th className="px-3 py-2">Rate</th>
                                 <th className="px-3 py-2">Sessions</th>
@@ -28,33 +28,33 @@ export default function Agreements() {
                                 <th className="px-3 py-2">Action</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-200">
+                        <tbody className="dash-divider">
                             {agreements.map((a) => (
                                 <tr key={a.id}>
-                                    <td className="px-3 py-2 text-sm">{a.parent?.name || '-'}</td>
-                                    <td className="px-3 py-2 text-sm">₦{(a.hourly_rate_cents/100).toLocaleString()}/hr</td>
-                                    <td className="px-3 py-2 text-sm">{a.sessions_count}</td>
-                                    <td className="px-3 py-2 text-sm">₦{(a.total_cents/100).toLocaleString()}</td>
-                                    <td className="px-3 py-2 text-sm">{a.pay_day || '-'}</td>
-                                    <td className="px-3 py-2 text-sm">{a.status}</td>
+                                    <td className="px-3 py-2 text-sm text-white/80">{a.parent?.name || '-'}</td>
+                                    <td className="px-3 py-2 text-sm text-white/80">₦{(a.hourly_rate_cents/100).toLocaleString()}/hr</td>
+                                    <td className="px-3 py-2 text-sm text-white/80">{a.sessions_count}</td>
+                                    <td className="px-3 py-2 text-sm text-white/80">₦{(a.total_cents/100).toLocaleString()}</td>
+                                    <td className="px-3 py-2 text-sm text-white/80">{a.pay_day || '-'}</td>
+                                    <td className="px-3 py-2 text-sm text-white/70">{a.status}</td>
                                     <td className="px-3 py-2">
                                         {role === 'teacher' && a.status === 'pending_teacher' ? (
                                             <button
                                                 type="button"
                                                 onClick={() => accept(a.id)}
-                                                className="text-sm font-semibold text-slate-900"
+                                                className="dash-btn-green"
                                             >
                                                 Accept
                                             </button>
                                         ) : (
-                                            <span className="text-sm text-slate-500">—</span>
+                                            <span className="text-sm text-white/60">—</span>
                                         )}
                                     </td>
                                 </tr>
                             ))}
                             {agreements.length === 0 && (
                                 <tr>
-                                    <td className="px-3 py-6 text-base text-slate-700" colSpan={7}>
+                                    <td className="px-3 py-6 text-sm text-white/70" colSpan={7}>
                                         No agreements yet.
                                     </td>
                                 </tr>
@@ -66,4 +66,3 @@ export default function Agreements() {
         </DashboardLayout>
     );
 }
-

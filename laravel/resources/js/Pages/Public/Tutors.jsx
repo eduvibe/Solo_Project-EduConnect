@@ -431,6 +431,40 @@ export default function Tutors({ filters }) {
                                                             ? 'Online & In-person'
                                                             : 'Online'}
                                                     </div>
+                                                    {(t.linkedin_url || t.x_url || t.tiktok_url || t.facebook_url) && (
+                                                        <div className="mt-3 flex items-center gap-3 text-slate-700">
+                                                            {t.linkedin_url && (
+                                                                <a
+                                                                    href={t.linkedin_url}
+                                                                    target="_blank"
+                                                                    rel="noreferrer"
+                                                                    className="text-sm font-semibold underline"
+                                                                >
+                                                                    LinkedIn
+                                                                </a>
+                                                            )}
+                                                            {t.x_url && (
+                                                                <a
+                                                                    href={t.x_url}
+                                                                    target="_blank"
+                                                                    rel="noreferrer"
+                                                                    className="text-sm font-semibold underline"
+                                                                >
+                                                                    X
+                                                                </a>
+                                                            )}
+                                                            {(t.tiktok_url || t.facebook_url) && (
+                                                                <a
+                                                                    href={t.tiktok_url || t.facebook_url}
+                                                                    target="_blank"
+                                                                    rel="noreferrer"
+                                                                    className="text-sm font-semibold underline"
+                                                                >
+                                                                    {t.tiktok_url ? 'TikTok' : 'Facebook'}
+                                                                </a>
+                                                            )}
+                                                        </div>
+                                                    )}
                                                     <div className="mt-3 flex flex-wrap gap-2">
                                                         {t.tags.slice(0, 4).map((tag) => (
                                                             <span

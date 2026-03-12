@@ -2,6 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .dash-surface {
+        @apply border border-white/10 bg-black;
+    }
+
+    .dash-title {
+        @apply text-white;
+    }
+
+    .dash-muted {
+        @apply text-white/60;
+    }
+
+    .dash-muted-strong {
+        @apply text-white/70;
+    }
+
+    .dash-table-head {
+        @apply text-white/50;
+    }
+
+    .dash-divider {
+        @apply divide-y divide-white/10;
+    }
+
+    .dash-link {
+        @apply text-white underline;
+    }
+
+    .dash-chip {
+        @apply border border-white/10 bg-black px-3 py-1 text-sm font-semibold text-white/80;
+    }
+
+    .dash-btn-green {
+        @apply bg-[#9dff52] px-4 py-2 text-sm font-semibold text-black disabled:opacity-60;
+    }
+
+    .dash-btn-black {
+        @apply bg-black px-4 py-2 text-sm font-semibold text-white disabled:opacity-60;
+    }
+}
+
 @layer utilities {
     .no-scrollbar {
         -ms-overflow-style: none;

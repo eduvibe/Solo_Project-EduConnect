@@ -1,8 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\PayoutController;
+use App\Http\Controllers\AgreementController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Category;
+use App\Models\Schedule;
 use App\Models\User;
 use App\Support\RoleDashboard;
 use Illuminate\Foundation\Application;
@@ -93,11 +99,36 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('impersonate.stop');
 
     Route::get('/dashboard/parent', function () {
-        return Inertia::render('Dashboards/Parent');
+        $user = auth()->user();
+        $upcomingSchedules = [];
+        if ($user && Schema::hasTable('schedules') && Schema::hasTable('schedule_user')) {
+            $upcomingSchedules = $user->belongsToMany(Schedule::class, 'schedule_user')
+                ->where('status', 'scheduled')
+                ->orderByDesc('created_at')
+                ->take(5)
+                ->get(['schedules.id', 'schedules.title', 'schedules.link', 'schedules.day_of_week', 'schedules.start_time', 'schedules.recurring', 'schedules.date', 'schedules.status']);
+        }
+
+        return Inertia::render('Dashboards/Parent', [
+            'upcomingSchedules' => $upcomingSchedules,
+        ]);
     })->middleware('role:parent')->name('dashboard.parent');
 
     Route::get('/dashboard/teacher', function () {
-        return Inertia::render('Dashboards/Teacher');
+        $user = auth()->user();
+        $upcomingSchedules = [];
+        if ($user && Schema::hasTable('schedules')) {
+            $upcomingSchedules = Schedule::query()
+                ->where('teacher_id', $user->id)
+                ->where('status', 'scheduled')
+                ->orderByDesc('created_at')
+                ->take(5)
+                ->get(['id', 'title', 'link', 'day_of_week', 'start_time', 'recurring', 'date', 'status']);
+        }
+
+        return Inertia::render('Dashboards/Teacher', [
+            'upcomingSchedules' => $upcomingSchedules,
+        ]);
     })->middleware('role:teacher')->name('dashboard.teacher');
 
     Route::get('/dashboard/admin', function () {
@@ -116,6 +147,26 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/users', [UsersController::class, 'index'])->name('users');
         Route::patch('/users/{user}/role', [UsersController::class, 'updateRole'])->name('users.role');
     });
+
+    Route::get('/dashboard/messages', [MessageController::class, 'index'])->name('dashboard.messages');
+    Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
+
+    Route::get('/dashboard/schedules', [ScheduleController::class, 'index'])->name('dashboard.schedules');
+    Route::post('/schedules', [ScheduleController::class, 'store'])->name('schedules.store');
+    Route::patch('/schedules/{schedule}', [ScheduleController::class, 'update'])->name('schedules.update');
+    Route::delete('/schedules/{schedule}', [ScheduleController::class, 'destroy'])->name('schedules.destroy');
+    Route::post('/schedules/{schedule}/complete', [ScheduleController::class, 'complete'])->name('schedules.complete');
+
+    // Booking + Agreements
+    Route::post('/bookings/confirm', [BookingController::class, 'confirm'])->name('bookings.confirm');
+    Route::post('/agreements/{agreement}/accept', [BookingController::class, 'tutorAccept'])->name('agreements.accept');
+
+    // Payouts
+    Route::get('/dashboard/payouts', [PayoutController::class, 'index'])->name('dashboard.payouts');
+    Route::post('/payouts/request', [PayoutController::class, 'request'])->name('payouts.request');
+
+    // Agreements
+    Route::get('/dashboard/agreements', [AgreementController::class, 'index'])->name('dashboard.agreements');
 });
 
 Route::middleware('auth')->group(function () {

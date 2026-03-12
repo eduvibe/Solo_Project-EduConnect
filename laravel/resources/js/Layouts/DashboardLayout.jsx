@@ -56,6 +56,8 @@ export default function DashboardLayout({ title, children }) {
             return [
                 { label: 'Dashboard', href: route('dashboard.teacher'), active: route().current('dashboard.teacher') },
                 { label: 'Find parents', href: route('tutors.index'), active: route().current('tutors.index') },
+                { label: 'Agreements', href: route('dashboard.agreements'), active: route().current('dashboard.agreements') },
+                { label: 'Payouts', href: route('dashboard.payouts'), active: route().current('dashboard.payouts') },
                 { label: 'Profile', href: route('profile.edit'), active: route().current('profile.edit') },
             ];
         }
@@ -101,15 +103,6 @@ export default function DashboardLayout({ title, children }) {
                         </div>
                     </div>
 
-                    <div className="mt-4">
-                        <div className="flex items-center justify-between text-sm text-white/70">
-                            <div>Profile Completed</div>
-                            <div>23%</div>
-                        </div>
-                        <div className="mt-2 h-2 w-full bg-white/15">
-                            <div className="h-2 w-[23%] bg-[#9dff52]"></div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -185,6 +178,32 @@ export default function DashboardLayout({ title, children }) {
                         </div>
 
                         <div className="flex items-center gap-3">
+                            <Link href={route('dashboard.schedules')} aria-label="Schedules" className="text-slate-900">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
+                                    <rect x="3" y="4" width="18" height="18"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                                </svg>
+                            </Link>
+                            <Link href={route('dashboard.messages')} aria-label="Messages" className="relative text-slate-900">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                </svg>
+                                {usePage().props.counts?.unreadMessages > 0 && (
+                                    <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center bg-[#9dff52] px-1 text-[10px] font-bold text-black">
+                                        {usePage().props.counts.unreadMessages}
+                                    </span>
+                                )}
+                            </Link>
+                            <div className="relative text-slate-900" aria-label="Notifications" title="Notifications">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
+                                    <path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7"/>
+                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                                </svg>
+                                {usePage().props.counts?.unreadNotifications > 0 && (
+                                    <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center bg-[#9dff52] px-1 text-[10px] font-bold text-black">
+                                        {usePage().props.counts.unreadNotifications}
+                                    </span>
+                                )}
+                            </div>
                             {canImpersonate && (
                                 <div className="hidden items-center gap-2 sm:flex">
                                     {isImpersonating ? (

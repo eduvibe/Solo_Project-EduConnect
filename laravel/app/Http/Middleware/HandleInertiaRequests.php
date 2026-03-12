@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -36,6 +38,23 @@ class HandleInertiaRequests extends Middleware
             ? $impersonateRole
             : null;
 
+        $unreadMessages = 0;
+        $unreadNotifications = 0;
+        if ($user) {
+            if (Schema::hasTable('messages')) {
+                $unreadMessages = (int) DB::table('messages')
+                    ->where('to_user_id', $user->id)
+                    ->whereNull('read_at')
+                    ->count();
+            }
+            if (Schema::hasTable('simple_notifications')) {
+                $unreadNotifications = (int) DB::table('simple_notifications')
+                    ->where('user_id', $user->id)
+                    ->whereNull('read_at')
+                    ->count();
+            }
+        }
+
         return [
             ...parent::share($request),
             'auth' => [
@@ -44,6 +63,10 @@ class HandleInertiaRequests extends Middleware
             'impersonation' => [
                 'can' => $canImpersonate,
                 'activeRole' => $activeRole,
+            ],
+            'counts' => [
+                'unreadMessages' => $unreadMessages,
+                'unreadNotifications' => $unreadNotifications,
             ],
             'flash' => [
                 'status' => fn () => $request->session()->get('status'),

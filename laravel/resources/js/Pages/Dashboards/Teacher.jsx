@@ -1,8 +1,9 @@
 import DashboardLayout from '@/Layouts/DashboardLayout';
-import { Head, usePage } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 
 export default function TeacherDashboard() {
     const user = usePage().props.auth.user;
+    const upcomingSchedules = usePage().props.upcomingSchedules || [];
 
     return (
         <DashboardLayout title="Tutor Dashboard">
@@ -43,37 +44,37 @@ export default function TeacherDashboard() {
                             </div>
                         </div>
 
-                        <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                            <div className="bg-slate-50 p-5">
+                        <div className="mt-6 grid gap-6 sm:grid-cols-3">
+                            <div>
                                 <div className="text-xs font-semibold text-slate-500">
                                     Profile views
                                 </div>
                                 <div className="mt-2 text-2xl font-bold text-slate-900">
                                     83
                                 </div>
-                                <div className="mt-1 text-xs text-slate-500">
+                                <div className="text-xs text-slate-500">
                                     This week
                                 </div>
                             </div>
-                            <div className="bg-slate-50 p-5">
+                            <div>
                                 <div className="text-xs font-semibold text-slate-500">
                                     Verification
                                 </div>
                                 <div className="mt-2 text-sm font-semibold text-slate-900">
                                     Pending
                                 </div>
-                                <div className="mt-1 text-xs text-slate-500">
+                                <div className="text-xs text-slate-500">
                                     Upload docs to go live
                                 </div>
                             </div>
-                            <div className="bg-slate-50 p-5">
+                            <div>
                                 <div className="text-xs font-semibold text-slate-500">
                                     Earnings
                                 </div>
                                 <div className="mt-2 text-2xl font-bold text-slate-900">
                                     ₦125,000
                                 </div>
-                                <div className="mt-1 text-xs text-slate-500">
+                                <div className="text-xs text-slate-500">
                                     Last 30 days
                                 </div>
                             </div>
@@ -105,34 +106,20 @@ export default function TeacherDashboard() {
                                 ))}
                             </div>
                         </div>
-
                         <div className="bg-white p-6 shadow-sm">
-                            <div className="flex items-center justify-between">
-                                <div className="text-sm font-semibold text-slate-900">
-                                    Upcoming schedule
-                                </div>
-                                <div className="text-xs font-semibold text-slate-700">
-                                    Next
-                                </div>
+                            <div className="text-sm font-semibold text-slate-900">
+                                Agreements
                             </div>
-                            <div className="mt-4 space-y-3">
-                                {[
-                                    { title: 'Maths - JSS2', time: 'Today • 4:30 PM', mode: 'Online' },
-                                    { title: 'English - WAEC', time: 'Tomorrow • 6:00 PM', mode: 'In-person' },
-                                    { title: 'Physics - SSS3', time: 'Sat • 10:00 AM', mode: 'Online' },
-                                ].map((s) => (
-                                    <div
-                                        key={s.title}
-                                        className="bg-slate-50 p-4"
-                                    >
-                                        <div className="text-sm font-semibold text-slate-900">
-                                            {s.title}
-                                        </div>
-                                        <div className="mt-1 text-xs text-slate-500">
-                                            {s.time} • {s.mode}
-                                        </div>
-                                    </div>
-                                ))}
+                            <div className="mt-3 text-sm text-slate-600">
+                                Accept pending agreements to unlock messaging and credit earnings.
+                            </div>
+                            <div className="mt-4">
+                                <Link
+                                    href={route('dashboard.agreements')}
+                                    className="inline-flex bg-[#9dff52] px-5 py-3 text-base font-semibold text-black"
+                                >
+                                    View agreements
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -140,33 +127,48 @@ export default function TeacherDashboard() {
 
                 <div className="lg:col-span-4">
                     <div className="bg-white p-6 shadow-sm">
-                        <div className="text-sm font-semibold text-slate-900">
-                            Profile strength
+                        <div className="flex items-center justify-between">
+                            <div className="text-sm font-semibold text-slate-900">
+                                Upcoming classes
+                            </div>
+                            <Link
+                                href={route('dashboard.schedules')}
+                                className="text-sm font-semibold text-slate-900 underline"
+                            >
+                                Open
+                            </Link>
                         </div>
-                        <div className="mt-3 bg-slate-50 p-4">
-                            <div className="flex items-center justify-between text-xs text-slate-600">
-                                <div>Completed</div>
-                                <div className="font-semibold text-slate-900">
-                                    23%
-                                </div>
-                            </div>
-                            <div className="mt-3 h-2 w-full bg-slate-200">
-                                <div className="h-2 w-[23%] bg-[#9dff52]"></div>
-                            </div>
-                            <div className="mt-4 space-y-2 text-sm text-slate-700">
-                                <div className="flex items-start gap-2">
-                                    <span className="mt-1 h-2 w-2 bg-[#9dff52]"></span>
-                                    Add subjects & pricing
-                                </div>
-                                <div className="flex items-start gap-2">
-                                    <span className="mt-1 h-2 w-2 bg-[#9dff52]"></span>
-                                    Upload verification documents
-                                </div>
-                                <div className="flex items-start gap-2">
-                                    <span className="mt-1 h-2 w-2 bg-[#9dff52]"></span>
-                                    Set availability
-                                </div>
-                            </div>
+
+                        <div className="mt-4 overflow-x-auto">
+                            <table className="min-w-full">
+                                <thead>
+                                    <tr className="text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                        <th className="px-3 py-2">Title</th>
+                                        <th className="px-3 py-2">When</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-slate-200">
+                                    {upcomingSchedules.map((s) => (
+                                        <tr key={s.id}>
+                                            <td className="px-3 py-2 text-sm font-semibold text-slate-900">
+                                                {s.title}
+                                            </td>
+                                            <td className="px-3 py-2 text-sm text-slate-800">
+                                                {s.recurring
+                                                    ? `${String(s.day_of_week || '').toUpperCase()} ${s.start_time || ''}`
+                                                    : s.date || ''}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    {upcomingSchedules.length === 0 && (
+                                        <tr>
+                                            <td className="px-3 py-4 text-sm text-slate-700" colSpan={2}>
+                                                No upcoming classes.
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
@@ -175,15 +177,24 @@ export default function TeacherDashboard() {
                             Quick actions
                         </div>
                         <div className="mt-4 grid gap-3">
-                            <div className="bg-slate-50 p-4 text-sm font-semibold text-slate-900">
+                            <Link
+                                href={route('profile.edit')}
+                                className="bg-slate-50 p-4 text-sm font-semibold text-slate-900"
+                            >
                                 Update profile
-                            </div>
-                            <div className="bg-slate-50 p-4 text-sm font-semibold text-slate-900">
-                                Add availability
-                            </div>
-                            <div className="bg-slate-50 p-4 text-sm font-semibold text-slate-900">
+                            </Link>
+                            <Link
+                                href={route('dashboard.schedules')}
+                                className="bg-slate-50 p-4 text-sm font-semibold text-slate-900"
+                            >
+                                Manage schedules
+                            </Link>
+                            <Link
+                                href={route('dashboard.payouts')}
+                                className="bg-slate-50 p-4 text-sm font-semibold text-slate-900"
+                            >
                                 View payouts
-                            </div>
+                            </Link>
                         </div>
                     </div>
                 </div>

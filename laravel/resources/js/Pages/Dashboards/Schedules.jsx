@@ -5,29 +5,10 @@ import { useMemo, useState } from 'react';
 export default function Schedules() {
     const role = (usePage().props.role || '').toLowerCase();
     const initial = usePage().props.schedules || [];
-    const [creating, setCreating] = useState(false);
     const [editingId, setEditingId] = useState(null);
     const [editForm, setEditForm] = useState({
         title: '', link: '', day_of_week: '', start_time: '', recurring: false, date: '',
     });
-    const [form, setForm] = useState({
-        title: '',
-        link: '',
-        day_of_week: '',
-        start_time: '',
-        recurring: false,
-        date: '',
-        invite_email: '',
-    });
-
-    const save = (e) => {
-        e.preventDefault();
-        router.post(route('schedules.store'), form, { preserveScroll: true });
-        setForm({
-            title: '', link: '', day_of_week: '', start_time: '', recurring: false, date: '', invite_email: '',
-        });
-        setCreating(false);
-    };
 
     const deleteSchedule = (id) => {
         router.delete(route('schedules.destroy', id), { preserveScroll: true });
@@ -67,58 +48,11 @@ export default function Schedules() {
                 <div className="lg:col-span-12">
                     <div className="bg-white p-6 shadow-sm">
                         <div className="flex items-center justify-between">
-                            <div className="text-2xl font-bold text-slate-900">Upcoming classes</div>
-                            {role === 'teacher' && (
-                                <button
-                                    type="button"
-                                    onClick={() => setCreating((v) => !v)}
-                                    className="bg-[#9dff52] px-4 py-3 text-base font-semibold text-black"
-                                >
-                                    {creating ? 'Cancel' : 'New schedule'}
-                                </button>
-                            )}
+                            <div className="text-xl font-semibold text-slate-900">Class schedules</div>
+                            <div className="text-sm text-slate-500">
+                                {role === 'teacher' ? 'Manage sessions' : 'Your sessions'}
+                            </div>
                         </div>
-
-                        {creating && role === 'teacher' && (
-                            <form onSubmit={save} className="mt-6 grid gap-4 sm:grid-cols-6">
-                                <div className="sm:col-span-2">
-                                    <div className="text-sm text-slate-600">Title</div>
-                                    <input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="mt-1 w-full border-slate-300 text-base shadow-sm" required />
-                                </div>
-                                <div className="sm:col-span-2">
-                                    <div className="text-sm text-slate-600">Join link</div>
-                                    <input value={form.link} onChange={(e) => setForm({ ...form, link: e.target.value })} className="mt-1 w-full border-slate-300 text-base shadow-sm" />
-                                </div>
-                                <div>
-                                    <div className="text-sm text-slate-600">Day</div>
-                                    <select value={form.day_of_week} onChange={(e) => setForm({ ...form, day_of_week: e.target.value })} className="mt-1 w-full border-slate-300 text-base shadow-sm">
-                                        <option value="">One-off</option>
-                                        {days.map((d) => (<option key={d} value={d}>{d.toUpperCase()}</option>))}
-                                    </select>
-                                </div>
-                                <div>
-                                    <div className="text-sm text-slate-600">Start</div>
-                                    <input type="time" value={form.start_time} onChange={(e) => setForm({ ...form, start_time: e.target.value })} className="mt-1 w-full border-slate-300 text-base shadow-sm" />
-                                </div>
-                                <div className="sm:col-span-1 flex items-end">
-                                    <label className="flex items-center gap-2 text-sm text-slate-600">
-                                        <input type="checkbox" checked={form.recurring} onChange={(e) => setForm({ ...form, recurring: e.target.checked })} />
-                                        Recurring
-                                    </label>
-                                </div>
-                                <div>
-                                    <div className="text-sm text-slate-600">Date</div>
-                                    <input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className="mt-1 w-full border-slate-300 text-base shadow-sm" />
-                                </div>
-                                <div className="sm:col-span-2">
-                                    <div className="text-sm text-slate-600">Invite parent (email)</div>
-                                    <input value={form.invite_email} onChange={(e) => setForm({ ...form, invite_email: e.target.value })} placeholder="parent@example.com" className="mt-1 w-full border-slate-300 text-base shadow-sm" />
-                                </div>
-                                <div className="sm:col-span-1 flex items-end">
-                                    <button type="submit" className="bg-black px-6 py-3 text-base font-semibold text-white">Save</button>
-                                </div>
-                            </form>
-                        )}
 
                         <div className="mt-6 overflow-x-auto">
                             <table className="min-w-full">
@@ -202,7 +136,7 @@ export default function Schedules() {
                                     })}
                                     {initial.length === 0 && (
                                         <tr>
-                                            <td className="px-3 py-6 text-base text-slate-700" colSpan={6}>
+                                            <td className="px-3 py-6 text-sm text-slate-700" colSpan={6}>
                                                 No schedules yet.
                                             </td>
                                         </tr>

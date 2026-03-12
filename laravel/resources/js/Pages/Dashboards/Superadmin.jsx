@@ -9,16 +9,16 @@ export default function SuperadminDashboard() {
             <div className="grid gap-6 lg:grid-cols-12">
                 <div className="lg:col-span-8">
                     <div className="dash-surface p-6">
-                        <div className="text-2xl font-bold text-white">
+                        <div className="dash-title text-2xl font-bold">
                             Platform controls
                         </div>
-                        <div className="mt-2 text-sm text-white/60">
+                        <div className="dash-muted mt-2 text-sm">
                             User roles, governance, and platform-wide settings.
                         </div>
                         <div className="mt-6 flex flex-wrap gap-3">
                             <Link
                                 href={route('dashboard.superadmin.teachers')}
-                                className="dash-btn-black inline-flex items-center px-5 py-3 text-base"
+                                className="dash-btn-neutral inline-flex items-center px-5 py-3 text-base"
                             >
                                 Teachers
                             </Link>
@@ -30,7 +30,7 @@ export default function SuperadminDashboard() {
                             </Link>
                             <Link
                                 href={route('tutors.index')}
-                                className="inline-flex items-center border border-white/10 bg-black px-5 py-3 text-base font-semibold text-white"
+                                className="dash-btn-neutral inline-flex items-center px-5 py-3 text-base"
                             >
                                 Browse tutors
                             </Link>
@@ -40,17 +40,17 @@ export default function SuperadminDashboard() {
 
                 <div className="lg:col-span-4">
                     <div className="dash-surface p-6">
-                        <div className="text-sm font-semibold text-white">
+                        <div className="dash-title text-sm font-semibold">
                             Quick actions
                         </div>
                         <div className="mt-4 grid gap-3">
-                            <div className="border border-white/10 bg-black p-4 text-sm font-semibold text-white">
+                            <div className="dash-surface p-4 text-sm font-semibold">
                                 Audit logs
                             </div>
-                            <div className="border border-white/10 bg-black p-4 text-sm font-semibold text-white">
+                            <div className="dash-surface p-4 text-sm font-semibold">
                                 Payout settings
                             </div>
-                            <div className="border border-white/10 bg-black p-4 text-sm font-semibold text-white">
+                            <div className="dash-surface p-4 text-sm font-semibold">
                                 Platform settings
                             </div>
                         </div>

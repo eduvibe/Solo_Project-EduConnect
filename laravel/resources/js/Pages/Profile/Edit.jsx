@@ -34,8 +34,8 @@ export default function Edit({ mustVerifyEmail, status }) {
             <div className="dash-surface p-4 sm:p-6">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                        <div className="text-lg font-semibold text-white">Manage your profile</div>
-                        <div className="mt-1 text-sm text-white/60">
+                        <div className="dash-title text-lg font-semibold">Manage your profile</div>
+                        <div className="dash-muted mt-1 text-sm">
                             Update your details in short steps. Works well on mobile.
                         </div>
                     </div>
@@ -49,7 +49,7 @@ export default function Edit({ mustVerifyEmail, status }) {
                             onClick={() => setActive(t.key)}
                             className={
                                 'px-4 py-2 text-sm font-semibold ' +
-                                (active === t.key ? 'bg-[#9dff52] text-black' : 'bg-white/10 text-white')
+                                (active === t.key ? 'bg-[#9dff52] text-black' : 'dash-surface dash-title')
                             }
                         >
                             {t.label}

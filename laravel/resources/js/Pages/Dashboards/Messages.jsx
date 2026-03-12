@@ -21,7 +21,7 @@ export default function Messages() {
             <div className="grid gap-6 lg:grid-cols-12">
                 <div className="lg:col-span-8">
                     <div className="dash-surface p-6">
-                        <div className="text-sm font-semibold text-white">Inbox</div>
+                        <div className="dash-title text-sm font-semibold">Inbox</div>
 
                         <div className="mt-4 overflow-x-auto">
                             <table className="min-w-full">
@@ -36,15 +36,15 @@ export default function Messages() {
                                 <tbody className="dash-divider">
                                     {messages.map((m) => (
                                         <tr key={m.id}>
-                                            <td className="px-3 py-2 text-sm font-semibold text-white">{m.from?.name}</td>
-                                            <td className="px-3 py-2 text-sm text-white/70">{m.to?.name}</td>
-                                            <td className="px-3 py-2 text-sm text-white/70">{m.body}</td>
-                                            <td className="px-3 py-2 text-xs text-white/60">{m.created_at}</td>
+                                            <td className="dash-title px-3 py-2 text-sm font-semibold">{m.from?.name}</td>
+                                            <td className="dash-muted px-3 py-2 text-sm">{m.to?.name}</td>
+                                            <td className="dash-muted px-3 py-2 text-sm">{m.body}</td>
+                                            <td className="dash-muted px-3 py-2 text-xs">{m.created_at}</td>
                                         </tr>
                                     ))}
                                     {messages.length === 0 && (
                                         <tr>
-                                            <td className="px-3 py-6 text-sm text-white/70" colSpan={4}>
+                                            <td className="dash-muted px-3 py-6 text-sm" colSpan={4}>
                                                 No messages yet.
                                             </td>
                                         </tr>
@@ -58,14 +58,14 @@ export default function Messages() {
 
                 <div className="lg:col-span-4">
                     <div className="dash-surface p-6">
-                        <div className="text-sm font-semibold text-white">New message</div>
+                        <div className="dash-title text-sm font-semibold">New message</div>
                         <form onSubmit={send} className="mt-4 space-y-3">
                             <div>
-                                <div className="text-sm text-white/70">To</div>
+                                <div className="dash-muted-strong text-sm">To</div>
                                 <select
                                     value={toUserId}
                                     onChange={(e) => setToUserId(e.target.value)}
-                                    className="mt-1 w-full border-white/10 bg-black text-sm text-white shadow-sm"
+                                    className="dash-input mt-1 w-full p-3 text-sm shadow-sm"
                                 >
                                     <option value="">Select recipient</option>
                                     {recipients.map((r) => (
@@ -74,12 +74,12 @@ export default function Messages() {
                                 </select>
                             </div>
                             <div>
-                                <div className="text-sm text-white/70">Message</div>
+                                <div className="dash-muted-strong text-sm">Message</div>
                                 <textarea
                                     value={body}
                                     onChange={(e) => setBody(e.target.value)}
                                     rows={5}
-                                    className="mt-1 w-full border-white/10 bg-black p-3 text-sm text-white shadow-sm"
+                                    className="dash-input mt-1 w-full p-3 text-sm shadow-sm"
                                 />
                             </div>
                             <button

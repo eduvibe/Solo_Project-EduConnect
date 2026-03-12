@@ -14,7 +14,7 @@ export default function Agreements() {
             <Head title="Agreements" />
 
             <div className="dash-surface p-6">
-                <div className="text-sm font-semibold text-white">Your agreements</div>
+                <div className="dash-title text-sm font-semibold">Your agreements</div>
                 <div className="mt-4 overflow-x-auto">
                     <table className="min-w-full">
                         <thead>
@@ -31,12 +31,12 @@ export default function Agreements() {
                         <tbody className="dash-divider">
                             {agreements.map((a) => (
                                 <tr key={a.id}>
-                                    <td className="px-3 py-2 text-sm text-white/80">{a.parent?.name || '-'}</td>
-                                    <td className="px-3 py-2 text-sm text-white/80">₦{(a.hourly_rate_cents/100).toLocaleString()}/hr</td>
-                                    <td className="px-3 py-2 text-sm text-white/80">{a.sessions_count}</td>
-                                    <td className="px-3 py-2 text-sm text-white/80">₦{(a.total_cents/100).toLocaleString()}</td>
-                                    <td className="px-3 py-2 text-sm text-white/80">{a.pay_day || '-'}</td>
-                                    <td className="px-3 py-2 text-sm text-white/70">{a.status}</td>
+                                    <td className="dash-title px-3 py-2 text-sm">{a.parent?.name || '-'}</td>
+                                    <td className="dash-title px-3 py-2 text-sm">₦{(a.hourly_rate_cents/100).toLocaleString()}/hr</td>
+                                    <td className="dash-title px-3 py-2 text-sm">{a.sessions_count}</td>
+                                    <td className="dash-title px-3 py-2 text-sm">₦{(a.total_cents/100).toLocaleString()}</td>
+                                    <td className="dash-title px-3 py-2 text-sm">{a.pay_day || '-'}</td>
+                                    <td className="dash-muted px-3 py-2 text-sm">{a.status}</td>
                                     <td className="px-3 py-2">
                                         {role === 'teacher' && a.status === 'pending_teacher' ? (
                                             <button
@@ -47,14 +47,14 @@ export default function Agreements() {
                                                 Accept
                                             </button>
                                         ) : (
-                                            <span className="text-sm text-white/60">—</span>
+                                            <span className="dash-muted text-sm">—</span>
                                         )}
                                     </td>
                                 </tr>
                             ))}
                             {agreements.length === 0 && (
                                 <tr>
-                                    <td className="px-3 py-6 text-sm text-white/70" colSpan={7}>
+                                    <td className="dash-muted px-3 py-6 text-sm" colSpan={7}>
                                         No agreements yet.
                                     </td>
                                 </tr>

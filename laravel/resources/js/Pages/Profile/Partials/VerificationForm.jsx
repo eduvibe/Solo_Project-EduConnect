@@ -27,26 +27,26 @@ export default function VerificationForm({ className = '' }) {
 
     return (
         <div className={className}>
-            <div className="text-sm font-semibold text-white">Verification</div>
-            <div className="mt-1 text-sm text-white/60">
+            <div className="dash-title text-sm font-semibold">Verification</div>
+            <div className="dash-muted mt-1 text-sm">
                 Upload your photo and documents. After submission, we review and update your status.
             </div>
 
             <div className="mt-4 flex flex-wrap items-center gap-3">
-                <div className="text-sm font-semibold text-white">Status:</div>
-                <div className="text-sm text-white/70">{statusLabel(user.verification_status)}</div>
-                <div className="text-sm text-white/60">{user.verification_submitted_at || ''}</div>
+                <div className="dash-title text-sm font-semibold">Status:</div>
+                <div className="dash-muted text-sm">{statusLabel(user.verification_status)}</div>
+                <div className="dash-muted text-sm">{user.verification_submitted_at || ''}</div>
             </div>
 
             <form onSubmit={upload} className="mt-6 grid gap-4 sm:grid-cols-3">
                 <div className="sm:col-span-1">
-                    <div className="text-sm font-semibold text-white">Photo</div>
-                    <div className="mt-1 text-sm text-white/60">JPG/PNG up to 2MB.</div>
+                    <div className="dash-title text-sm font-semibold">Photo</div>
+                    <div className="dash-muted mt-1 text-sm">JPG/PNG up to 2MB.</div>
                     <input
                         type="file"
                         accept="image/*"
                         onChange={(e) => setData('avatar', e.target.files?.[0] || null)}
-                        className="mt-3 block w-full text-sm text-white"
+                        className="dash-muted mt-3 block w-full text-sm"
                     />
                     {errors.avatar && <div className="mt-2 text-sm text-red-600">{errors.avatar}</div>}
                     {user.avatar_path && (
@@ -59,13 +59,13 @@ export default function VerificationForm({ className = '' }) {
                 </div>
 
                 <div className="sm:col-span-1">
-                    <div className="text-sm font-semibold text-white">ID document</div>
-                    <div className="mt-1 text-sm text-white/60">PDF/JPG/PNG up to 5MB.</div>
+                    <div className="dash-title text-sm font-semibold">ID document</div>
+                    <div className="dash-muted mt-1 text-sm">PDF/JPG/PNG up to 5MB.</div>
                     <input
                         type="file"
                         accept=".pdf,image/*"
                         onChange={(e) => setData('id_document', e.target.files?.[0] || null)}
-                        className="mt-3 block w-full text-sm text-white"
+                        className="dash-muted mt-3 block w-full text-sm"
                     />
                     {errors.id_document && <div className="mt-2 text-sm text-red-600">{errors.id_document}</div>}
                     {user.id_document_path && (
@@ -78,13 +78,13 @@ export default function VerificationForm({ className = '' }) {
                 </div>
 
                 <div className="sm:col-span-1">
-                    <div className="text-sm font-semibold text-white">Certificate</div>
-                    <div className="mt-1 text-sm text-white/60">PDF/JPG/PNG up to 5MB.</div>
+                    <div className="dash-title text-sm font-semibold">Certificate</div>
+                    <div className="dash-muted mt-1 text-sm">PDF/JPG/PNG up to 5MB.</div>
                     <input
                         type="file"
                         accept=".pdf,image/*"
                         onChange={(e) => setData('certificate', e.target.files?.[0] || null)}
-                        className="mt-3 block w-full text-sm text-white"
+                        className="dash-muted mt-3 block w-full text-sm"
                     />
                     {errors.certificate && <div className="mt-2 text-sm text-red-600">{errors.certificate}</div>}
                     {user.certificate_path && (
@@ -100,7 +100,7 @@ export default function VerificationForm({ className = '' }) {
                     <button
                         type="submit"
                         disabled={processing}
-                        className="dash-btn-black px-5 py-2"
+                        className="dash-btn-neutral px-5 py-2"
                     >
                         Upload files
                     </button>
@@ -111,7 +111,7 @@ export default function VerificationForm({ className = '' }) {
                     >
                         Submit for review
                     </button>
-                    <Link href={route('profile.edit')} className="px-5 py-2 text-sm font-semibold text-white/70">
+                    <Link href={route('profile.edit')} className="dash-muted-strong px-5 py-2 text-sm font-semibold">
                         Refresh
                     </Link>
                 </div>

@@ -73,7 +73,7 @@ export default function Users({ users, filters }) {
                                         'px-4 py-3 text-base font-semibold ' +
                                         (currentRole === '' && !isTeachersView
                                             ? 'bg-[#9dff52] text-black'
-                                            : 'bg-white/10 text-white')
+                                            : 'dash-surface dash-title')
                                     }
                                 >
                                     All
@@ -84,7 +84,7 @@ export default function Users({ users, filters }) {
                                         'px-4 py-3 text-base font-semibold ' +
                                         (currentRole === 'teacher'
                                             ? 'bg-[#9dff52] text-black'
-                                            : 'bg-white/10 text-white')
+                                            : 'dash-surface dash-title')
                                     }
                                 >
                                     Teachers
@@ -95,7 +95,7 @@ export default function Users({ users, filters }) {
                                         'px-4 py-3 text-base font-semibold ' +
                                         (currentRole === 'parent'
                                             ? 'bg-[#9dff52] text-black'
-                                            : 'bg-white/10 text-white')
+                                            : 'dash-surface dash-title')
                                     }
                                 >
                                     Parents
@@ -106,7 +106,7 @@ export default function Users({ users, filters }) {
                                 onSubmit={submitSearch}
                                 className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center"
                             >
-                                <div className="text-sm font-semibold text-white">
+                                <div className="dash-title text-sm font-semibold">
                                     {titleFromRole(currentRole)}
                                 </div>
                                 <div className="flex gap-2">
@@ -116,7 +116,7 @@ export default function Users({ users, filters }) {
                                             setQ(e.target.value)
                                         }
                                         placeholder="Search name or email..."
-                                        className="w-full border border-white/10 bg-black p-3 text-sm text-white shadow-sm sm:w-80"
+                                        className="dash-input w-full p-3 text-sm shadow-sm sm:w-80"
                                     />
                                     <button
                                         type="submit"
@@ -151,10 +151,10 @@ export default function Users({ users, filters }) {
                                 {users.data.map((u) => (
                                     <tr key={u.id}>
                                         <td className="px-6 py-4">
-                                            <div className="text-sm font-semibold text-white">
+                                            <div className="dash-title text-sm font-semibold">
                                                 {u.name}
                                             </div>
-                                            <div className="text-sm text-white/60">
+                                            <div className="dash-muted text-sm">
                                                 {u.email}
                                             </div>
                                         </td>
@@ -169,7 +169,7 @@ export default function Users({ users, filters }) {
                                                         [u.id]: e.target.value,
                                                     }))
                                                 }
-                                                className="border border-white/10 bg-black p-2 text-sm text-white shadow-sm"
+                                                className="dash-input p-2 text-sm shadow-sm"
                                             >
                                                 <option value="parent">
                                                     parent
@@ -185,7 +185,7 @@ export default function Users({ users, filters }) {
                                                 </option>
                                             </select>
                                         </td>
-                                        <td className="px-6 py-4 text-sm text-white/60">
+                                        <td className="dash-muted px-6 py-4 text-sm">
                                             {u.created_at || '-'}
                                         </td>
                                         <td className="px-6 py-4 text-right">
@@ -217,8 +217,8 @@ export default function Users({ users, filters }) {
                                             (linkItem.active
                                                 ? 'bg-[#9dff52] text-black'
                                                 : linkItem.url
-                                                  ? 'bg-white/10 text-white'
-                                                  : 'cursor-not-allowed bg-white/10 text-white/40')
+                                                  ? 'dash-surface dash-title'
+                                                  : 'dash-surface cursor-not-allowed opacity-50')
                                         }
                                         dangerouslySetInnerHTML={{
                                             __html: linkItem.label,

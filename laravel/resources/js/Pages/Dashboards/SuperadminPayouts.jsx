@@ -50,10 +50,10 @@ export default function SuperadminPayouts() {
             <div className="dash-surface p-6">
                 <div className="flex items-center justify-between">
                     <div>
-                        <div className="text-lg font-semibold text-white">Payout requests</div>
-                        <div className="mt-1 text-sm text-white/60">Set an expected date, mark paid, or reject with a note.</div>
+                        <div className="dash-title text-lg font-semibold">Payout requests</div>
+                        <div className="dash-muted mt-1 text-sm">Set an expected date, mark paid, or reject with a note.</div>
                     </div>
-                    <div className="text-sm font-semibold text-white">{payouts.length} total</div>
+                    <div className="dash-title text-sm font-semibold">{payouts.length} total</div>
                 </div>
 
                 <div className="mt-6 overflow-x-auto">
@@ -72,12 +72,12 @@ export default function SuperadminPayouts() {
                             {payouts.map((p) => (
                                 <tr key={p.id}>
                                     <td className="px-3 py-3">
-                                        <div className="text-sm font-semibold text-white">{p.tutor?.name}</div>
-                                        <div className="text-sm text-white/60">{p.tutor?.email}</div>
-                                        <div className="text-xs text-white/50">{p.tutor?.phone || ''}</div>
+                                        <div className="dash-title text-sm font-semibold">{p.tutor?.name}</div>
+                                        <div className="dash-muted text-sm">{p.tutor?.email}</div>
+                                        <div className="dash-muted text-xs">{p.tutor?.phone || ''}</div>
                                     </td>
-                                    <td className="px-3 py-3 text-sm text-white/70">{p.created_at}</td>
-                                    <td className="px-3 py-3 text-sm font-semibold text-white">
+                                    <td className="dash-muted px-3 py-3 text-sm">{p.created_at}</td>
+                                    <td className="dash-title px-3 py-3 text-sm font-semibold">
                                         ₦{(p.amount_cents / 100).toLocaleString()}
                                     </td>
                                     <td className="px-3 py-3">
@@ -85,10 +85,10 @@ export default function SuperadminPayouts() {
                                             type="date"
                                             value={expectedById[p.id] ?? p.expected_date ?? ''}
                                             onChange={(e) => setExpectedById((m) => ({ ...m, [p.id]: e.target.value }))}
-                                            className="w-44 border border-white/10 bg-black p-2 text-sm text-white"
+                                            className="dash-input w-44 p-2 text-sm"
                                         />
                                     </td>
-                                    <td className="px-3 py-3 text-sm text-white/70">{p.status}</td>
+                                    <td className="dash-muted px-3 py-3 text-sm">{p.status}</td>
                                     <td className="px-3 py-3">
                                         <div className="flex flex-col gap-2">
                                             <button
@@ -102,7 +102,7 @@ export default function SuperadminPayouts() {
                                             <button
                                                 type="button"
                                                 onClick={() => markPaid(p.id)}
-                                                className="dash-btn-black"
+                                                className="dash-btn-neutral"
                                             >
                                                 Mark paid
                                             </button>
@@ -110,14 +110,14 @@ export default function SuperadminPayouts() {
                                                 value={rejectNotesById[p.id] ?? p.admin_note ?? ''}
                                                 onChange={(e) => setRejectNotesById((m) => ({ ...m, [p.id]: e.target.value }))}
                                                 rows={2}
-                                                className="w-72 border border-white/10 bg-black p-2 text-sm text-white"
+                                                className="dash-input w-72 p-2 text-sm"
                                                 placeholder="Rejection note"
                                             />
                                             <button
                                                 type="button"
                                                 onClick={() => reject(p.id)}
                                                 disabled={!canReject[p.id]}
-                                                className="border border-white/10 bg-black px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
+                                                className="dash-btn-neutral disabled:opacity-60"
                                             >
                                                 Reject
                                             </button>
@@ -127,7 +127,7 @@ export default function SuperadminPayouts() {
                             ))}
                             {payouts.length === 0 && (
                                 <tr>
-                                    <td className="px-3 py-6 text-sm text-white/70" colSpan={6}>
+                                    <td className="dash-muted px-3 py-6 text-sm" colSpan={6}>
                                         No payout requests yet.
                                     </td>
                                 </tr>

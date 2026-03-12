@@ -46,8 +46,8 @@ export default function AvailabilityForm({ className = '' }) {
 
     return (
         <form onSubmit={submit} className={className}>
-            <div className="text-sm font-semibold text-white">Availability</div>
-            <div className="mt-1 text-sm text-white/60">
+            <div className="dash-title text-sm font-semibold">Availability</div>
+            <div className="dash-muted mt-1 text-sm">
                 Set the days and times you’re available. Parents see this when booking and scheduling sessions.
             </div>
 
@@ -66,7 +66,7 @@ export default function AvailabilityForm({ className = '' }) {
                             const v = data.availability[d.key];
                             return (
                                 <tr key={d.key}>
-                                    <td className="px-3 py-3 text-sm font-semibold text-white">
+                                    <td className="dash-title px-3 py-3 text-sm font-semibold">
                                         {d.label}
                                     </td>
                                     <td className="px-3 py-3">
@@ -92,7 +92,7 @@ export default function AvailabilityForm({ className = '' }) {
                                                     [d.key]: { ...v, start: e.target.value },
                                                 })
                                             }
-                                            className="w-full border border-white/10 bg-black p-2 text-sm text-white disabled:opacity-60"
+                                            className="dash-input w-full p-2 text-sm disabled:opacity-60"
                                         />
                                     </td>
                                     <td className="px-3 py-3">
@@ -106,7 +106,7 @@ export default function AvailabilityForm({ className = '' }) {
                                                     [d.key]: { ...v, end: e.target.value },
                                                 })
                                             }
-                                            className="w-full border border-white/10 bg-black p-2 text-sm text-white disabled:opacity-60"
+                                            className="dash-input w-full p-2 text-sm disabled:opacity-60"
                                         />
                                     </td>
                                 </tr>

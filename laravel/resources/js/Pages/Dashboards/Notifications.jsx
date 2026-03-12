@@ -28,15 +28,15 @@ export default function Notifications() {
             <div className="dash-surface p-6">
                 <div className="flex items-center justify-between">
                     <div>
-                        <div className="text-lg font-semibold text-white">All notifications</div>
-                        <div className="mt-1 text-sm text-white/60">Updates and requests that need your attention.</div>
+                        <div className="dash-title text-lg font-semibold">All notifications</div>
+                        <div className="dash-muted mt-1 text-sm">Updates and requests that need your attention.</div>
                     </div>
                     <div className="flex items-center gap-3">
                         {canNotify && Notification.permission !== 'granted' && (
                             <button
                                 type="button"
                                 onClick={enableDesktopNotifications}
-                                className="dash-btn-black"
+                                className="dash-btn-neutral"
                             >
                                 Enable desktop alerts
                             </button>
@@ -64,17 +64,17 @@ export default function Notifications() {
                         <tbody className="dash-divider">
                             {notifications.map((n) => (
                                 <tr key={n.id}>
-                                    <td className="px-3 py-3 text-sm text-white/70">{n.created_at}</td>
-                                    <td className="px-3 py-3 text-sm font-semibold text-white">{n.type || '—'}</td>
-                                    <td className="px-3 py-3 text-sm text-white/70">
+                                    <td className="dash-muted px-3 py-3 text-sm">{n.created_at}</td>
+                                    <td className="dash-title px-3 py-3 text-sm font-semibold">{n.type || '—'}</td>
+                                    <td className="dash-muted px-3 py-3 text-sm">
                                         {typeof n.data === 'string' ? n.data : JSON.stringify(n.data)}
                                     </td>
-                                    <td className="px-3 py-3 text-sm text-white/70">{n.read_at ? 'Read' : 'Unread'}</td>
+                                    <td className="dash-muted px-3 py-3 text-sm">{n.read_at ? 'Read' : 'Unread'}</td>
                                 </tr>
                             ))}
                             {notifications.length === 0 && (
                                 <tr>
-                                    <td className="px-3 py-6 text-sm text-white/70" colSpan={4}>
+                                    <td className="dash-muted px-3 py-6 text-sm" colSpan={4}>
                                         No notifications yet.
                                     </td>
                                 </tr>

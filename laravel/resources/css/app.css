@@ -3,44 +3,118 @@
 @tailwind utilities;
 
 @layer components {
+    [data-theme='light'] {
+        --dash-bg: #f8fafc;
+        --dash-surface: #ffffff;
+        --dash-border: rgba(2, 6, 23, 0.12);
+        --dash-text: #0f172a;
+        --dash-muted: rgba(15, 23, 42, 0.72);
+        --dash-muted-strong: rgba(15, 23, 42, 0.82);
+        --dash-table-head: rgba(15, 23, 42, 0.55);
+        --dash-link: #0f172a;
+        --dash-input-bg: #ffffff;
+        --dash-input-border: rgba(2, 6, 23, 0.18);
+        --dash-input-text: #0f172a;
+        --dash-overlay: rgba(2, 6, 23, 0.45);
+        --dash-btn-neutral-bg: #0b0b0b;
+        --dash-btn-neutral-text: #ffffff;
+        --dash-btn-neutral-border: transparent;
+    }
+
+    [data-theme='dark'] {
+        --dash-bg: #000000;
+        --dash-surface: #000000;
+        --dash-border: rgba(255, 255, 255, 0.1);
+        --dash-text: #ffffff;
+        --dash-muted: rgba(255, 255, 255, 0.6);
+        --dash-muted-strong: rgba(255, 255, 255, 0.7);
+        --dash-table-head: rgba(255, 255, 255, 0.5);
+        --dash-link: #ffffff;
+        --dash-input-bg: #000000;
+        --dash-input-border: rgba(255, 255, 255, 0.1);
+        --dash-input-text: #ffffff;
+        --dash-overlay: rgba(0, 0, 0, 0.55);
+        --dash-btn-neutral-bg: #000000;
+        --dash-btn-neutral-text: #ffffff;
+        --dash-btn-neutral-border: rgba(255, 255, 255, 0.1);
+    }
+
+    .dash-root {
+        background: var(--dash-bg);
+        color: var(--dash-text);
+    }
+
     .dash-surface {
-        @apply border border-white/10 bg-black;
+        background: var(--dash-surface);
+        border: 1px solid var(--dash-border);
     }
 
     .dash-title {
-        @apply text-white;
+        color: var(--dash-text);
     }
 
     .dash-muted {
-        @apply text-white/60;
+        color: var(--dash-muted);
     }
 
     .dash-muted-strong {
-        @apply text-white/70;
+        color: var(--dash-muted-strong);
     }
 
     .dash-table-head {
-        @apply text-white/50;
+        color: var(--dash-table-head);
     }
 
     .dash-divider {
-        @apply divide-y divide-white/10;
+        border-color: var(--dash-border);
+    }
+
+    .dash-divider > :not([hidden]) ~ :not([hidden]) {
+        border-top-width: 1px;
+        border-color: var(--dash-border);
     }
 
     .dash-link {
-        @apply text-white underline;
+        color: var(--dash-link);
+        text-decoration: underline;
     }
 
     .dash-chip {
-        @apply border border-white/10 bg-black px-3 py-1 text-sm font-semibold text-white/80;
+        background: var(--dash-surface);
+        border: 1px solid var(--dash-border);
+        color: var(--dash-muted-strong);
+        padding: 0.25rem 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 600;
     }
 
     .dash-btn-green {
         @apply bg-[#9dff52] px-4 py-2 text-sm font-semibold text-black disabled:opacity-60;
     }
 
-    .dash-btn-black {
-        @apply bg-black px-4 py-2 text-sm font-semibold text-white disabled:opacity-60;
+    .dash-btn-neutral {
+        background: var(--dash-btn-neutral-bg);
+        color: var(--dash-btn-neutral-text);
+        border: 1px solid var(--dash-btn-neutral-border);
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+    }
+
+    .dash-btn-neutral:disabled {
+        opacity: 0.6;
+    }
+
+    .dash-input {
+        background: var(--dash-input-bg);
+        border: 1px solid var(--dash-input-border);
+        color: var(--dash-input-text);
+    }
+
+    .dash-icon-btn {
+        background: var(--dash-surface);
+        border: 1px solid var(--dash-border);
+        color: var(--dash-text);
     }
 }
 

@@ -111,7 +111,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         if ($user && Schema::hasTable('schedules') && Schema::hasTable('schedule_user')) {
             $upcomingSchedules = $user->belongsToMany(Schedule::class, 'schedule_user')
                 ->where('status', 'scheduled')
-                ->orderByDesc('created_at')
+                ->orderByDesc('schedules.created_at')
                 ->take(5)
                 ->get(['schedules.id', 'schedules.title', 'schedules.link', 'schedules.day_of_week', 'schedules.start_time', 'schedules.recurring', 'schedules.date', 'schedules.status']);
         }
@@ -120,6 +120,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'upcomingSchedules' => $upcomingSchedules,
         ]);
     })->middleware('role:parent')->name('dashboard.parent');
+
+    Route::get('/dashboard/confirm-booking', function (Request $request) {
+        return Inertia::render('Dashboards/ConfirmBooking', [
+            'prefill' => [
+                'teacher_email' => (string) $request->query('teacher_email', ''),
+            ],
+        ]);
+    })->middleware('role:parent')->name('dashboard.bookings.confirm');
 
     Route::get('/dashboard/teacher', function () {
         $user = auth()->user();

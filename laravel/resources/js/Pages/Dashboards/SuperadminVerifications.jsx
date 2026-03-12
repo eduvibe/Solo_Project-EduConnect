@@ -34,12 +34,12 @@ export default function SuperadminVerifications() {
             <div className="dash-surface p-6">
                 <div className="flex items-center justify-between">
                     <div>
-                        <div className="text-lg font-semibold text-white">Pending reviews</div>
-                        <div className="mt-1 text-sm text-white/60">
+                        <div className="dash-title text-lg font-semibold">Pending reviews</div>
+                        <div className="dash-muted mt-1 text-sm">
                             Review uploaded documents and approve or reject with a note.
                         </div>
                     </div>
-                    <div className="text-sm font-semibold text-white">
+                    <div className="dash-title text-sm font-semibold">
                         {teachers.length} pending
                     </div>
                 </div>
@@ -59,11 +59,11 @@ export default function SuperadminVerifications() {
                             {teachers.map((t) => (
                                 <tr key={t.id}>
                                     <td className="px-3 py-3">
-                                        <div className="text-sm font-semibold text-white">{t.name}</div>
-                                        <div className="text-sm text-white/60">{t.email}</div>
-                                        <div className="text-xs text-white/50">{t.phone || ''}</div>
+                                        <div className="dash-title text-sm font-semibold">{t.name}</div>
+                                        <div className="dash-muted text-sm">{t.email}</div>
+                                        <div className="dash-muted text-xs">{t.phone || ''}</div>
                                     </td>
-                                    <td className="px-3 py-3 text-sm text-white/70">
+                                    <td className="dash-muted px-3 py-3 text-sm">
                                         {t.verification_submitted_at || '—'}
                                     </td>
                                     <td className="px-3 py-3 text-sm">
@@ -84,7 +84,7 @@ export default function SuperadminVerifications() {
                                                 </a>
                                             )}
                                             {!t.avatar_path && !t.id_document_path && !t.certificate_path && (
-                                                <span className="text-white/60">—</span>
+                                                <span className="dash-muted text-sm">—</span>
                                             )}
                                         </div>
                                     </td>
@@ -95,7 +95,7 @@ export default function SuperadminVerifications() {
                                                 setNotesById((p) => ({ ...p, [t.id]: e.target.value }))
                                             }
                                             rows={3}
-                                            className="w-80 border border-white/10 bg-black p-2 text-sm text-white"
+                                            className="dash-input w-80 p-2 text-sm"
                                             placeholder="Explain what’s missing (e.g., ID unreadable, name mismatch, etc.)"
                                         />
                                     </td>
@@ -111,7 +111,7 @@ export default function SuperadminVerifications() {
                                             <button
                                                 type="button"
                                                 onClick={() => reject(t.id)}
-                                                className="dash-btn-black"
+                                                className="dash-btn-neutral"
                                                 disabled={!canReject[t.id]}
                                             >
                                                 Reject
@@ -123,7 +123,7 @@ export default function SuperadminVerifications() {
 
                             {teachers.length === 0 && (
                                 <tr>
-                                    <td className="px-3 py-6 text-sm text-white/70" colSpan={5}>
+                                    <td className="dash-muted px-3 py-6 text-sm" colSpan={5}>
                                         No pending verifications.
                                     </td>
                                 </tr>

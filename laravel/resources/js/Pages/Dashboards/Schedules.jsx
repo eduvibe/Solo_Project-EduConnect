@@ -70,6 +70,15 @@ export default function Schedules() {
         setEditingId(null);
     };
     const days = useMemo(() => ['mon','tue','wed','thu','fri','sat','sun'], []);
+    const [issueById, setIssueById] = useState({});
+
+    const confirmLesson = (id) => {
+        router.post(route('lessons.confirm', id), {}, { preserveScroll: true });
+    };
+
+    const reportIssue = (id) => {
+        router.post(route('lessons.issue', id), { issue_note: issueById[id] || '' }, { preserveScroll: true });
+    };
 
     return (
         <DashboardLayout title="Class schedules">
@@ -111,6 +120,12 @@ export default function Schedules() {
                                 <tbody className="dash-divider">
                                     {initial.map((s) => {
                                         const isEditing = editingId === s.id;
+                                        const status = s.lesson_status || s.status;
+                                        const whenLabel = s.scheduled_start
+                                            ? new Date(s.scheduled_start).toLocaleString()
+                                            : s.recurring
+                                              ? `${(s.day_of_week || '').toUpperCase()} ${s.start_time || ''}`
+                                              : (s.date || '');
                                         return (
                                             <tr key={s.id}>
                                                 <td className="dash-title px-3 py-2 text-sm font-semibold">
@@ -135,7 +150,7 @@ export default function Schedules() {
                                                             <input type="date" value={editForm.date || ''} onChange={(e) => setEditForm({ ...editForm, date: e.target.value })} className="dash-input p-2 text-sm shadow-sm" />
                                                         </div>
                                                     ) : (
-                                                        s.recurring ? `${(s.day_of_week || '').toUpperCase()} ${s.start_time || ''}` : (s.date || '')
+                                                        whenLabel
                                                     )}
                                                 </td>
                                                 <td className="dash-muted px-3 py-2 text-sm">
@@ -148,7 +163,7 @@ export default function Schedules() {
                                                         s.link ? (<Link href={s.link} className="dash-link text-sm font-semibold">Open</Link>) : '-'
                                                     )}
                                                 </td>
-                                                <td className="dash-muted px-3 py-2 text-sm">{s.status}</td>
+                                                <td className="dash-muted px-3 py-2 text-sm">{status}</td>
                                                 <td className="px-3 py-2">
                                                     {role === 'teacher' ? (
                                                         <div className="flex flex-wrap gap-2">
@@ -166,7 +181,23 @@ export default function Schedules() {
                                                             )}
                                                         </div>
                                                     ) : (
-                                                        s.link ? (
+                                                        status === 'awaiting_confirmation' ? (
+                                                            <div className="flex flex-wrap items-center gap-2">
+                                                                <button type="button" onClick={() => confirmLesson(s.id)} className="dash-btn-green">
+                                                                    Mark completed
+                                                                </button>
+                                                                <button type="button" onClick={() => reportIssue(s.id)} className="dash-btn-neutral">
+                                                                    Report issue
+                                                                </button>
+                                                                <textarea
+                                                                    value={issueById[s.id] ?? ''}
+                                                                    onChange={(e) => setIssueById((m) => ({ ...m, [s.id]: e.target.value }))}
+                                                                    rows={2}
+                                                                    className="dash-input w-72 p-2 text-sm"
+                                                                    placeholder="What went wrong? (optional)"
+                                                                />
+                                                            </div>
+                                                        ) : s.link ? (
                                                             <Link href={s.link} className="dash-link text-sm font-semibold">Attend</Link>
                                                         ) : (
                                                             <span className="dash-muted text-sm">—</span>

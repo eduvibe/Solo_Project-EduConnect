@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Schedule;
 use App\Models\SimpleNotification;
 use App\Models\User;
+use App\Models\Transaction;
+use App\Models\WalletTransaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Inertia\Inertia;
 
@@ -35,10 +38,15 @@ class ScheduleController extends Controller
                 $schedules = Schedule::query()
                     ->where('teacher_id', $user->id)
                     ->with('attendees:id,name,email')
+                    ->orderByDesc('scheduled_start')
                     ->orderByDesc('created_at')
                     ->get();
             } else {
-                $schedules = $user->belongsToMany(Schedule::class, 'schedule_user')->get();
+                $schedules = $user->belongsToMany(Schedule::class, 'schedule_user')
+                    ->with('teacher:id,name')
+                    ->orderByDesc('scheduled_start')
+                    ->orderByDesc('created_at')
+                    ->get();
             }
         }
 
@@ -124,5 +132,126 @@ class ScheduleController extends Controller
         abort_unless((int) $schedule->teacher_id === (int) $user->id, 403);
         $schedule->update(['status' => 'completed']);
         return back()->with('status', 'Marked completed');
+    }
+
+    public function parentConfirm(Request $request, Schedule $schedule)
+    {
+        $user = $request->user();
+        abort_unless($this->effectiveRole($request) === 'parent', 403);
+        abort_unless($schedule->attendees()->where('users.id', $user->id)->exists(), 403);
+
+        $schedule->refresh();
+        abort_unless((string) $schedule->lesson_status === 'awaiting_confirmation', 422);
+
+        abort_unless(Schema::hasColumn('users', 'wallet_balance_kobo'), 503);
+        abort_unless(Schema::hasTable('wallet_transactions'), 503);
+
+        DB::transaction(function () use ($schedule, $user) {
+            $schedule->refresh();
+            if ((string) $schedule->lesson_status !== 'awaiting_confirmation') {
+                return;
+            }
+
+            $rateKobo = (int) ($schedule->tutor_rate_kobo ?? 0);
+            $commissionBps = (int) ($schedule->commission_bps ?? 1000);
+            $feeKobo = (int) floor($rateKobo * $commissionBps / 10000);
+            $netKobo = max(0, $rateKobo - $feeKobo);
+
+            $parent = User::query()->lockForUpdate()->find($user->id);
+            $tutor = User::query()->lockForUpdate()->find($schedule->teacher_id);
+            if (! $parent || ! $tutor) {
+                return;
+            }
+
+            if ((int) $parent->wallet_balance_kobo < $rateKobo) {
+                $schedule->update([
+                    'lesson_status' => 'issue_reported',
+                    'issue_note' => 'Insufficient wallet balance at confirmation.',
+                ]);
+                SimpleNotification::create([
+                    'user_id' => $parent->id,
+                    'type' => 'lesson_issue',
+                    'data' => ['schedule_id' => $schedule->id],
+                ]);
+                return;
+            }
+
+            $parent->decrement('wallet_balance_kobo', $rateKobo);
+            $tutor->increment('balance_cents', $netKobo);
+
+            WalletTransaction::create([
+                'user_id' => $parent->id,
+                'wallet_type' => 'parent',
+                'amount_kobo' => -$rateKobo,
+                'type' => 'lesson_confirmation',
+                'reference' => $schedule->booking_intent_id ? "booking_intent:{$schedule->booking_intent_id}" : null,
+                'meta' => ['schedule_id' => $schedule->id, 'tutor_id' => $tutor->id],
+            ]);
+
+            WalletTransaction::create([
+                'user_id' => $tutor->id,
+                'wallet_type' => 'tutor',
+                'amount_kobo' => $netKobo,
+                'type' => 'lesson_confirmation',
+                'reference' => $schedule->booking_intent_id ? "booking_intent:{$schedule->booking_intent_id}" : null,
+                'meta' => ['schedule_id' => $schedule->id, 'parent_id' => $parent->id, 'fee_kobo' => $feeKobo],
+            ]);
+
+            if (Schema::hasTable('transactions')) {
+                Transaction::create([
+                    'agreement_id' => null,
+                    'payer_id' => $parent->id,
+                    'tutor_id' => $tutor->id,
+                    'amount_cents' => $rateKobo,
+                    'fee_cents' => $feeKobo,
+                    'net_cents' => $netKobo,
+                    'status' => 'cleared',
+                    'description' => 'Lesson confirmed',
+                ]);
+            }
+
+            $schedule->update([
+                'lesson_status' => 'confirmed',
+                'confirmed_at' => now(),
+                'auto_confirm_at' => null,
+            ]);
+
+            SimpleNotification::create([
+                'user_id' => $parent->id,
+                'type' => 'lesson_confirmed',
+                'data' => ['schedule_id' => $schedule->id],
+            ]);
+            SimpleNotification::create([
+                'user_id' => $tutor->id,
+                'type' => 'lesson_confirmed',
+                'data' => ['schedule_id' => $schedule->id],
+            ]);
+        });
+
+        return back()->with('status', 'Lesson confirmed.');
+    }
+
+    public function parentIssue(Request $request, Schedule $schedule)
+    {
+        $user = $request->user();
+        abort_unless($this->effectiveRole($request) === 'parent', 403);
+        abort_unless($schedule->attendees()->where('users.id', $user->id)->exists(), 403);
+
+        $data = $request->validate([
+            'issue_note' => ['nullable', 'string', 'max:2000'],
+        ]);
+
+        $schedule->update([
+            'lesson_status' => 'issue_reported',
+            'issue_note' => $data['issue_note'] ?? null,
+        ]);
+
+        SimpleNotification::create([
+            'user_id' => $schedule->teacher_id,
+            'type' => 'lesson_issue',
+            'data' => ['schedule_id' => $schedule->id],
+        ]);
+
+        return back()->with('status', 'Issue reported.');
     }
 }

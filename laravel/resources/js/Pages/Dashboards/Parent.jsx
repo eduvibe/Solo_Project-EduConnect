@@ -5,6 +5,7 @@ export default function ParentDashboard() {
     const user = usePage().props.auth.user;
     const upcomingSchedules = usePage().props.upcomingSchedules || [];
     const spentCents = Number(user?.spent_cents || 0);
+    const walletKobo = Number(user?.wallet_balance_kobo || 0);
 
     return (
         <DashboardLayout title="Parent Dashboard">
@@ -91,30 +92,23 @@ export default function ParentDashboard() {
                             </ul>
                         </div>
                     </div>
+
                 </div>
 
                 <div className="lg:col-span-4">
                     <div className="dash-surface p-6">
-                        <div className="dash-title text-sm font-semibold">
-                            Quick actions
+                        <div className="dash-muted-strong text-sm font-semibold">Wallet balance</div>
+                        <div className="dash-title mt-2 text-3xl font-bold">
+                            ₦{Math.floor(walletKobo / 100).toLocaleString()}
                         </div>
-                        <div className="mt-4 grid gap-3">
-                            <Link
-                                href={route('tutors.index')}
-                                className="dash-surface p-4 text-sm font-semibold"
-                            >
-                                Browse tutors
+                        <div className="mt-4">
+                            <Link href={route('dashboard.wallet')} className="dash-btn-green inline-flex px-5 py-3 text-base">
+                                View wallet
                             </Link>
-                            <div className="dash-surface p-4 text-sm font-semibold">
-                                View bookings
-                            </div>
-                            <div className="dash-surface p-4 text-sm font-semibold">
-                                Payments
-                            </div>
                         </div>
                     </div>
 
-                    <div className="dash-surface mt-6 p-6">
+                    <div className="dash-surface p-6">
                         <div className="dash-title text-sm font-semibold">
                             Upcoming classes
                         </div>

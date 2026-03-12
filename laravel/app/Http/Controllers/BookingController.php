@@ -10,6 +10,31 @@ use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
+    private function firstAvailabilityDayLabel(?array $availability): string
+    {
+        $map = [
+            'monday' => 'Monday',
+            'tuesday' => 'Tuesday',
+            'wednesday' => 'Wednesday',
+            'thursday' => 'Thursday',
+            'friday' => 'Friday',
+            'saturday' => 'Saturday',
+            'sunday' => 'Sunday',
+        ];
+
+        foreach ($map as $key => $label) {
+            $row = $availability[$key] ?? null;
+            if (! is_array($row)) {
+                continue;
+            }
+            if (! empty($row['enabled'])) {
+                return $label;
+            }
+        }
+
+        return 'Friday';
+    }
+
     // Parent confirms a booking intent — creates agreement (pending tutor acceptance) and records payment to platform.
     public function confirm(Request $request)
     {
@@ -17,30 +42,23 @@ class BookingController extends Controller
         abort_unless((string) $parent->role === 'parent' || (string) $parent->role === 'superadmin', 403);
 
         $data = $request->validate([
-            'teacher_id' => ['nullable', 'integer', 'exists:users,id'],
-            'teacher_email' => ['nullable', 'email'],
-            'hourly_rate' => ['required', 'numeric', 'min:0'],
+            'teacher_id' => ['required', 'integer', 'exists:users,id'],
             'sessions' => ['required', 'integer', 'min:1'],
-            'pay_day' => ['required', 'string', 'max:20'],
         ]);
 
-        $teacher = null;
-        if (!empty($data['teacher_id'])) {
-            $teacher = User::query()->findOrFail($data['teacher_id']);
-        } elseif (!empty($data['teacher_email'])) {
-            $teacher = User::query()->where('email', $data['teacher_email'])->firstOrFail();
-        } else {
-            abort(422, 'Provide teacher_id or teacher_email');
-        }
+        $teacher = User::query()->findOrFail($data['teacher_id']);
+        abort_unless((string) $teacher->role === 'teacher', 404);
 
-        $hourlyCents = (int) round($data['hourly_rate'] * 100);
+        $hourlyCents = (int) ($teacher->hourly_rate_cents ?? 0);
+        abort_if($hourlyCents <= 0, 422, 'Tutor has no hourly rate set.');
         $sessions = (int) $data['sessions'];
         $totalCents = $hourlyCents * $sessions;
         $feeBps = 1000; // 10%
         $feeCents = (int) floor($totalCents * $feeBps / 10000);
         $netCents = $totalCents - $feeCents;
+        $payDay = $this->firstAvailabilityDayLabel($teacher->availability);
 
-        DB::transaction(function () use ($parent, $teacher, $hourlyCents, $sessions, $totalCents, $feeBps, $data, $feeCents, $netCents) {
+        DB::transaction(function () use ($parent, $teacher, $hourlyCents, $sessions, $totalCents, $feeBps, $feeCents, $netCents, $payDay) {
             $agreement = Agreement::updateOrCreate(
                 [
                     'teacher_id' => $teacher->id,
@@ -51,7 +69,7 @@ class BookingController extends Controller
                     'hourly_rate_cents' => $hourlyCents,
                     'sessions_count' => $sessions,
                     'total_cents' => $totalCents,
-                    'pay_day' => $data['pay_day'],
+                    'pay_day' => $payDay,
                     'service_fee_bps' => $feeBps,
                 ]
             );

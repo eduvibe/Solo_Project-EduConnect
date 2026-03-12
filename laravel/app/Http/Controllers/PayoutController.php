@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\PayoutRequestedMail;
 use App\Models\PayoutRequest;
 use App\Models\Transaction;
 use App\Models\SimpleNotification;
@@ -40,6 +39,16 @@ class PayoutController extends Controller
         $user = $request->user();
         abort_unless((string) $user->role === 'teacher' || (string) $user->role === 'superadmin', 403);
 
+        if (Schema::hasTable('payout_requests')) {
+            $exists = PayoutRequest::query()
+                ->where('tutor_id', $user->id)
+                ->whereIn('status', ['requested', 'processing'])
+                ->exists();
+            if ($exists) {
+                return back()->with('status', 'You already have a payout request in progress.');
+            }
+        }
+
         $balance = (int) ($user->balance_cents ?? 0);
         if ($balance <= 0) {
             return back()->with('status', 'No balance to payout.');
@@ -51,21 +60,19 @@ class PayoutController extends Controller
                 'tutor_id' => $user->id,
                 'amount_cents' => $balance,
                 'status' => 'requested',
-                'expected_date' => now()->addDays(2)->toDateString(),
+                'expected_date' => null,
             ]);
 
             Transaction::create([
                 'agreement_id' => null,
                 'payer_id' => $user->id,
                 'tutor_id' => $user->id,
-                'amount_cents' => -$balance,
+                'amount_cents' => $balance,
                 'fee_cents' => 0,
-                'net_cents' => -$balance,
+                'net_cents' => $balance,
                 'status' => 'payout_requested',
                 'description' => 'Payout requested',
             ]);
-
-            $user->decrement('balance_cents', $balance);
         });
 
         if (Schema::hasTable('simple_notifications')) {
@@ -85,9 +92,10 @@ class PayoutController extends Controller
 
             if ($admins->count() > 0) {
                 try {
-                    Mail::to($admins->pluck('email')->all())->send(new PayoutRequestedMail($user, $payout));
+                    $subject = 'New payout request';
+                    $body = "A tutor requested a payout.\n\nTutor: {$user->name}\nTutor email: {$user->email}\nAmount: ₦" . number_format($balance / 100, 2) . "\nRequest ID: {$payout?->id}\n";
+                    Mail::raw($body, fn ($m) => $m->to($admins->pluck('email')->all())->subject($subject));
                 } catch (\Throwable $e) {
-                    report($e);
                 }
             }
         }

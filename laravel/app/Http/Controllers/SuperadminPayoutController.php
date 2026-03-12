@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\PayoutRequest;
 use App\Models\SimpleNotification;
 use App\Models\User;
+use App\Models\WalletTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Schema;
 use Inertia\Inertia;
 
@@ -59,10 +61,47 @@ class SuperadminPayoutController extends Controller
     {
         abort_unless((string) $request->user()->role === 'superadmin', 403);
 
-        $payoutRequest->status = 'paid';
-        $payoutRequest->reviewed_by = $request->user()->id;
-        $payoutRequest->reviewed_at = now();
-        $payoutRequest->save();
+        abort_unless(Schema::hasColumn('users', 'balance_cents'), 503);
+
+        DB::transaction(function () use ($request, $payoutRequest) {
+            $payoutRequest->refresh();
+            if ((string) $payoutRequest->status === 'paid') {
+                return;
+            }
+
+            $tutor = User::query()->lockForUpdate()->find($payoutRequest->tutor_id);
+            if (! $tutor) {
+                return;
+            }
+
+            $amount = (int) $payoutRequest->amount_cents;
+            if ((int) $tutor->balance_cents < $amount) {
+                $payoutRequest->status = 'rejected';
+                $payoutRequest->admin_note = 'Insufficient balance at payout time.';
+                $payoutRequest->reviewed_by = $request->user()->id;
+                $payoutRequest->reviewed_at = now();
+                $payoutRequest->save();
+                return;
+            }
+
+            $tutor->decrement('balance_cents', $amount);
+
+            if (Schema::hasTable('wallet_transactions')) {
+                WalletTransaction::create([
+                    'user_id' => $tutor->id,
+                    'wallet_type' => 'tutor',
+                    'amount_kobo' => -$amount,
+                    'type' => 'payout',
+                    'reference' => "payout_request:{$payoutRequest->id}",
+                    'meta' => ['amount_cents' => $amount],
+                ]);
+            }
+
+            $payoutRequest->status = 'paid';
+            $payoutRequest->reviewed_by = $request->user()->id;
+            $payoutRequest->reviewed_at = now();
+            $payoutRequest->save();
+        });
 
         if (Schema::hasTable('simple_notifications')) {
             SimpleNotification::create([
@@ -70,6 +109,16 @@ class SuperadminPayoutController extends Controller
                 'type' => 'payout_paid',
                 'data' => ['amount_cents' => $payoutRequest->amount_cents],
             ]);
+        }
+
+        $tutor = User::query()->find($payoutRequest->tutor_id);
+        if ($tutor && $tutor->email && config('mail.default')) {
+            try {
+                $amount = (int) $payoutRequest->amount_cents;
+                $body = "Your payout has been marked as paid.\nAmount: ₦" . number_format($amount / 100, 2) . "\nRequest ID: {$payoutRequest->id}\n";
+                Mail::raw($body, fn ($m) => $m->to($tutor->email)->subject('Payout paid'));
+            } catch (\Throwable $e) {
+            }
         }
 
         return back()->with('status', 'Payout marked as paid.');
@@ -89,11 +138,6 @@ class SuperadminPayoutController extends Controller
             $payoutRequest->reviewed_by = $request->user()->id;
             $payoutRequest->reviewed_at = now();
             $payoutRequest->save();
-
-            $tutor = User::query()->find($payoutRequest->tutor_id);
-            if ($tutor) {
-                $tutor->increment('balance_cents', (int) $payoutRequest->amount_cents);
-            }
         });
 
         if (Schema::hasTable('simple_notifications')) {
@@ -104,7 +148,16 @@ class SuperadminPayoutController extends Controller
             ]);
         }
 
+        $tutor = User::query()->find($payoutRequest->tutor_id);
+        if ($tutor && $tutor->email && config('mail.default')) {
+            try {
+                $amount = (int) $payoutRequest->amount_cents;
+                $body = "Your payout request was rejected.\nAmount: ₦" . number_format($amount / 100, 2) . "\nReason: {$data['note']}\nRequest ID: {$payoutRequest->id}\n";
+                Mail::raw($body, fn ($m) => $m->to($tutor->email)->subject('Payout rejected'));
+            } catch (\Throwable $e) {
+            }
+        }
+
         return back()->with('status', 'Payout rejected.');
     }
 }
-

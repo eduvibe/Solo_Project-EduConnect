@@ -11,6 +11,10 @@ use App\Http\Controllers\TutorProfileController;
 use App\Http\Controllers\SuperadminVerificationController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\SuperadminPayoutController;
+use App\Http\Controllers\BookingFlowController;
+use App\Http\Controllers\SuperadminPaymentController;
+use App\Http\Controllers\WalletFundingController;
+use App\Http\Controllers\SuperadminWalletFundingController;
 use App\Models\Category;
 use App\Models\Schedule;
 use App\Models\Agreement;
@@ -52,6 +56,60 @@ Route::get('/', function () {
 });
 
 Route::get('/tutors', function (Request $request) {
+    $tutors = [];
+    if (Schema::hasTable('users')) {
+        $query = User::query()->where('role', 'teacher');
+        if (Schema::hasColumn('users', 'disabled_at')) {
+            $query->whereNull('disabled_at');
+        }
+        if (Schema::hasColumn('users', 'verification_status')) {
+            $query->whereIn('verification_status', ['approved', 'pending', null]);
+        }
+
+        if (Schema::hasTable('categories') && Schema::hasTable('category_user')) {
+            $query->with('categories:id,name');
+        }
+
+        $teachers = $query->orderBy('name')->get([
+            'id',
+            'name',
+            'location',
+            'hourly_rate_cents',
+            'availability',
+            'linkedin_url',
+            'x_url',
+            'tiktok_url',
+            'facebook_url',
+        ]);
+
+        $tutors = $teachers->map(function (User $t) {
+            $subjects = [];
+            if ($t->relationLoaded('categories')) {
+                $subjects = $t->categories->pluck('name')->values()->all();
+            }
+
+            $city = (string) ($t->location ?: 'any');
+            $price = (int) floor(((int) ($t->hourly_rate_cents ?? 0)) / 100);
+
+            return [
+                'id' => $t->id,
+                'name' => $t->name,
+                'city' => $city,
+                'subjects' => $subjects,
+                'price' => $price,
+                'availability' => $t->availability,
+                'rating' => 4.8,
+                'lessons' => 0,
+                'modes' => ['online'],
+                'tags' => array_slice($subjects, 0, 6),
+                'linkedin_url' => $t->linkedin_url,
+                'x_url' => $t->x_url,
+                'tiktok_url' => $t->tiktok_url,
+                'facebook_url' => $t->facebook_url,
+            ];
+        })->values()->all();
+    }
+
     return Inertia::render('Public/Tutors', [
         'filters' => [
             'subject' => $request->string('subject')->trim()->value(),
@@ -59,6 +117,7 @@ Route::get('/tutors', function (Request $request) {
             'mode' => $request->string('mode')->trim()->value() ?: 'online',
             'city' => $request->string('city')->trim()->value() ?: 'any',
         ],
+        'tutors' => $tutors,
     ]);
 })->name('tutors.index');
 
@@ -121,13 +180,33 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ]);
     })->middleware('role:parent')->name('dashboard.parent');
 
-    Route::get('/dashboard/confirm-booking', function (Request $request) {
-        return Inertia::render('Dashboards/ConfirmBooking', [
-            'prefill' => [
-                'teacher_email' => (string) $request->query('teacher_email', ''),
-            ],
-        ]);
-    })->middleware('role:parent')->name('dashboard.bookings.confirm');
+    Route::get('/dashboard/parent/book/{tutor}', [BookingFlowController::class, 'bookTutor'])
+        ->middleware('role:parent')
+        ->name('dashboard.book.tutor');
+    Route::post('/booking-intents', [BookingFlowController::class, 'createIntent'])
+        ->middleware('role:parent')
+        ->name('booking-intents.store');
+    Route::get('/dashboard/payments/{bookingIntent}', [BookingFlowController::class, 'paymentInstructions'])
+        ->middleware('role:parent')
+        ->name('payments.instructions');
+    Route::post('/dashboard/payments/{bookingIntent}/submit', [BookingFlowController::class, 'submitPayment'])
+        ->middleware('role:parent')
+        ->name('payments.submit');
+    Route::get('/dashboard/wallet', [BookingFlowController::class, 'wallet'])
+        ->middleware('role:parent')
+        ->name('dashboard.wallet');
+    Route::get('/dashboard/wallet/fund', [WalletFundingController::class, 'create'])
+        ->middleware('role:parent')
+        ->name('wallet.funding.create');
+    Route::post('/dashboard/wallet/fund', [WalletFundingController::class, 'store'])
+        ->middleware('role:parent')
+        ->name('wallet.funding.store');
+    Route::get('/dashboard/wallet/fund/{walletFundingIntent}', [WalletFundingController::class, 'instructions'])
+        ->middleware('role:parent')
+        ->name('wallet.funding.instructions');
+    Route::post('/dashboard/wallet/fund/{walletFundingIntent}/submit', [WalletFundingController::class, 'submit'])
+        ->middleware('role:parent')
+        ->name('wallet.funding.submit');
 
     Route::get('/dashboard/teacher', function () {
         $user = auth()->user();
@@ -236,7 +315,33 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->middleware('role:admin,superadmin')->name('dashboard.admin');
 
     Route::get('/dashboard/superadmin', function () {
-        return Inertia::render('Dashboards/Superadmin');
+        $pendingVerifications = 0;
+        $pendingPayments = 0;
+        $pendingWalletTopups = 0;
+        $pendingPayouts = 0;
+
+        if (Schema::hasTable('users') && Schema::hasColumn('users', 'verification_status')) {
+            $pendingVerifications = User::query()->where('role', 'teacher')->where('verification_status', 'pending')->count();
+        }
+        if (Schema::hasTable('manual_payments')) {
+            $pendingPayments = DB::table('manual_payments')->where('status', 'pending')->count();
+        }
+        if (Schema::hasTable('wallet_funding_payments')) {
+            $pendingWalletTopups = DB::table('wallet_funding_payments')->where('status', 'pending')->count();
+            $pendingPayments += $pendingWalletTopups;
+        }
+        if (Schema::hasTable('payout_requests')) {
+            $pendingPayouts = DB::table('payout_requests')->whereIn('status', ['requested', 'processing'])->count();
+        }
+
+        return Inertia::render('Dashboards/Superadmin', [
+            'overview' => [
+                'pending_verifications' => $pendingVerifications,
+                'pending_payments' => $pendingPayments,
+                'pending_wallet_topups' => $pendingWalletTopups,
+                'pending_payouts' => $pendingPayouts,
+            ],
+        ]);
     })->middleware('role:superadmin')->name('dashboard.superadmin');
 
     Route::get('/dashboard/superadmin/verifications', [SuperadminVerificationController::class, 'index'])
@@ -252,6 +357,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/superadmin/payouts', [SuperadminPayoutController::class, 'index'])
         ->middleware('role:superadmin')
         ->name('dashboard.superadmin.payouts');
+    Route::get('/dashboard/superadmin/payments', [SuperadminPaymentController::class, 'index'])
+        ->middleware('role:superadmin')
+        ->name('dashboard.superadmin.payments');
+    Route::post('/dashboard/superadmin/payments/{manualPayment}/approve', [SuperadminPaymentController::class, 'approve'])
+        ->middleware('role:superadmin')
+        ->name('dashboard.superadmin.payments.approve');
+    Route::post('/dashboard/superadmin/payments/{manualPayment}/reject', [SuperadminPaymentController::class, 'reject'])
+        ->middleware('role:superadmin')
+        ->name('dashboard.superadmin.payments.reject');
+    Route::get('/dashboard/superadmin/wallet-fundings', [SuperadminWalletFundingController::class, 'index'])
+        ->middleware('role:superadmin')
+        ->name('dashboard.superadmin.wallet-fundings');
+    Route::post('/dashboard/superadmin/wallet-fundings/{walletFundingPayment}/approve', [SuperadminWalletFundingController::class, 'approve'])
+        ->middleware('role:superadmin')
+        ->name('dashboard.superadmin.wallet-fundings.approve');
+    Route::post('/dashboard/superadmin/wallet-fundings/{walletFundingPayment}/reject', [SuperadminWalletFundingController::class, 'reject'])
+        ->middleware('role:superadmin')
+        ->name('dashboard.superadmin.wallet-fundings.reject');
     Route::post('/dashboard/superadmin/payouts/{payoutRequest}/processing', [SuperadminPayoutController::class, 'setProcessing'])
         ->middleware('role:superadmin')
         ->name('dashboard.superadmin.payouts.processing');
@@ -282,6 +405,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/schedules/{schedule}', [ScheduleController::class, 'update'])->name('schedules.update');
     Route::delete('/schedules/{schedule}', [ScheduleController::class, 'destroy'])->name('schedules.destroy');
     Route::post('/schedules/{schedule}/complete', [ScheduleController::class, 'complete'])->name('schedules.complete');
+    Route::post('/lessons/{schedule}/confirm', [ScheduleController::class, 'parentConfirm'])
+        ->middleware('role:parent')
+        ->name('lessons.confirm');
+    Route::post('/lessons/{schedule}/issue', [ScheduleController::class, 'parentIssue'])
+        ->middleware('role:parent')
+        ->name('lessons.issue');
 
     // Booking + Agreements
     Route::post('/bookings/confirm', [BookingController::class, 'confirm'])->name('bookings.confirm');

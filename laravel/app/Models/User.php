@@ -43,6 +43,7 @@ class User extends Authenticatable
         'verification_reviewed_at',
         'balance_cents',
         'spent_cents',
+        'wallet_balance_kobo',
     ];
 
     /**

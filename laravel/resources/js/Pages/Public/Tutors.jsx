@@ -3,8 +3,13 @@ import { Head, Link, router, usePage } from '@inertiajs/react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 export default function Tutors({ filters }) {
-    const auth = usePage().props.auth;
+    const page = usePage();
+    const auth = page.props.auth;
     const isAuthed = Boolean(auth?.user);
+    const impersonation = page.props.impersonation;
+    const serverTutors = page.props.tutors || [];
+    const effectiveRole = String(impersonation?.activeRole || auth?.user?.role || '').toLowerCase();
+    const canBook = isAuthed && effectiveRole === 'parent';
 
     const [subject, setSubject] = useState(filters?.subject || '');
     const [level, setLevel] = useState(filters?.level || 'jss');
@@ -21,91 +26,7 @@ export default function Tutors({ filters }) {
     });
     const resultsRef = useRef(null);
 
-    const tutors = useMemo(
-        () => [
-            {
-                name: 'Amaka',
-                city: 'Lagos',
-                subjects: ['Mathematics', 'Further Maths'],
-                price: 4500,
-                rating: 4.9,
-                lessons: 214,
-                modes: ['online', 'in_person'],
-                tags: ['WAEC', 'JSS/SSS', 'UTME'],
-            },
-            {
-                name: 'Ibrahim',
-                city: 'Abuja',
-                subjects: ['English', 'IELTS'],
-                price: 3500,
-                rating: 4.8,
-                lessons: 182,
-                modes: ['online', 'in_person'],
-                tags: ['IELTS', 'Writing', 'Oral'],
-            },
-            {
-                name: 'Chinedu',
-                city: 'Enugu',
-                subjects: ['Physics'],
-                price: 4200,
-                rating: 4.8,
-                lessons: 156,
-                modes: ['online'],
-                tags: ['WAEC', 'UTME', 'SSS'],
-            },
-            {
-                name: 'Blessing',
-                city: 'Port Harcourt',
-                subjects: ['Biology', 'Chemistry'],
-                price: 3800,
-                rating: 4.9,
-                lessons: 199,
-                modes: ['online', 'in_person'],
-                tags: ['WAEC', 'NECO', 'JSS/SSS'],
-            },
-            {
-                name: 'Sade',
-                city: 'Ibadan',
-                subjects: ['Yorùbá'],
-                price: 3000,
-                rating: 4.7,
-                lessons: 141,
-                modes: ['online'],
-                tags: ['Conversation', 'Grammar', 'Culture'],
-            },
-            {
-                name: 'Tunde',
-                city: 'Lagos',
-                subjects: ['Coding'],
-                price: 6500,
-                rating: 4.9,
-                lessons: 267,
-                modes: ['online'],
-                tags: ['Python', 'Web', 'Projects'],
-            },
-            {
-                name: 'Hauwa',
-                city: 'Kano',
-                subjects: ['English', 'Literature'],
-                price: 3200,
-                rating: 4.8,
-                lessons: 121,
-                modes: ['online'],
-                tags: ['WAEC', 'Reading', 'Essay'],
-            },
-            {
-                name: 'Uche',
-                city: 'Owerri',
-                subjects: ['Igbo'],
-                price: 2800,
-                rating: 4.7,
-                lessons: 98,
-                modes: ['online'],
-                tags: ['Conversation', 'Basics', 'Culture'],
-            },
-        ],
-        [],
-    );
+    const tutors = useMemo(() => serverTutors, [serverTutors]);
 
     const results = useMemo(() => {
         const q = subject.trim().toLowerCase();
@@ -409,7 +330,7 @@ export default function Tutors({ filters }) {
 
                                 {displayedResults.map((t) => (
                                     <div
-                                        key={t.name}
+                                        key={t.id || t.name}
                                         className="border border-slate-200 bg-white p-5 shadow-sm"
                                     >
                                         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -489,12 +410,21 @@ export default function Tutors({ filters }) {
                                                         / hour
                                                     </span>
                                                 </div>
-                                                <Link
-                                                    href={isAuthed ? route('dashboard') : route('login')}
-                                                    className="inline-flex items-center justify-center bg-black px-4 py-2 text-base font-semibold text-white"
-                                                >
-                                                    Book lesson
-                                                </Link>
+                                                {canBook && t.id ? (
+                                                    <Link
+                                                        href={route('dashboard.book.tutor', t.id)}
+                                                        className="inline-flex items-center justify-center bg-black px-4 py-2 text-base font-semibold text-white"
+                                                    >
+                                                        Book now
+                                                    </Link>
+                                                ) : (
+                                                    <Link
+                                                        href={isAuthed ? route('dashboard') : route('login')}
+                                                        className="inline-flex items-center justify-center bg-black px-4 py-2 text-base font-semibold text-white"
+                                                    >
+                                                        {isAuthed ? 'Dashboard' : 'Sign in to book'}
+                                                    </Link>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -502,7 +432,9 @@ export default function Tutors({ filters }) {
 
                                 {displayedResults.length === 0 && (
                                     <div className="border border-slate-200 bg-slate-50 p-6 text-base text-slate-700">
-                                        No tutors match those filters yet. Try a different city or switch to online.
+                                        {serverTutors.length === 0
+                                            ? 'No tutors available yet. Ask a tutor to create an account and complete their profile.'
+                                            : 'No tutors match those filters yet. Try a different city or switch to online.'}
                                     </div>
                                 )}
                             </div>

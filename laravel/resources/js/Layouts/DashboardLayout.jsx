@@ -47,6 +47,8 @@ export default function DashboardLayout({ title, children }) {
                 { label: 'Dashboard', href: route('dashboard.superadmin'), active: route().current('dashboard.superadmin') },
                 { label: 'Teachers', href: route('dashboard.superadmin.teachers'), active: route().current('dashboard.superadmin.teachers') },
                 { label: 'Verifications', href: route('dashboard.superadmin.verifications'), active: route().current('dashboard.superadmin.verifications') },
+                { label: 'Payments', href: route('dashboard.superadmin.payments'), active: route().current('dashboard.superadmin.payments') },
+                { label: 'Wallet top-ups', href: route('dashboard.superadmin.wallet-fundings'), active: route().current('dashboard.superadmin.wallet-fundings') },
                 { label: 'Payouts', href: route('dashboard.superadmin.payouts'), active: route().current('dashboard.superadmin.payouts') },
                 { label: 'User management', href: route('admin.users'), active: route().current('admin.users') },
                 { label: 'Profile', href: route('profile.edit'), active: route().current('profile.edit') },
@@ -73,7 +75,7 @@ export default function DashboardLayout({ title, children }) {
         return [
             { label: 'Dashboard', href: route('dashboard.parent'), active: route().current('dashboard.parent') },
             { label: 'Find tutors', href: route('tutors.index'), active: route().current('tutors.index') },
-            { label: 'Confirm booking', href: route('dashboard.bookings.confirm'), active: route().current('dashboard.bookings.confirm') },
+            { label: 'Wallet', href: route('dashboard.wallet'), active: route().current('dashboard.wallet') },
             { label: 'Profile', href: route('profile.edit'), active: route().current('profile.edit') },
         ];
     }, [effectiveRole]);
